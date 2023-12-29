@@ -51,7 +51,8 @@
   logo_tuda_path: "logos/tuda_logo.svg",
 
   // path to a optinal sub-logo of a institue containing the file name, has to be a svg.
-  logo_institue_path: "logos/iasLogo.jpeg",
+  // E.g. "logos/iasLogo.jpeg"
+  logo_institue_path: none,
 
   // how to set the size of the optinal sub-logo
   // either "width": use tud_logo_width*(2/3)

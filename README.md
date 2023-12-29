@@ -1,14 +1,20 @@
 # Typst Template for the Corporate Design of TU Darmstadt [WIP]
-This template can be used to write in [Typst](https://github.com/typst/typst) with the corporate design of [TU Darmstadt]().
+This **unofficial** template can be used to write in [Typst](https://github.com/typst/typst) with the corporate design of [TU Darmstadt](https://www.tu-darmstadt.de/).
+
+#### Disclaimer
+Please ask your supervisor if you are allowed to use typst and this template for your thesis or other documents.
+Note that this template is not checked by TU Darmstadt for correctness.
+Thus, this template does not guarantee completeness or correctness.
+
 
 
 ## Implemented Templates
 The templates imitate the style of the corresponding latex templates in [tuda_latex_templates](https://github.com/tudace/tuda_latex_templates).
 Note that there can be visual differences between the original latex template and the typst template (you may open an issue when you find one).
 
-| Template  | Preview | Scope |
-----|----|--|
-|[tudapub](templates/tudapub/tudapub.typ) | <img src="img/tudapub_prev.png" height="300px"> | Master and Bachelor thesis |
+| Template  | Preview | Example | Scope |
+----|----|--|--|
+|[tudapub](templates/tudapub/tudapub.typ) | <img src="img/tudapub_prev.png" height="300px"> |  [example_tudapub.pdf](example_tudapub.pdf) <br/> [example_tudapub.typ](example_tudapub.typ)   |  Master and Bachelor thesis |
 
 
 ## Usage
@@ -24,6 +30,13 @@ Now execute the following script in the `logos` folder to convert it into an svg
 cd templates/tuda-typst-templates/templates/tudapub/logos
 ./convert_logo.sh
 ```
+
+Also download the required fonts `Roboto` and `XCharter`:
+```bash
+cd templates/tuda-typst-templates/templates/tudapub/fonts
+./download_fonts.sh
+```
+Now you can install all fonts in the folders in `templates/tuda-typst-templates/templates/tudapub/fonts` on your system.
 
 
 Create a simple `main.typ` in the root folder (`my_thesis`) of your new project:
