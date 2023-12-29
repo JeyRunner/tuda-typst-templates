@@ -1,0 +1,177 @@
+#import "props.typ": *
+#import "../tudacolors.typ": tuda_colors
+
+
+// note the page needs to have the correct margins.
+// Set these up before
+#let tudpub-make-title-page(
+  title: [Title],
+  title_german: [Title German],
+
+  // "master" or "bachelor" thesis
+  thesis_type: "master",
+
+  // the code of the accentcolor.
+  // A list of all available accentcolors is in the list tuda_colors
+  accentcolor: "9c",
+
+  // language for correct hyphenation
+  language: "eng",
+
+
+  // author name as text, e.g "Albert Author"
+  author: "A Author",
+
+  // date of submission as string
+  date_of_submission: datetime(
+    year: 2023,
+    month: 10,
+    day: 4,
+  ),
+
+  location: "Darmstadt",
+
+  // array of the names of the reviewers
+  reviewer_names: ("SuperSupervisor 1", "SuperSupervisor 2"),
+
+  // path to the tuda logo containing the file name, has to be a svg.
+  logo_tuda_path: "logos/tuda_logo.svg",
+
+  // path to a optinal sub-logo of a institue containing the file name, has to be a svg.
+  // E.g. "logos/iasLogo.jpeg"
+  logo_institue_path: none,
+
+  // how to set the size of the optinal sub-logo
+  // either "width": use tud_logo_width*(2/3)
+  // or     "height": use tud_logo_height*(2/3)
+  logo_institue_sizeing_type: "width",
+
+  // move the optinal sub-logo horizontally
+  logo_institue_offset_right: 0mm,
+
+  title_height: 3.5em
+) = {
+
+  // vars
+  let accentcolor_rgb = tuda_colors.at(accentcolor)
+  let title_seperator_spacing = 15pt
+  let title = [#title]
+  //let title_height = 150pt //measure(title, styles).height
+  let title_page_inner_margin_left = 8pt
+  let logo_tud_height = 22mm
+
+  let submission_date = date_of_submission.display("[month repr:long] [day], [year]")
+  if (language == "ger") {
+    submission_date = date_of_submission.display("[day].[month repr:numerical].[year]")
+  }
+
+  let thesis_type_text = {
+    if thesis_type == "master" {"Master"}
+    else if thesis_type == "bachelor" {"Bachelor"}
+    else {panic("thesis_type has to be either 'master' or 'bachelor'")}
+  }
+
+
+  ///////////////////////////////////////
+  // Display the title page
+  page[
+    //#set par(leading: 1em)
+    #set text(
+      //font: "Comfortaa",
+      font: "Roboto",
+      //stretch: 50%,
+      //fallback: false,
+      weight: "bold",
+      size: 35.86pt,
+      //height: 
+    )
+    #let title_height = 3.5em //measure(title, styles).height
+
+    //#v(80pt)
+    #grid(
+      rows: (auto, 1fr),
+      stack(
+        // title
+        block(
+          inset: (left: title_page_inner_margin_left),
+          height: title_height)[
+            #set par(
+              justify: false,
+              leading: 20pt   // line spacing
+            )
+            #align(bottom)[#title]
+          ],
+        v(title_seperator_spacing),
+        line(length: 100%, stroke: tud_heading_line_thin_stroke),
+        v(3mm), // title_seperator_spacing
+        //
+        // sub block with reviewers and other text
+        block(inset: (left: title_page_inner_margin_left))[
+          #set text(size: 12pt)
+          #title_german
+          \
+          #set text(weight: "regular")
+          #thesis_type_text thesis by #author
+          \
+          Date of submission: #submission_date
+          \
+          \
+          #for (i, reviewer_name) in reviewer_names.enumerate() [
+            #(i+1). Review: #reviewer_name
+            \
+          ]
+          #v(-5pt) // spacing optional
+          #location
+        ],
+        v(15pt)
+      ),
+      // color rect with logos
+      rect(
+        fill: color.rgb(accentcolor_rgb),
+        stroke: (
+          top: tud_heading_line_thin_stroke,
+          bottom: tud_heading_line_thin_stroke
+        ),
+        inset: 0mm,
+        width: 100%,
+        height: 100%//10em
+      )[
+        
+        #v(logo_tud_height/2)
+        #style(styles => {
+          let tud_logo = image(logo_tuda_path, height: logo_tud_height)
+          let tud_logo_width = measure(tud_logo, styles).width
+          let tud_logo_offset_right = -6.3mm
+          tud_logo_width += tud_logo_offset_right
+
+          align(right)[
+            //#natural-image(logo_tuda_path)
+            #grid( 
+              // tud logo
+              // move logo(s) to the right
+              box(inset: (right: tud_logo_offset_right), fill: black)[
+                #tud_logo
+              ],
+              // sub logo
+              v(5mm),
+              // height from design guidelines
+              if logo_institue_path != none {
+                box(inset: (right: logo_institue_offset_right), fill: black)[
+                  #{
+                    if logo_institue_sizeing_type == "width" {
+                      image(logo_institue_path, width: tud_logo_width*(2/3))
+                    }
+                    else {
+                      image(logo_institue_path, height: logo_tud_height*(2/3))
+                    }
+                  }
+                ]
+              }
+            )
+          ]
+        })
+        
+      ]
+    )
+  ]
+}

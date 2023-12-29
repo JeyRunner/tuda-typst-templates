@@ -1,5 +1,7 @@
 #import "tudacolors.typ": tuda_colors
 #import "common/outline.typ": *
+#import "common/props.typ": *
+#import "common/tudapub_title_page.typ": *
 #import "util.typ": *
 
 
@@ -92,16 +94,10 @@
 
   // vars
   let accentcolor_rgb = tuda_colors.at(accentcolor)
-  let heading_line_thin_stroke = 0.75pt
   let heading_2_line_spacing = 5.3pt
   let heading_2_margin_before = 12pt
   let heading_3_margin_before = 12pt
 
-  let thesis_type_text = {
-    if thesis_type == "master" {"Master"}
-    else if thesis_type == "bachelor" {"Bachelor"}
-    else {panic("thesis_type has to be either 'master' or 'bachelor'")}
-  }
 
   // Set document metadata.
   set document(
@@ -128,6 +124,9 @@
   if paper != "a4" {
     panic("currently just a4 as paper is supported")
   }
+
+
+  
 
   ///////////////////////////////////////
   // page setup
@@ -177,23 +176,6 @@
   )
 
 
-  set page(
-    paper: paper,
-    margin: (
-      left: margin_title_page.left, //15mm,
-      right: margin_title_page.right, //15mm,
-      //  top: inner + margin.top + header_height
-      top: margin_title_page.top + inner_page_margin_top + header_height,  // 15mm
-      bottom: margin_title_page.bottom //+ 0*inner_page_margin_bottom + footer_height //20mm
-    ),
-    // header
-    header: header,
-    // don't move header up -> so that upper side is at 15mm from top
-    header-ascent: inner_page_margin_top,//0%,
-    // footer
-    footer: none,//footer,
-    footer-descent: 0mm //inner_page_margin_bottom
-  )
 
 
 
@@ -273,7 +255,7 @@
           #it.body
         ],
         v(13pt),
-        line(length: 100%, stroke: heading_line_thin_stroke),
+        line(length: 100%, stroke: tud_heading_line_thin_stroke),
         v(32pt)
       )
     ]
@@ -305,7 +287,7 @@
     )[
       #stack(
         v(heading_margin_before),
-        line(length: 100%, stroke: heading_line_thin_stroke),
+        line(length: 100%, stroke: tud_heading_line_thin_stroke),
         v(heading_2_line_spacing),
         block[
           #if it.outlined {
@@ -317,13 +299,14 @@
           //#loc.position() #content_page_margin_full_top
         ],
         v(heading_2_line_spacing),
-        line(length: 100%, stroke: heading_line_thin_stroke),
+        line(length: 100%, stroke: tud_heading_line_thin_stroke),
         v(10pt)
       )
     ]
 
     
   })
+
 
 
 
@@ -334,128 +317,58 @@
 
 
 
+
   ///////////////////////////////////////
   // Display the title page
-  let title_seperator_spacing = 15pt
-  let title = [#title]
-  //let title_height = 150pt //measure(title, styles).height
-  let title_page_inner_margin_left = 8pt
-  let logo_tud_height = 22mm
+  set page(
+    paper: paper,
+    margin: (
+      left: margin_title_page.left, //15mm,
+      right: margin_title_page.right, //15mm,
+      //  top: inner + margin.top + header_height
+      top: margin_title_page.top + inner_page_margin_top + header_height,  // 15mm
+      bottom: margin_title_page.bottom //+ 0*inner_page_margin_bottom + footer_height //20mm
+    ),
+    // header
+    header: header,
+    // don't move header up -> so that upper side is at 15mm from top
+    header-ascent: inner_page_margin_top,//0%,
+    // footer
+    footer: none,//footer,
+    footer-descent: 0mm //inner_page_margin_bottom
+  )
 
-  let submission_date = date_of_submission.display("[month repr:long] [day], [year]")
-  if (language == "ger") {
-    submission_date = date_of_submission.display("[day].[month repr:numerical].[year]")
+  // make image paths relative to this dir of this .typ file
+  let make-path-rel-parent(path) = {
+    if not path == none and not path.starts-with("/") {
+      return "../" + path
+    }
+    else {return path}
   }
 
-  page[
-    //#set par(leading: 1em)
-    #set text(
-      //font: "Comfortaa",
-      font: "Roboto",
-      //stretch: 50%,
-      //fallback: false,
-      weight: "bold",
-      size: 35.86pt,
-      //height: 
-    )
-    #let title_height = 3.5em //measure(title, styles).height
-
-    //#v(80pt)
-    #grid(
-      rows: (auto, 1fr),
-      stack(
-        // title
-        block(
-          inset: (left: title_page_inner_margin_left),
-          height: title_height)[
-            #set par(
-              justify: false,
-              leading: 20pt   // line spacing
-            )
-            #align(bottom)[#title]
-          ],
-        v(title_seperator_spacing),
-        line(length: 100%, stroke: heading_line_thin_stroke),
-        v(3mm), // title_seperator_spacing
-        //
-        // sub block with reviewers and other text
-        block(inset: (left: title_page_inner_margin_left))[
-          #set text(size: 12pt)
-          #title_german
-          \
-          #set text(weight: "regular")
-          #thesis_type_text thesis by #author
-          \
-          Date of submission: #submission_date
-          \
-          \
-          #for (i, reviewer_name) in reviewer_names.enumerate() [
-            #(i+1). Review: #reviewer_name
-            \
-          ]
-          #v(-5pt) // spacing optional
-          #location
-        ],
-        v(15pt)
-      ),
-      // color rect with logos
-      rect(
-        fill: color.rgb(accentcolor_rgb),
-        stroke: (
-          top: heading_line_thin_stroke,
-          bottom: heading_line_thin_stroke
-        ),
-        inset: 0mm,
-        width: 100%,
-        height: 100%//10em
-      )[
-        
-        #v(logo_tud_height/2)
-        #style(styles => {
-          let tud_logo = image(logo_tuda_path, height: logo_tud_height)
-          let tud_logo_width = measure(tud_logo, styles).width
-          let tud_logo_offset_right = -6.3mm
-          tud_logo_width += tud_logo_offset_right
-
-          align(right)[
-            //#natural-image(logo_tuda_path)
-            #grid( 
-              // tud logo
-              // move logo(s) to the right
-              box(inset: (right: tud_logo_offset_right), fill: black)[
-                #tud_logo
-              ],
-              // sub logo
-              v(5mm),
-              // height from design guidelines
-              if logo_institue_path != none {
-                box(inset: (right: logo_institue_offset_right), fill: black)[
-                  #{
-                    if logo_institue_sizeing_type == "width" {
-                      image(logo_institue_path, width: tud_logo_width*(2/3))
-                    }
-                    else {
-                      image(logo_institue_path, height: logo_tud_height*(2/3))
-                    }
-                  }
-                ]
-              }
-            )
-          ]
-        })
-        
-      ]
-    )
-  ]
+  tudpub-make-title-page(
+    title: title,
+    title_german: title_german,
+    thesis_type: thesis_type,
+    accentcolor: accentcolor,
+    language: language,
+    author: author,
+    date_of_submission: date_of_submission,
+    location: location,
+    reviewer_names: reviewer_names,
+    logo_tuda_path: make-path-rel-parent(logo_tuda_path),
+    logo_institue_path: make-path-rel-parent(logo_institue_path),
+    logo_institue_sizeing_type: logo_institue_sizeing_type,
+    logo_institue_offset_right: logo_institue_offset_right
+  )
 
 
+
+
+  ///////////////////////////////////////
+  // Content pages
   
-  //[
-  //  Header: #header_height
-  //]
-
   // body has different margins than title page
-  let inner = 4mm
   set page(
     margin: (
       left: margin.left, //15mm,
@@ -474,11 +387,12 @@
 
 
 
+
   ///////////////////////////////////////
   // Display the table of contents
   //page()[
   [
-    #tudapub-make-outline-table-of_contents(
+    #tudapub-make-outline-table-of-contents(
       outline_table_of_contents_style: outline_table_of_contents_style,
       heading_numbering_max_level: heading_numbering_max_level
     )

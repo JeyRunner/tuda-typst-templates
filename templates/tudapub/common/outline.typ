@@ -1,6 +1,6 @@
 
 
-#let tudapub-make-outline-table-of_contents(
+#let tudapub-make-outline-table-of-contents(
   // How the table of contents outline is displayed.
   // Either "adapted":    use the default typst outline and adpat the style 
   // or     "rewritten":  use own custom outline implementation which better reproduces the look of the original latex template.
