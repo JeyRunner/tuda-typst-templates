@@ -53,7 +53,7 @@
   // path to the tuda logo containing the file name, has to be a svg.
   logo_tuda_path: "logos/tuda_logo.svg",
 
-  // path to a optinal sub-logo of a institue containing the file name, has to be a svg.
+  // path to a optinal sub-logo of a institue containing the file name, has to be a svg or picture.
   // E.g. "logos/iasLogo.jpeg"
   logo_institue_path: none,
 
@@ -64,6 +64,15 @@
 
   // move the optinal sub-logo horizontally
   logo_institue_offset_right: 0mm,
+
+  // an additional white box with content for e.g. the institute, ... below the tud logo.
+  // E.g. logo_sub_content_text: [ Institute A \ filed of study: \ B]
+  logo_sub_content_text: [
+    field of study: \
+    Some Field of Study \
+    \
+    Institute A
+  ],
 
 
   // for headings with a height level than this number no number will be shown.
@@ -83,6 +92,8 @@
   //                      Note that this may be less stable than "adapted", thus when you notice visual problems with the outline switch to "adapted".
   outline_table_of_contents_style: "rewritten",
 
+  // Use 'Roboto Slab' instead of 'Robot' font for figure captions.
+  figure_caption_font_roboto_slab: true,
 
   // content.
   body
@@ -118,6 +129,7 @@
     fallback: false,
     lang: language,
     kerning: true,
+    ligatures: false,
     spacing: 92%  // to make it look like the latex template
   )
 
@@ -316,6 +328,21 @@
   show math.equation: set block(spacing: 0.65em)
 
 
+  ///////////////////////////////////////
+  // Configure figures.
+  let figure_caption_font = "Roboto"
+  if figure_caption_font_roboto_slab {
+    figure_caption_font = ("Roboto Slab", "Roboto")
+  }
+  show figure: set text(
+        font: figure_caption_font,
+        ligatures: false,
+        stretch: 100%,
+        fallback: false,
+        weight: "regular"
+  )
+
+
 
 
   ///////////////////////////////////////
@@ -359,7 +386,8 @@
     logo_tuda_path: make-path-rel-parent(logo_tuda_path),
     logo_institue_path: make-path-rel-parent(logo_institue_path),
     logo_institue_sizeing_type: logo_institue_sizeing_type,
-    logo_institue_offset_right: logo_institue_offset_right
+    logo_institue_offset_right: logo_institue_offset_right,
+    logo_sub_content_text: logo_sub_content_text
   )
 
 

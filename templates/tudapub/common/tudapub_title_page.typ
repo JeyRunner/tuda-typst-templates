@@ -35,7 +35,7 @@
   reviewer_names: ("SuperSupervisor 1", "SuperSupervisor 2"),
 
   // path to the tuda logo containing the file name, has to be a svg.
-  logo_tuda_path: "logos/tuda_logo.svg",
+  logo_tuda_path: "../logos/tuda_logo.svg",
 
   // path to a optinal sub-logo of a institue containing the file name, has to be a svg.
   // E.g. "logos/iasLogo.jpeg"
@@ -48,6 +48,10 @@
 
   // move the optinal sub-logo horizontally
   logo_institue_offset_right: 0mm,
+
+  // an additional white box with content for e.g. the institute, ... below the tud logo.
+  // E.g. logo_sub_content_text: [ Institute A \ filed of study: \ B]
+  logo_sub_content_text: none,
 
   title_height: 3.5em
 ) = {
@@ -66,8 +70,8 @@
   }
 
   let thesis_type_text = {
-    if thesis_type == "master" {"Master"}
-    else if thesis_type == "bachelor" {"Bachelor"}
+    if lower(thesis_type) == "master" {"Master"}
+    else if lower(thesis_type) == "bachelor" {"Bachelor"}
     else {panic("thesis_type has to be either 'master' or 'bachelor'")}
   }
 
@@ -166,7 +170,18 @@
                     }
                   }
                 ]
-              }
+              },
+              // sub box with custom text
+              if logo_sub_content_text != none {
+                box(width: tud_logo_width, 
+                    outset: 0mm, 
+                    fill: white, 
+                    inset: 5pt, 
+                    align(left)[
+                    #set text(weight: "regular", size: 9.96pt)
+                  #logo_sub_content_text
+                ])
+            }
             )
           ]
         })

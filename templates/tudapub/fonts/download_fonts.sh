@@ -15,7 +15,6 @@ mv roboto_ roboto
 rm roboto/RobotoCondensed*
 rm roboto/RobotoSerif_Condensed*
 rm roboto/RobotoSerif*
-rm roboto/RobotoSlab*
 rm roboto.zip
 
 # xcharta font

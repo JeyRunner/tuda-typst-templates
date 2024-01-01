@@ -20,6 +20,13 @@
     TUDa Thesis
   ],
   author: "Albert Authors",
+  logo_sub_content_text: [
+    field of study: \
+    Some Field of Study \
+    \
+    Institute ABC
+  ],
+
   accentcolor: "9c"
 )
 

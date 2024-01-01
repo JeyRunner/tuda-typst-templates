@@ -92,12 +92,42 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 #set text(hyphenate: true)
 #lorem(135)
-= Heading
-Test #lorem(67)
 
 
 
+= Test Different Elements
+Test some footnotes  #footnote[This is a footnote].
+Another footnote #footnote[This is another footnote which has a very long text. This footnote expands over multiple lines causing the footnote region to expand vertically.].
 
+=== Figures
+Here is @fig_test. Here is more text.
+#figure(
+  image(height: 60pt, "img/opensource_logo.png"),
+  placement: none,
+  caption: [This is the figure title.]
+) <fig_test>
+Even more text that may or may not be before the figure.
+Some text after the figure. And another sentence containing no meaning.
+
+
+#pagebreak()
+
+==== Figures with Tables
+Here is @fig_test_table. Here is more text.
+#figure(
+  table(
+    columns: 2,
+    [A], [B],
+    [1], [2]
+  ),
+  caption: [This is the figure title.]
+) <fig_test_table>
+Even more text that may or may not be before the figure.
+Some text after the figure. And another sentence containing no meaning.
+
+
+#pagebreak()
+=== Test some lists
 This is a list:
  + an item
  + another item
