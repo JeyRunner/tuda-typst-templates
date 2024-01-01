@@ -39,10 +39,10 @@
 
 // test content
 = The First Chapter
-This is some example text that is not very long, but needs to fill some space.
+This is some example text that is not very long but needs to fill some space.
 
-== Demo Paragrphs
-Here follows some demo text. #lorem(50)
+== Demo Paragraphs
+Here is some demo text. #lorem(50)
 
 #lorem(110)
 
@@ -53,7 +53,7 @@ Here follows some demo text. #lorem(50)
 This text contains two#footnote[The number two can also be written as 2.] footnotes#footnote[This is a first footnote. \ It has a second line.].
 
 === Figures
-The following @fig_test represtents a demo Figure. 
+The following @fig_test represents a demo Figure. 
 #figure(
   rect(inset: 20pt, fill: gray)[
     Here should be an Image
@@ -75,7 +75,7 @@ The text continues normally after the Figures.
 
 #pagebreak()
 == Test Coding
-Lets autogenerate some stuff:
+Let's autogenerate some stuff:
 //#let x = (1, 2, 3)
 #let x = range(0, 3)
 #for (i, el) in x.map(el => el*2).enumerate() [
@@ -98,7 +98,7 @@ This is another list
 #pagebreak()
 
 
-== Lets do some math
+== Let's do some math
 Bla _blub_ *bold*.
 Math: $x + y (a+b)/2$.
 
@@ -133,8 +133,8 @@ In @eq.last we can see cool stuff.
 
 
 === Math in Latex
-This is possible with the packge #link("https://github.com/mitex-rs/mitex")[mitex]:
-You can include the package in the beginning of your document via 
+This is possible with the package #link("https://github.com/mitex-rs/mitex")[mitex]:
+You can include the package at the beginning of your document via 
 //```typst
 #raw(lang: "typst", "#import \"@preview/mitex:0.1.0\": *")
 //```
@@ -172,7 +172,7 @@ Usage:
 ]
 
 === #strike[Ajust Equation spacing]
-To reduce the spacing above and below block eqautions use:
+To reduce the spacing above and below block equations use:
 ```typst
 #show math.equation: set block(spacing: 0.1em) // does not work!
 ```
@@ -200,14 +200,14 @@ To reduce the spacing above and below block eqautions use:
 == Another Section
 Some graphics: \
 #box(stroke: black, inset: 5mm)[
-  test in box
+  test in a box
   #circle(width: 2.2cm, inset: 2mm)[
     And in the circle
   ]
 ]
 
 Some more text here. #lorem(20)
-In @fig.myfig we can seee stuff.
+In @fig.myfig we can see things.
 
 #figure(
   [
