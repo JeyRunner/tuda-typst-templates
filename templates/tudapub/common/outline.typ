@@ -137,7 +137,6 @@
       let heading_page_number_width = 1.5em
 
       // go over all headings
-      let heading_counter = counter("h")
       for it in headings {
         if it.level > heading_numbering_max_level {
           continue
@@ -197,7 +196,6 @@
           //#outline.entry(it.level, it, [Test], [], [])
           \
         ]
-        heading_counter.step(level: it.level)
       }
     })
 

@@ -9,17 +9,13 @@
 #import "templates/tudapub/tudacolors.typ": tuda_colors
 
 
-// setup
-// #set page(width: 20cm, height:auto)
-// #set heading(numbering: "1.")
-// #set par(justify: true)
-
-
+// setup the template
 #show: tudapub.with(
   title: [
-    TUDa Thesis
+    TUDa Thesis 
+    With Typst
   ],
-  author: "Albert Authors",
+  author: "Albert Author",
   logo_sub_content_text: [
     field of study: \
     Some Field of Study \
@@ -27,47 +23,57 @@
     Institute ABC
   ],
 
-  accentcolor: "9c"
+  accentcolor: "9c",
+
+  // change the pagemargins with
+  // margin: (
+  //  top: 15mm,
+  //  left: 15mm,
+  //  right: 15mm,
+  //  bottom: 15mm - 1mm
+  // )
 )
 
 
 
 
 // test content
-
 = The First Chapter
 This is some example text that is not very long, but needs to fill some space.
 
-This starts a new paragraph. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words.
+== Demo Paragrphs
+Here follows some demo text. #lorem(50)
 
-== Subheading
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor inci-
-didunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus
-animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum
-et infinitum impendere malum nobis opinemur. Quod idem licet transferre in voluptatem,
-ut postea variari voluptas distinguique possit, augeri amplificarique non possit. At etiam
-Athenis, ut e patre audiebam facete et urbane Stoicos irridente, statua est in quo a nobis
-philosophia defensa et collaudata est, cum id, quod maxime placeat, facere possimus,
-omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam
-et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae
-sint et molestiae non recusandae. Itaque earum rerum defuturum, quas natura non de-
-pravata desiderat. Et quem ad me accedis, saluto: 'chaere,' inquam, 'Tite!' lictores, turma
-omnis chorusque: 'chaere, Tite!' hinc hostis mi Albucius, hinc inimicus. Sed iure Mucius.
-Ego autem mirari satis non queo unde hoc sit tam insolens domesticarum rerum fastid-
-ium. Non est omnino hic docendi locus; sed ita prorsus existimo, neque eum Torquatum,
-qui hoc primus cognomen invenerit, aut torquem illum hosti detraxisse, ut aliquam ex
-eo est consecutus? – Laudem et caritatem, quae sunt vitae sine metu degendae praesidia
-firmissima. – Filium morte multavit. – Si sine causa, nollem me ab eo delectari, quod
-ista Platonis, Aristoteli, Theophrasti orationis ornamenta neglexerit. Nam illud quidem
-physici, credere aliquid esse minimum, quod profecto numquam putavisset, si a Polyaeno,
-familiari suo, geometrica discere maluisset quam illum etiam ipsum dedocere. 
+#lorem(110)
+
+#lorem(60)
 
 
+== Some Basic Elements
+This text contains two#footnote[The number two can also be written as 2.] footnotes#footnote[This is a first footnote. \ It has a second line.].
+
+=== Figures
+The following @fig_test represtents a demo Figure. 
+#figure(
+  rect(inset: 20pt, fill: gray)[
+    Here should be an Image
+  ],
+  caption: [The figure caption.]
+) <fig_test>
+
+We can also make tables, as in @fig_tab_test.
+#figure(
+  table(
+    columns: 2,
+    [A], [B],
+    [1], [2]
+  ),
+  caption: [This is the table title.]
+) <fig_tab_test>
+The text continues normally after the Figures.
 
 
-
-
-
+#pagebreak()
 == Test Coding
 Lets autogenerate some stuff:
 //#let x = (1, 2, 3)
@@ -78,21 +84,17 @@ Lets autogenerate some stuff:
     //$circle$
 ]
 
-== Subheading
-Test #lorem(51)
-
-
+== Lists
 This is a list:
  + an item
  + another item
 
-=== Subsubheading
+This is another list
+ - an item
+ - another item
+ - yet another item
 
 
-#lorem(584)
-#pagebreak()
-== Another Subsection
-=== Subsub
 #pagebreak()
 
 

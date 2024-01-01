@@ -98,6 +98,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 = Test Different Elements
 Test some footnotes  #footnote[This is a footnote].
 Another footnote #footnote[This is another footnote which has a very long text. This footnote expands over multiple lines causing the footnote region to expand vertically.].
+//Bla #footnote[Abc \ D \ E \ F \ G \ D]
 
 === Figures
 Here is @fig_test. Here is more text.

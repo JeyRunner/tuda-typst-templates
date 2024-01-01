@@ -92,6 +92,14 @@
   //                      Note that this may be less stable than "adapted", thus when you notice visual problems with the outline switch to "adapted".
   outline_table_of_contents_style: "rewritten",
 
+  // Use own rewritten footnote display implementation.
+  // This may be less table than the buildin footnote display impl.
+  // Thus when having problems with the rendering of footnote disable this option.
+  footnote_rewritten_fix_alignment: true,
+
+  // When footnote_rewritten_fix_alignment is true, add a hanging intent to multiline footnotes.
+  footnote_rewritten_fix_alignment_hanging_indent: true,
+
   // Use 'Roboto Slab' instead of 'Robot' font for figure captions.
   figure_caption_font_roboto_slab: true,
 
@@ -323,12 +331,12 @@
 
 
   ///////////////////////////////////////
+
   // Configure equation numbering and spacing.
   set math.equation(numbering: "(1)")
   show math.equation: set block(spacing: 0.65em)
 
 
-  ///////////////////////////////////////
   // Configure figures.
   let figure_caption_font = "Roboto"
   if figure_caption_font_roboto_slab {
@@ -341,6 +349,37 @@
         fallback: false,
         weight: "regular"
   )
+
+  // configure footnotes
+  set footnote.entry(
+    separator: line(length: 40%, stroke: 0.5pt)
+  )
+  show footnote.entry: it => {
+    if footnote_rewritten_fix_alignment {
+      let loc = it.note.location()
+      let it_counter_arr = counter(footnote).at(loc)
+      let idx_str = numbering(it.note.numbering, ..it_counter_arr)
+      //[#it.fields()]
+
+      stack(dir: ltr, 
+        h(5pt),
+        super(idx_str),
+        {
+          // optional add indent to multi line footnote
+          if footnote_rewritten_fix_alignment_hanging_indent {
+            par(hanging-indent: 5pt)[#it.note.body]
+          }
+          else {
+            it.note.body
+          }
+        }
+      )
+    }
+    else {
+      // if not footnote_rewritten_fix_alignment keep as is
+      it
+    }
+  }
 
 
 
