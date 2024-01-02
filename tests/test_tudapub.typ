@@ -125,6 +125,14 @@ Here is @fig_test_table. Here is more text.
 ) <fig_test_table>
 Even more text that may or may not be before the figure.
 Some text after the figure. And another sentence containing no meaning.
+#figure(
+  table(
+    columns: 2,
+    [AA], [BB],
+    [1], [2]
+  ),
+  caption: [This is the figure title.]
+) 
 
 
 #pagebreak()
@@ -237,4 +245,14 @@ In @fig.myfig we can seee stuff.
 #lorem(100)
 
 
+= Next Chapter with Figures
+
+#figure(
+  [
+    #rect(inset: 20.9pt)[Dummy Test]
+  ],
+  caption: [
+    This is a figure
+  ]
+)
 

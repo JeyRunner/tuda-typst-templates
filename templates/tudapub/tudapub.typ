@@ -4,6 +4,8 @@
 #import "common/tudapub_title_page.typ": *
 #import "util.typ": *
 
+#import "@preview/i-figured:0.2.3"
+
 
 
 // This function gets your whole document as its `body` and formats
@@ -102,6 +104,12 @@
 
   // Use 'Roboto Slab' instead of 'Robot' font for figure captions.
   figure_caption_font_roboto_slab: true,
+
+  // Figures have the numbering <chapter-nr>.<figure-nr>
+  figure_numbering_per_chapter: true,
+
+  // Equations have the numbering <chapter-nr>.<equation-nr>
+  equation_numbering_per_chapter: false,
 
   // content.
   body
@@ -254,6 +262,7 @@
   show heading.where(
     level: 1
   ): it => {
+    // heading font style
     set text(
       font: "Roboto",
       fallback: false,
@@ -280,6 +289,11 @@
       )
     ]
   }
+  // rest figure numbers for each chapter
+  show heading: it => if figure_numbering_per_chapter {
+      i-figured.reset-counters.with()(it)
+    } else {it}
+
 
   // heading level 2 
   show heading.where(
@@ -335,20 +349,34 @@
   // Configure equation numbering and spacing.
   set math.equation(numbering: "(1)")
   show math.equation: set block(spacing: 0.65em)
-
+  // equation numbering per chapter
+  show math.equation: it => {
+    if equation_numbering_per_chapter {
+      i-figured.show-equation(only-labeled: false, it)
+    }
+    else {it}
+  }
 
   // Configure figures.
   let figure_caption_font = "Roboto"
   if figure_caption_font_roboto_slab {
     figure_caption_font = ("Roboto Slab", "Roboto")
   }
-  show figure: set text(
+  show figure.caption: set text(
         font: figure_caption_font,
         ligatures: false,
         stretch: 100%,
         fallback: false,
         weight: "regular"
   )
+  // figure numbering per Chapter
+  show figure: it => {
+    if figure_numbering_per_chapter {
+      i-figured.show-figure(it)
+    }
+    else {it}
+  }
+
 
   // configure footnotes
   set footnote.entry(
@@ -365,7 +393,7 @@
         h(5pt),
         super(idx_str),
         {
-          // optional add indent to multi line footnote
+          // optional add indent to multi-line footnote
           if footnote_rewritten_fix_alignment_hanging_indent {
             par(hanging-indent: 5pt)[#it.note.body]
           }
