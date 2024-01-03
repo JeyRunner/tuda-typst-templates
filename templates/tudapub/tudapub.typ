@@ -8,27 +8,32 @@
 
 
 
-// This function gets your whole document as its `body` and formats
+// This function gets your whole document as its `body` and formats it.
 #let tudapub(
   title: [Title],
   title_german: [Title German],
 
+  // Adds an abstract page after the title page with the corresponding content.
+  // E.g. abstract: [My abstract text...]
+  abstract: none,
+
   // "master" or "bachelor" thesis
   thesis_type: "master",
 
-  // the code of the accentcolor.
+  // The code of the accentcolor.
   // A list of all available accentcolors is in the list tuda_colors
   accentcolor: "9c",
 
-  // size of the main text font
+  // Size of the main text font
   fontsize: 10.905pt, //11pt,
 
+  // Currently just a4 is supported
   paper: "a4",
 
-  // author name as text, e.g "Albert Author"
-  author: "A Author",
+  // Author name as text, e.g "Albert Author"
+  author: "An Author",
 
-  // date of submission as string
+  // Date of submission as string
   date_of_submission: datetime(
     year: 2023,
     month: 10,
@@ -43,8 +48,8 @@
   // language for correct hyphenation
   language: "eng",
 
-  // set the margins of the content pages.
-  // The title tabe is not affected by this.
+  // Set the margins of the content pages.
+  // The title page is not affected by this.
   margin: (
     top: 30mm, //35.25mm + 0.05mm,//+ 0.02mm,
     left: 31.5mm,
@@ -55,19 +60,20 @@
   // path to the tuda logo containing the file name, has to be a svg.
   logo_tuda_path: "logos/tuda_logo.svg",
 
-  // path to a optinal sub-logo of a institue containing the file name, has to be a svg or picture.
+  // path to an optional sub-logo of an institute containing the file name, has to be a svg or picture.
   // E.g. "logos/iasLogo.jpeg"
   logo_institue_path: none,
 
-  // how to set the size of the optinal sub-logo
+  // How to set the size of the optional sub-logo
   // either "width": use tud_logo_width*(2/3)
   // or     "height": use tud_logo_height*(2/3)
   logo_institue_sizeing_type: "width",
 
-  // move the optinal sub-logo horizontally
+  // Move the optinal sub-logo horizontally
   logo_institue_offset_right: 0mm,
 
-  // an additional white box with content for e.g. the institute, ... below the tud logo.
+  // An additional white box with content e.g. the institute, ... below the tud logo.
+  // Disable it by setting its value to none.
   // E.g. logo_sub_content_text: [ Institute A \ filed of study: \ B]
   logo_sub_content_text: [
     field of study: \
@@ -76,26 +82,61 @@
     Institute A
   ],
 
+  
+  // Which pages to insert
+  // Pages can be disabled individually.
+  show_pages: (
+    title_page: true,
+    outline_table_of_contents: true
+  ),
 
-  // for headings with a height level than this number no number will be shown.
+
+
+  // Insert additional pages directly after the title page.
+  // E.g. additional_pages_after_title_page: [
+  //   = Notes
+  //   #pagebreak()
+  //   = Another Page
+  // ]
+  additional_pages_after_title_page: none,
+
+  // Insert additional pages directly after the title page.
+  // E.g. additional_pages_after_title_page: [
+  //   = Notes
+  //   #pagebreak()
+  //   = Another Page
+  // ]
+  additional_pages_before_outline_table_of_contents: none,
+
+  // Insert additional pages directly after the title page.
+  // E.g. additional_pages_after_title_page: [
+  //   = Notes
+  //   #pagebreak()
+  //   = Another Page
+  // ]
+  additional_pages_after_outline_table_of_contents: none,
+
+
+
+  // For headings with a height level than this number no number will be shown.
   // The heading with the lowest level has level 1.
-  // Note that the numbers of the first two levels will allways be shown.
+  // Note that the numbers of the first two levels will always be shown.
   heading_numbering_max_level: 3,
 
-  // set space above heading to zero if its the first element on a page
-  // This is currently implemened as hack (check the y pos of the heading).
+  // Set space above the heading to zero if it's the first element on a page.
+  // This is currently implemented as a hack (check the y pos of the heading).
   // Thus when you experience compilation problems (slow, no convergence) set this to false.
   reduce_heading_space_when_first_on_page: true,
 
 
   // How the table of contents outline is displayed.
-  // Either "adapted":    use the default typst outline and adpat the style 
+  // Either "adapted":    use the default typst outline and adapt the style 
   // or     "rewritten":  use own custom outline implementation which better reproduces the look of the original latex template.
   //                      Note that this may be less stable than "adapted", thus when you notice visual problems with the outline switch to "adapted".
   outline_table_of_contents_style: "rewritten",
 
   // Use own rewritten footnote display implementation.
-  // This may be less table than the buildin footnote display impl.
+  // This may be less stable than the built-in footnote display impl.
   // Thus when having problems with the rendering of footnote disable this option.
   footnote_rewritten_fix_alignment: true,
 
@@ -109,7 +150,7 @@
   figure_numbering_per_chapter: true,
 
   // Equations have the numbering <chapter-nr>.<equation-nr>
-  // @todo this seems to increase the equation number in steps of 2 instead of one
+  // @todo This seems to increase the equation number in steps of 2 instead of one
   equation_numbering_per_chapter: true,
 
   // content.
@@ -436,28 +477,30 @@
 
   // make image paths relative to this dir of this .typ file
   let make-path-rel-parent(path) = {
-    if not path == none and not path.starts-with("/") {
+    if not path == none and not path.starts-with("/") and not path.starts-with("./") {
       return "../" + path
     }
     else {return path}
   }
 
-  tudpub-make-title-page(
-    title: title,
-    title_german: title_german,
-    thesis_type: thesis_type,
-    accentcolor: accentcolor,
-    language: language,
-    author: author,
-    date_of_submission: date_of_submission,
-    location: location,
-    reviewer_names: reviewer_names,
-    logo_tuda_path: make-path-rel-parent(logo_tuda_path),
-    logo_institue_path: make-path-rel-parent(logo_institue_path),
-    logo_institue_sizeing_type: logo_institue_sizeing_type,
-    logo_institue_offset_right: logo_institue_offset_right,
-    logo_sub_content_text: logo_sub_content_text
-  )
+  if show_pages.title_page {
+    tudpub-make-title-page(
+      title: title,
+      title_german: title_german,
+      thesis_type: thesis_type,
+      accentcolor: accentcolor,
+      language: language,
+      author: author,
+      date_of_submission: date_of_submission,
+      location: location,
+      reviewer_names: reviewer_names,
+      logo_tuda_path: make-path-rel-parent(logo_tuda_path),
+      logo_institue_path: make-path-rel-parent(logo_institue_path),
+      logo_institue_sizeing_type: logo_institue_sizeing_type,
+      logo_institue_offset_right: logo_institue_offset_right,
+      logo_sub_content_text: logo_sub_content_text
+    )
+  }
 
 
 
@@ -482,18 +525,43 @@
     footer-descent: inner_page_margin_bottom //footer_height // @todo
   )
 
+  // disable heading outlined for outline
+  set heading(outlined: false)
+
+  // additional_pages_after_title_page
+  pagebreak(weak: true)
+  additional_pages_after_title_page
+
+
+
+  ///////////////////////////////////////
+  // "Erklärung zur Abschlussarbeit" and abstract
+  if abstract != none [
+    = Abstract
+    #abstract
+  ]
+
 
 
 
   ///////////////////////////////////////
   // Display the table of contents
+
+  // additional_pages_before_outline_table_of_contents
+  pagebreak(weak: true)
+  additional_pages_before_outline_table_of_contents
+
   //page()[
-  [
+  if show_pages.outline_table_of_contents [
     #tudapub-make-outline-table-of-contents(
       outline_table_of_contents_style: outline_table_of_contents_style,
       heading_numbering_max_level: heading_numbering_max_level
     )
   ]
+
+  // additional_pages_after_outline_table_of_contents
+  pagebreak(weak: true)
+  additional_pages_after_outline_table_of_contents
 
 
 
@@ -501,7 +569,9 @@
   // restart page counter
   counter(page).update(1)
   // restart heading counter
-  counter(heading).update(1)
+  counter(heading).update(0)
+  // enable heading outlined for body
+  set heading(outlined: true)
 
   // Display the paper's contents.
   body

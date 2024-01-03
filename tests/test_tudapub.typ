@@ -22,7 +22,10 @@
   ],
   author: "Albert Authors",
   accentcolor: "9c",
-  language: "eng"
+  language: "eng",
+
+
+  abstract: [The abstract...]
 )
 
 

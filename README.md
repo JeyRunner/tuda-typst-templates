@@ -70,12 +70,12 @@ What also works is to uninstall/deactivate all `Roboto condensed` fonts from you
 
 ## Todos
 - [ ] add pages for:
-  - abstract
-  - list of figures, tables, ... other
-  - list of abbreviations (glossary)
-  - references
+  - [x] abstract
+  - [ ] list of figures, tables, ... other
+  - [ ] list of abbreviations (glossary)
+  - [ ] references
 - [ ] reduce vertical spacing between adjacent headings when there is no text in between (looks better, latex template also does this)
-- [ ] add arguments for optional pages:
+- [x] add arguments for optional pages:
   - after title page
   - before outline table of contents
   - after outline table of contents
