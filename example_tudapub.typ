@@ -25,6 +25,11 @@
 
   accentcolor: "9c",
 
+  abstract: [
+    This is a template to write your thesis with the corporate design of #link("https://www.tu-darmstadt.de/")[TU Darmstadt].
+    For instructions of how to setup this template see @sec_usage.
+  ],
+
   // change the pagemargins with
   // margin: (
   //  top: 15mm,
@@ -38,8 +43,9 @@
 
 
 // test content
-= The First Chapter
-This is some example text that is not very long but needs to fill some space.
+= Demo of the Template Style
+This chapter contains lots of demo content to see how the template looks.
+For usage instructions go to to @sec_usage.
 
 == Demo Paragraphs
 Here is some demo text. #lorem(50)
@@ -224,9 +230,176 @@ In @fig.myfig we can see things.
 
 
 
+= Usage of this Template <sec_usage>
+To use the template write the following in your `main.typ` file (also see the `README.md` of the repository for more details):
+```typst
+#import "templates/tuda-typst-templates/templates/tudapub/tudapub.typ": tudapub
 
-= Colors
-The list of colors:
+#show: tudapub.with(
+  title: [
+    My Thesis
+  ],
+  author: "My Name",
+  accentcolor: "3d"
+)
+
+= My First Chapter
+Some Text
+```
+For the list of possible accent colors to select from see @sec_usage_accentcolors.
+
+== Template Options
+In the following, we show the show-command of this template with all doc and default options. Note that this may not be up to date, thus allways also look at the file `templates/tudapub/tudapub.typ`.
+```typst
+#show: tudapub.with(
+  title: [Title],
+  title_german: [Title German],
+
+  // Adds an abstract page after the title page with the corresponding content.
+  // E.g. abstract: [My abstract text...]
+  abstract: none,
+
+  // "master" or "bachelor" thesis
+  thesis_type: "master",
+
+  // The code of the accentcolor.
+  // A list of all available accentcolors is in the list tuda_colors
+  accentcolor: "9c",
+
+  // Size of the main text font
+  fontsize: 10.905pt, //11pt,
+
+  // Currently just a4 is supported
+  paper: "a4",
+
+  // Author name as text, e.g "Albert Author"
+  author: "An Author",
+
+  // Date of submission as string
+  date_of_submission: datetime(
+    year: 2023,
+    month: 10,
+    day: 4,
+  ),
+
+  location: "Darmstadt",
+
+  // array of the names of the reviewers
+  reviewer_names: ("SuperSupervisor 1", "SuperSupervisor 2"),
+
+  // language for correct hyphenation
+  language: "eng",
+
+  // Set the margins of the content pages.
+  // The title page is not affected by this.
+  margin: (
+    top: 30mm, //35.25mm + 0.05mm,//+ 0.02mm,
+    left: 31.5mm,
+    right: 31.5mm,
+    bottom: 56mm
+  ),
+
+  // path to the tuda logo containing the file name, has to be a svg.
+  logo_tuda_path: "logos/tuda_logo.svg",
+
+  // path to an optional sub-logo of an institute containing the file name, has to be a svg or picture.
+  // E.g. "logos/iasLogo.jpeg"
+  logo_institue_path: none,
+
+  // How to set the size of the optional sub-logo
+  // either "width": use tud_logo_width*(2/3)
+  // or     "height": use tud_logo_height*(2/3)
+  logo_institue_sizeing_type: "width",
+
+  // Move the optinal sub-logo horizontally
+  logo_institue_offset_right: 0mm,
+
+  // An additional white box with content e.g. the institute, ... below the tud logo.
+  // Disable it by setting its value to none.
+  // E.g. logo_sub_content_text: [ Institute A \ filed of study: \ B]
+  logo_sub_content_text: [
+    field of study: \
+    Some Field of Study \
+    \
+    Institute A
+  ],
+
+  
+  // Which pages to insert
+  // Pages can be disabled individually.
+  show_pages: (
+    title_page: true,
+    outline_table_of_contents: true
+  ),
+
+
+
+  // Insert additional pages directly after the title page.
+  // E.g. additional_pages_after_title_page: [
+  //   = Notes
+  //   #pagebreak()
+  //   = Another Page
+  // ]
+  additional_pages_after_title_page: none,
+
+  // Insert additional pages directly after the title page.
+  // E.g. additional_pages_after_title_page: [
+  //   = Notes
+  //   #pagebreak()
+  //   = Another Page
+  // ]
+  additional_pages_before_outline_table_of_contents: none,
+
+  // Insert additional pages directly after the title page.
+  // E.g. additional_pages_after_title_page: [
+  //   = Notes
+  //   #pagebreak()
+  //   = Another Page
+  // ]
+  additional_pages_after_outline_table_of_contents: none,
+
+
+
+  // For headings with a height level than this number no number will be shown.
+  // The heading with the lowest level has level 1.
+  // Note that the numbers of the first two levels will always be shown.
+  heading_numbering_max_level: 3,
+
+  // Set space above the heading to zero if it's the first element on a page.
+  // This is currently implemented as a hack (check the y pos of the heading).
+  // Thus when you experience compilation problems (slow, no convergence) set this to false.
+  reduce_heading_space_when_first_on_page: true,
+
+
+  // How the table of contents outline is displayed.
+  // Either "adapted":    use the default typst outline and adapt the style 
+  // or     "rewritten":  use own custom outline implementation which better reproduces the look of the original latex template.
+  //                      Note that this may be less stable than "adapted", thus when you notice visual problems with the outline switch to "adapted".
+  outline_table_of_contents_style: "rewritten",
+
+  // Use own rewritten footnote display implementation.
+  // This may be less stable than the built-in footnote display impl.
+  // Thus when having problems with the rendering of footnote disable this option.
+  footnote_rewritten_fix_alignment: true,
+
+  // When footnote_rewritten_fix_alignment is true, add a hanging intent to multiline footnotes.
+  footnote_rewritten_fix_alignment_hanging_indent: true,
+
+  // Use 'Roboto Slab' instead of 'Robot' font for figure captions.
+  figure_caption_font_roboto_slab: true,
+
+  // Figures have the numbering <chapter-nr>.<figure-nr>
+  figure_numbering_per_chapter: true,
+
+  // Equations have the numbering <chapter-nr>.<equation-nr>
+  // @todo This seems to increase the equation number in steps of 2 instead of one
+  equation_numbering_per_chapter: true
+)
+```
+
+
+== TUDa Accent Color List <sec_usage_accentcolors>
+The list of colors which can be use in the template argument `accentcolor`:
 #grid(
   columns: auto,
   rows: auto,

@@ -69,6 +69,8 @@ What also works is to uninstall/deactivate all `Roboto condensed` fonts from you
 
 
 ## Todos
+- [ ] fix first-level heading page is wrong
+in the outline, the page of the first-level heading is sometimes the previous page of the heading. This is due to the page break before the heading being part of the heading itself.
 - [ ] add pages for:
   - [x] abstract
   - [ ] list of figures, tables, ... other
