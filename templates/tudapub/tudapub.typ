@@ -330,11 +330,24 @@
         v(32pt)
       )
     ]
+    // rest figure/equation numbers for each chapter
+    // -> manual reimplementation of the i-figured.reset-counters(...) function
+    //   -> fixes: heading page is wrong due to pagebreak 
+    if figure_numbering_per_chapter {
+      for kind in (image, table, raw)  {
+        counter(figure.where(kind: i-figured._prefix + repr(kind))).update(0)
+      }
+    }
+    if equation_numbering_per_chapter {
+        counter(math.equation).update(0)
+    }
   }
   // rest figure numbers for each chapter
-  show heading: it => if figure_numbering_per_chapter {
-      i-figured.reset-counters.with()(it)
-    } else {it}
+  // -> not working together with pagebreak of heading level 1
+  //   -> heading page is wrong
+  //show heading: it => if figure_numbering_per_chapter {
+  //    i-figured.reset-counters.with()(it)
+  //  } else {it}
 
 
   // heading level 2 
@@ -379,8 +392,6 @@
         v(10pt)
       )
     ]
-
-    
   })
 
 

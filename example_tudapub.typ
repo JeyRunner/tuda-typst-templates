@@ -37,6 +37,9 @@
   //  right: 15mm,
   //  bottom: 15mm - 1mm
   // )
+  //outline_table_of_contents_style: "adapted",
+  //reduce_heading_space_when_first_on_page: false
+  // figure_numbering_per_chapter: false
 )
 
 
