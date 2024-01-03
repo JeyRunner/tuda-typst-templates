@@ -109,7 +109,8 @@
   figure_numbering_per_chapter: true,
 
   // Equations have the numbering <chapter-nr>.<equation-nr>
-  equation_numbering_per_chapter: false,
+  // @todo this seems to increase the equation number in steps of 2 instead of one
+  equation_numbering_per_chapter: true,
 
   // content.
   body
@@ -350,8 +351,9 @@
   set math.equation(numbering: "(1)")
   show math.equation: set block(spacing: 0.65em)
   // equation numbering per chapter
-  show math.equation: it => {
+  show math.equation.where(block: true): it => {
     if equation_numbering_per_chapter {
+      // @todo this seems to increase the equation number in steps of 2 instead of one
       i-figured.show-equation(only-labeled: false, it)
     }
     else {it}

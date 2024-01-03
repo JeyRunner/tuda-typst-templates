@@ -12,6 +12,8 @@ Thus, this template does not guarantee completeness or correctness.
 The templates imitate the style of the corresponding latex templates in [tuda_latex_templates](https://github.com/tudace/tuda_latex_templates).
 Note that there can be visual differences between the original latex template and the typst template (you may open an issue when you find one).
 
+For missing features, ideas or other problems you can open an issue. Contributions are also welcome.
+
 | Template  | Preview | Example | Scope |
 ----|----|--|--|
 |[tudapub](templates/tudapub/tudapub.typ) | <img src="img/tudapub_prev.png" height="300px"> |  [example_tudapub.pdf](example_tudapub.pdf) <br/> [example_tudapub.typ](example_tudapub.typ)   |  Master and Bachelor thesis |
@@ -64,3 +66,20 @@ Note that we add `--font-path` to ensure that the correct fonts are used.
 Due to a bug (typst/typst#2917 typst/typst#2098) typst sometimes uses the font `Roboto condensed` instead of `Roboto`.
 To on the safe side, double-check the embedded fonts in the pdf (there should be no `Roboto condensed`).
 What also works is to uninstall/deactivate all `Roboto condensed` fonts from your system.
+
+
+## Todos
+- [ ] add pages for:
+  - abstract
+  - list of figures, tables, ... other
+  - list of abbreviations (glossary)
+  - references
+- [ ] reduce vertical spacing between adjacent headings when there is no text in between (looks better, latex template also does this)
+- [ ] add arguments for optional pages:
+  - after title page
+  - before outline table of contents
+  - after outline table of contents
+- [ ] fix equation numbering per chapter
+- [ ] provide some default page margins (small, medium, large)
+- [ ] make all font sizes relative to the main text font size (e.g. headings)
+- [ ] switch to kebab case for template, function args

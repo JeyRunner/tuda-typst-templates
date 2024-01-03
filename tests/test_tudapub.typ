@@ -256,3 +256,17 @@ In @fig.myfig we can seee stuff.
   ]
 )
 
+First eq:
+$
+x
+$
+
+Second eq:
+$
+y
+$
+
+Third eq:
+$
+y
+$
