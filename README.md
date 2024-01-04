@@ -6,21 +6,19 @@ Please ask your supervisor if you are allowed to use typst and this template for
 Note that this template is not checked by TU Darmstadt for correctness.
 Thus, this template does not guarantee completeness or correctness.
 
-
-
 ## Implemented Templates
 The templates imitate the style of the corresponding latex templates in [tuda_latex_templates](https://github.com/tudace/tuda_latex_templates).
 Note that there can be visual differences between the original latex template and the typst template (you may open an issue when you find one).
 
 For missing features, ideas or other problems you can open an issue. Contributions are also welcome.
 
-| Template  | Preview | Example | Scope |
-----|----|--|--|
-|[tudapub](templates/tudapub/tudapub.typ) | <img src="img/tudapub_prev.png" height="300px"> |  [example_tudapub.pdf](example_tudapub.pdf) <br/> [example_tudapub.typ](example_tudapub.typ)   |  Master and Bachelor thesis |
-
+| Template | Preview | Example | Scope |
+|----------|---------|---------|-------|
+| [tudapub](templates/tudapub/tudapub.typ) | <img src="img/tudapub_prev.png" height="300px"> | [example_tudapub.pdf](example_tudapub.pdf) <br/> [example_tudapub.typ](example_tudapub.typ) | Master and Bachelor thesis |
 
 ## Usage
 Create a folder for your writing project and download this template into the `templates` folder:
+
 ```bash
 mkdir my_thesis && cd my_thesis
 mkdir templates && cd templates
@@ -28,6 +26,7 @@ git clone https://github.com/JeyRunner/tuda-typst-templates templates/
 ```
 Download the tud logo from [download.hrz.tu-darmstadt.de/protected/ULB/tuda_logo.pdf](https://download.hrz.tu-darmstadt.de/protected/ULB/tuda_logo.pdf) and put it into the `templates/tuda-typst-templates/templates/tudapub/logos` folder.
 Now execute the following script in the `logos` folder to convert it into an svg:
+
 ```bash
 cd templates/tuda-typst-templates/templates/tudapub/logos
 ./convert_logo.sh
@@ -39,7 +38,6 @@ cd templates/tuda-typst-templates/templates/tudapub/fonts
 ./download_fonts.sh
 ```
 Now you can install all fonts in the folders in `templates/tuda-typst-templates/templates/tudapub/fonts` on your system.
-
 
 Create a simple `main.typ` in the root folder (`my_thesis`) of your new project:
 ```js
@@ -56,10 +54,13 @@ Create a simple `main.typ` in the root folder (`my_thesis`) of your new project:
 = My First Chapter
 Some Text
 ```
+
 And compile it:
+
 ```bash
 typst --watch main.typ --font-path templates/tuda-typst-templates/templates/tudapub/fonts
 ```
+
 This will watch your file and recompile it to a pdf when the file is saved. For writing you can use [Vscode](https://code.visualstudio.com/) with these extension: [Typst LSP](https://marketplace.visualstudio.com/items?itemName=nvarner.typst-lsp) and [Typst Preview](https://marketplace.visualstudio.com/items?itemName=mgt19937.typst-preview).
 
 Note that we add `--font-path` to ensure that the correct fonts are used.
@@ -69,20 +70,21 @@ What also works is to uninstall/deactivate all `Roboto condensed` fonts from you
 
 
 ## Todos
-- [x] fix first-level heading page is wrong
-  - in the outline, the page of the first-level heading is sometimes the previous page of the heading. Just appears in combination with `figure_numbering_per_chapter`.
-- [ ] first-level headings should be referenced as 'Chapter' not as 'Sections'
-- [ ] add pages for:
-  - [x] abstract
-  - [ ] list of figures, tables, ... other
-  - [ ] list of abbreviations (glossary)
-  - [ ] references
-- [ ] reduce vertical spacing between adjacent headings when there is no text in between (looks better, latex template also does this)
-- [x] add arguments for optional pages:
-  - after title page
-  - before outline table of contents
-  - after outline table of contents
-- [ ] fix equation numbering per chapter
-- [ ] provide some default page margins (small, medium, large)
-- [ ] make all font sizes relative to the main text font size (e.g. headings)
-- [ ] switch to kebab case for template, function args
+* [x] fix first-level heading page is wrong
+  * in the outline, the page of the first-level heading is sometimes the previous page of the heading. Just appears in combination with `figure_numbering_per_chapter`.
+* [ ] fix referencing figures respect figure numbering when using `figure_numbering_per_chapter`
+* [ ] first-level headings should be referenced as 'Chapter' not as 'Sections'
+* [ ] add pages for:
+  * [x] abstract
+  * [ ] list of figures, tables, ... other
+  * [ ] list of abbreviations (glossary)
+  * [ ] references
+* [ ] reduce vertical spacing between adjacent headings when there is no text in between (looks better, latex template also does this)
+* [x] add arguments for optional pages:
+  * after title page
+  * before outline table of contents
+  * after outline table of contents
+* [ ] fix equation numbering per chapter
+* [ ] provide some default page margins (small, medium, large)
+* [ ] make all font sizes relative to the main text font size (e.g. headings)
+* [ ] switch to kebab case for template, function args

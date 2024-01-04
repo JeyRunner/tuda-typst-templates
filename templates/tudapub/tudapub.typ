@@ -2,6 +2,7 @@
 #import "common/outline.typ": *
 #import "common/props.typ": *
 #import "common/tudapub_title_page.typ": *
+#import "common/thesis_statement_pursuant.typ": *
 #import "util.typ": *
 
 #import "@preview/i-figured:0.2.3"
@@ -57,10 +58,12 @@
     bottom: 56mm
   ),
 
-  // path to the tuda logo containing the file name, has to be a svg.
+  // Path to the tuda logo containing the file name, has to be a svg.
+  // Note that this path is relative to the location of this template file.
   logo_tuda_path: "logos/tuda_logo.svg",
 
-  // path to an optional sub-logo of an institute containing the file name, has to be a svg or picture.
+  // Path to an optional sub-logo of an institute containing the file name, has to be a svg or picture.
+  // Note that this path is relative to the location of this template file.
   // E.g. "logos/iasLogo.jpeg"
   logo_institue_path: none,
 
@@ -82,12 +85,23 @@
     Institute A
   ],
 
+
+  // The bibliography created with the bibliography(...) function.
+  // When this is not none a references section will appear at the end of the document.
+  // E.g. bib: bibliography("my_references.bib")
+  bib: none,
+
+
+  // Add a english translation to the "Erklärung zur Abschlussarbeit".
+  thesis_statement_pursuant_include_english_translation: false,
   
   // Which pages to insert
   // Pages can be disabled individually.
   show_pages: (
     title_page: true,
-    outline_table_of_contents: true
+    outline_table_of_contents: true,
+    // "Erklärung zur Abschlussarbeit"
+    thesis_statement_pursuant: true
   ),
 
 
@@ -122,6 +136,10 @@
   // The heading with the lowest level has level 1.
   // Note that the numbers of the first two levels will always be shown.
   heading_numbering_max_level: 3,
+
+  // In the outline the max heading level that will be shown.
+  // The heading with the lowest level has level 1.
+  outline_table_of_contents_max_level: 3,
 
   // Set space above the heading to zero if it's the first element on a page.
   // This is currently implemented as a hack (check the y pos of the heading).
@@ -289,7 +307,7 @@
       #stack(
         v(heading_margin_before),
         block[
-          #if it.level <= heading_numbering_max_level and it.outlined {
+          #if it.level <= heading_numbering_max_level and it.outlined and it.numbering != none {
             counter(heading).display(it.numbering)
             h(0.3em)
           }
@@ -319,7 +337,7 @@
         block[
           //\ \ 
           //#v(50pt)
-          #if it.outlined {
+          #if it.outlined and it.numbering != none {
             counter(heading).display(it.numbering)
             h(4pt)
           }
@@ -379,7 +397,7 @@
         line(length: 100%, stroke: tud_heading_line_thin_stroke),
         v(heading_2_line_spacing),
         block[
-          #if it.outlined {
+          #if it.outlined and it.numbering != none {
             counter(heading).display(it.numbering)
             h(2pt)
           }
@@ -547,6 +565,10 @@
 
   ///////////////////////////////////////
   // "Erklärung zur Abschlussarbeit" and abstract
+  if show_pages.thesis_statement_pursuant {
+    tudapub-get-thesis-statement-pursuant(date: date_of_submission, author: author, location: location)
+  }
+
   if abstract != none [
     = Abstract
     #abstract
@@ -566,7 +588,7 @@
   if show_pages.outline_table_of_contents [
     #tudapub-make-outline-table-of-contents(
       outline_table_of_contents_style: outline_table_of_contents_style,
-      heading_numbering_max_level: heading_numbering_max_level
+      heading_numbering_max_level: outline_table_of_contents_max_level
     )
   ]
 
@@ -586,4 +608,16 @@
 
   // Display the paper's contents.
   body
+
+
+  ///////////////////////////////////////
+  // references
+  if bib != none [
+    #set heading(outlined: false)
+    //#set text(font: "XCharter")
+    //#set heading(outlined: false)
+    //#bibliography(bibliography_path, style: "ieee", ..bibliography_params_dict)
+    #set bibliography(style: "ieee")
+    #bib
+  ]
 })

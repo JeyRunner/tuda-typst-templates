@@ -1,7 +1,7 @@
 // imports
 #import "@preview/cetz:0.1.2": canvas, plot
 #import "@preview/glossarium:0.2.5": make-glossary, print-glossary, gls, glspl 
-#import "@preview/mitex:0.1.0": *
+#import "@preview/mitex:0.2.0": *
 #import "@preview/drafting:0.1.2": *
 #show: make-glossary
 
@@ -25,7 +25,9 @@
   language: "eng",
 
 
-  abstract: [The abstract...]
+  abstract: [The abstract...],
+
+  bib: bibliography("./latex_ref/DEMO-TUDaBibliography.bib", full: true)//, style: "spie")
 )
 
 
@@ -34,7 +36,8 @@
 // test content
 = Über diese Datei
 
-This is some example text that is not very long, but needs to fill some space.
+This is some example text that is not very long, but needs to fill some space. @TUDaGuideline
+
 
 This starts a new paragraph. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words.
 
@@ -220,6 +223,27 @@ mitex(`
 `)
 )
 
+More latex math:
+#mitex(`
+  \newcommand{\f}[2]{#1f(#2)}
+  \f\relax{x} = \int_{-\infty}^\infty
+    \f\hat\xi\,e^{2 \pi i \xi x}
+    \,d\xi
+`)
+
+We can also import basic latex (just a few commands are suppored) via `mitex`:
+#mitext(`
+  \subsubsection{This is Generated from Latex}
+
+  A \textbf{strong} text, a \emph{emph} text and inline equation $x + y$.
+  
+  Also block \eqref{eq:pythagoras}.
+
+  \begin{equation}
+    a^2 + b^2 = c^2 \label{eq:pythagoras}
+  \end{equation}
+`)
+
 
 
 
@@ -243,6 +267,17 @@ In @fig.myfig we can seee stuff.
     This is a figure
   ]
 )<fig.myfig>
+
+
+Next is @fig:test_f. When using `figure_numbering_per_chapter: true` figures need to referenced with `@fig:<labelname>`
+#figure(
+  [
+    #rect(inset: 20.9pt)[Dummy Test]
+  ],
+  caption: [
+    This is a figure
+  ]
+)<test_f>
 
 
 #lorem(100)

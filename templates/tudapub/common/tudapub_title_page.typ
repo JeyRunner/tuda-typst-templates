@@ -1,4 +1,5 @@
 #import "props.typ": *
+#import "format.typ": *
 #import "../tudacolors.typ": tuda_colors
 
 
@@ -64,10 +65,7 @@
   let title_page_inner_margin_left = 8pt
   let logo_tud_height = 22mm
 
-  let submission_date = date_of_submission.display("[month repr:long] [day], [year]")
-  if (language == "ger") {
-    submission_date = date_of_submission.display("[day].[month repr:numerical].[year]")
-  }
+  let submission_date = format-date(date_of_submission, location)
 
   let thesis_type_text = {
     if lower(thesis_type) == "master" {"Master"}

@@ -142,6 +142,8 @@
           continue
         }
 
+        
+
         // save location and page of current heading
         let it_loc = it.location()
         //let it_page = numbering(it_loc.page-numbering(), ..counter(page).at(it_loc))
@@ -157,9 +159,15 @@
                     )
         // box[#pad(left: padd)
         let preamb = box(fill: none)[#pad(left: padd)[
-          #box(width: numbering_width + heading_numbering_intent, fill: none)[
-            #numbering(it.numbering, ..it_counter_arr) //.display(it.numbering)
-          ]
+          #box(width: numbering_width + heading_numbering_intent, fill: none, {
+            // if heading has numbering
+            if it.numbering != none {
+              numbering(it.numbering, ..it_counter_arr) //.display(it.numbering)
+            }
+            else {
+              //numbering("1.1", ..it_counter_arr) + "?"
+            }
+          })
           //#h(1em)
         ]]
 

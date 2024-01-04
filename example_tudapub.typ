@@ -1,7 +1,7 @@
 // imports
 #import "@preview/cetz:0.1.2": canvas, plot
 #import "@preview/glossarium:0.2.5": make-glossary, print-glossary, gls, glspl 
-#import "@preview/mitex:0.1.0": *
+#import "@preview/mitex:0.2.0": *
 #show: make-glossary
 
 
@@ -29,6 +29,8 @@
     This is a template to write your thesis with the corporate design of #link("https://www.tu-darmstadt.de/")[TU Darmstadt].
     For instructions of how to setup this template see @sec_usage.
   ],
+
+  bib: bibliography("tests/latex_ref/DEMO-TUDaBibliography.bib", full: true)//, style: "spie")
 
   // change the pagemargins with
   // margin: (
