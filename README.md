@@ -5,6 +5,9 @@ This **unofficial** template can be used to write in [Typst](https://github.com/
 Please ask your supervisor if you are allowed to use typst and this template for your thesis or other documents.
 Note that this template is not checked by TU Darmstadt for correctness.
 Thus, this template does not guarantee completeness or correctness.
+Also, note that submission in TUbama requires PDF/A which typst currently can't export to (https://github.com/typst/typst/issues/2942).
+You can use a converter to convert from the typst output to PDF/A, but check that there are no losses during the conversion. CMYK color space support may be required for printing which is also currently not supported by typst (https://github.com/typst/typst/issues/2942), but this is not relevant when you just submit online.
+
 
 ## Implemented Templates
 The templates imitate the style of the corresponding latex templates in [tuda_latex_templates](https://github.com/tudace/tuda_latex_templates).
