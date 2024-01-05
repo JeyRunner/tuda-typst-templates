@@ -26,7 +26,7 @@
   accentcolor: "9c",
 
   // Size of the main text font
-  fontsize: 10.905pt, //11pt,
+  fontsize: 10.909pt, //11pt,
 
   // Currently just a4 is supported
   paper: "a4",
@@ -51,12 +51,16 @@
 
   // Set the margins of the content pages.
   // The title page is not affected by this.
-  margin: (
-    top: 30mm, //35.25mm + 0.05mm,//+ 0.02mm,
-    left: 31.5mm,
-    right: 31.5mm,
-    bottom: 56mm
-  ),
+  // Some example margins are defined in 'common/props.typ':
+  //  - tud_page_margin_small  // same as title page margin
+  //  - tud_page_margin_big
+  // E.g.   margin: (
+  //   top: 30mm,
+  //   left: 31.5mm,
+  //   right: 31.5mm,
+  //   bottom: 56mm
+  // ),
+  margin: tud_page_margin_big,
 
   // Path to the tuda logo containing the file name, has to be a svg.
   // Note that this path is relative to the location of this template file.
@@ -72,7 +76,7 @@
   // or     "height": use tud_logo_height*(2/3)
   logo_institue_sizeing_type: "width",
 
-  // Move the optinal sub-logo horizontally
+  // Move the optional sub-logo horizontally
   logo_institue_offset_right: 0mm,
 
   // An additional white box with content e.g. the institute, ... below the tud logo.
@@ -92,7 +96,7 @@
   bib: none,
 
 
-  // Add a english translation to the "Erklärung zur Abschlussarbeit".
+  // Add an English translation to the "Erklärung zur Abschlussarbeit".
   thesis_statement_pursuant_include_english_translation: false,
   
   // Which pages to insert
@@ -181,7 +185,7 @@
 
   // vars
   let accentcolor_rgb = tuda_colors.at(accentcolor)
-  let heading_2_line_spacing = 5.3pt
+  let heading_2_line_spacing = 5.2pt
   let heading_2_margin_before = 12pt
   let heading_3_margin_before = 12pt
 
@@ -195,7 +199,8 @@
   // Set the default body font.
   set par(
     justify: true,
-    leading: 4.7pt//0.42em//4.7pt   // line spacing
+    //leading: 4.7pt//0.42em//4.7pt   // line spacing
+    leading: 4.8pt//0.42em//4.7pt   // line spacing
   )
   show par: set block(below: 1.1em) // was 1.2em
 
@@ -206,7 +211,9 @@
     lang: language,
     kerning: true,
     ligatures: false,
-    spacing: 92%  // to make it look like the latex template
+    //spacing: 92%  // to make it look like the latex template
+    //spacing: 84%  // to make it look like the latex template
+    spacing: 91%  // to make it look like the latex template
   )
 
   if paper != "a4" {
@@ -256,13 +263,7 @@
   let inner_page_margin_bottom = 30pt
 
   // title page has different margins
-  let margin_title_page = (
-    top: 15mm,
-    left: 15mm,
-    right: 15mm,
-    bottom: 15mm - 1mm  // should be 20mm according to guidelines
-  )
-
+  let margin_title_page = tud_page_margin_title_page
 
 
 
@@ -289,7 +290,7 @@
       else {10.9pt}
     }
 
-    // change heading margin depending if its the first on the page
+    // change heading margin depending on its the first on the page
     let (heading_margin_before, is_first_on_page) = get-spacing-zero-if-first-on-page(
       heading_3_margin_before, 
       loc, 
@@ -566,7 +567,11 @@
   ///////////////////////////////////////
   // "Erklärung zur Abschlussarbeit" and abstract
   if show_pages.thesis_statement_pursuant {
-    tudapub-get-thesis-statement-pursuant(date: date_of_submission, author: author, location: location)
+    tudapub-get-thesis-statement-pursuant(
+      date: date_of_submission, 
+      author: author, 
+      location: location, include-english-translation: thesis_statement_pursuant_include_english_translation
+    )
   }
 
   if abstract != none [

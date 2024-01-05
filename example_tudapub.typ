@@ -24,25 +24,45 @@
   ],
 
   accentcolor: "9c",
-
+ 
   abstract: [
     This is a template to write your thesis with the corporate design of #link("https://www.tu-darmstadt.de/")[TU Darmstadt].
-    For instructions of how to setup this template see @sec_usage.
+    For instructions on how to set up this template see @sec_usage.
   ],
 
-  bib: bibliography("tests/latex_ref/DEMO-TUDaBibliography.bib", full: true)//, style: "spie")
+  bib: bibliography("tests/latex_ref/DEMO-TUDaBibliography.bib", full: true), //, style: "spie")
 
-  // change the pagemargins with
-  // margin: (
-  //  top: 15mm,
-  //  left: 15mm,
-  //  right: 15mm,
-  //  bottom: 15mm - 1mm
-  // )
+
+  // Set the margins of the content pages.
+  // The title page is not affected by this.
+  // Some example margins are defined in 'common/props.typ':
+  //  - tud_page_margin_small  // same as title page margin
+  //  - tud_page_margin_big
+  // E.g.   margin: (
+  //   top: 30mm,
+  //   left: 31.5mm,
+  //   right: 31.5mm,
+  //   bottom: 56mm
+  // ),
+
+
   //outline_table_of_contents_style: "adapted",
   //reduce_heading_space_when_first_on_page: false
-  // figure_numbering_per_chapter: false
+  //figure_numbering_per_chapter: false
+
+  // Which pages to insert
+  // Pages can be disabled individually.
+  show_pages: (
+    title_page: true,
+    outline_table_of_contents: true,
+    // "Erklärung zur Abschlussarbeit"
+    thesis_statement_pursuant: true
+  ),
+
+  thesis_statement_pursuant_include_english_translation: false
 )
+
+
 
 
 
@@ -304,10 +324,12 @@ In the following, we show the show-command of this template with all doc and def
     bottom: 56mm
   ),
 
-  // path to the tuda logo containing the file name, has to be a svg.
+  // Path to the tuda logo containing the file name, has to be a svg.
+  // Note that this path is relative to the location of this template file.
   logo_tuda_path: "logos/tuda_logo.svg",
 
-  // path to an optional sub-logo of an institute containing the file name, has to be a svg or picture.
+  // Path to an optional sub-logo of an institute containing the file name, has to be a svg or picture.
+  // Note that this path is relative to the location of this template file.
   // E.g. "logos/iasLogo.jpeg"
   logo_institue_path: none,
 
@@ -329,12 +351,23 @@ In the following, we show the show-command of this template with all doc and def
     Institute A
   ],
 
+
+  // The bibliography created with the bibliography(...) function.
+  // When this is not none a references section will appear at the end of the document.
+  // E.g. bib: bibliography("my_references.bib")
+  bib: none,
+
+
+  // Add an english translation to the "Erklärung zur Abschlussarbeit".
+  thesis_statement_pursuant_include_english_translation: false,
   
   // Which pages to insert
   // Pages can be disabled individually.
   show_pages: (
     title_page: true,
-    outline_table_of_contents: true
+    outline_table_of_contents: true,
+    // "Erklärung zur Abschlussarbeit"
+    thesis_statement_pursuant: true
   ),
 
 
@@ -369,6 +402,10 @@ In the following, we show the show-command of this template with all doc and def
   // The heading with the lowest level has level 1.
   // Note that the numbers of the first two levels will always be shown.
   heading_numbering_max_level: 3,
+
+  // In the outline the max heading level that will be shown.
+  // The heading with the lowest level has level 1.
+  outline_table_of_contents_max_level: 3,
 
   // Set space above the heading to zero if it's the first element on a page.
   // This is currently implemented as a hack (check the y pos of the heading).

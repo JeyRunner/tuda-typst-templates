@@ -8,6 +8,7 @@
 
 #import "../templates/tudapub/tudapub.typ": tudapub
 #import "../templates/tudapub/tudacolors.typ": tuda_colors
+#import "../templates/tudapub/common/props.typ": *
 
 
 // setup
@@ -20,12 +21,14 @@
   title: [
     TUDaThesis - Title With a second line
   ],
-  author: "Albert Authors",
+  author: "Albert Author",
   accentcolor: "9c",
   language: "eng",
 
 
   abstract: [The abstract...],
+
+  margin: tud_page_margin_big,
 
   bib: bibliography("./latex_ref/DEMO-TUDaBibliography.bib", full: true)//, style: "spie")
 )
@@ -41,7 +44,7 @@ This is some example text that is not very long, but needs to fill some space. @
 
 This starts a new paragraph. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words. Test words.
 
-== Subheading 1
+== Subheading
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   
 
 Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.   
