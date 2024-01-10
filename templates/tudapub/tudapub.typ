@@ -173,7 +173,7 @@
 
   // Equations have the numbering <chapter-nr>.<equation-nr>
   // @todo This seems to increase the equation number in steps of 2 instead of one
-  equation_numbering_per_chapter: true,
+  equation_numbering_per_chapter: false,
 
   // content.
   body
@@ -279,9 +279,9 @@
   // headings
   set heading(numbering: "1.1")
 
-  // default heading (handle cases with level >= 3)
+  // default heading (handle cases with level >= 3 < 5)
   show heading: it => locate(loc => {
-    if it.level > 4 {
+    if it.level > 5 {
       panic("Just heading with a level < 4 are supported.")
     }
 
@@ -318,6 +318,21 @@
       )
     ]
   })
+
+
+  // heading level 5
+  show heading.where(level: 5): it => {
+    par()[]
+    set text(
+      font: "Roboto",
+      fallback: false,
+      weight: "bold",
+      size: fontsize
+    )
+    it.body + [: ] 
+    h(1mm)
+  }
+
 
   // heading level 1
   show heading.where(
@@ -489,6 +504,7 @@
   // Display the title page
   set page(
     paper: paper,
+    numbering: "1",
     margin: (
       left: margin_title_page.left, //15mm,
       right: margin_title_page.right, //15mm,
