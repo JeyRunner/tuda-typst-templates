@@ -226,7 +226,7 @@
   ///////////////////////////////////////
   // page setup
   // with header and footer
-  let header = box(fill: white,
+  let header = box(//fill: white,
     grid(
     rows: auto,
     rect(
@@ -251,7 +251,15 @@
         size: 10pt
     )[
       #set align(right)
-      #counter(page).display()
+      #let counter_disp = counter(page).display()
+      //#hide(counter_disp)
+      //#counter_disp
+      #locate(loc => {
+        let after_table_of_contents = query(selector(<__after_table_of_contents>).before(loc), loc).len() >= 1
+        if after_table_of_contents {counter_disp}
+        else {hide(counter_disp)}
+      })
+
     ]
   )
 
@@ -613,17 +621,22 @@
     )
   ]
 
-  // additional_pages_after_outline_table_of_contents
-  pagebreak(weak: true)
-  additional_pages_after_outline_table_of_contents
 
-
-
+  // mark start of body
+  //box[#figure(none) <__after_table_of_contents>]
+  [#metadata("After Table of Contents") <__after_table_of_contents>]
+  //[abc]
 
   // restart page counter
   counter(page).update(1)
   // restart heading counter
   counter(heading).update(0)
+
+  // additional_pages_after_outline_table_of_contents
+  pagebreak(weak: true)
+  additional_pages_after_outline_table_of_contents
+
+
   // enable heading outlined for body
   set heading(outlined: true)
 

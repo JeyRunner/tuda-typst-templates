@@ -76,7 +76,7 @@
 
   ///////////////////////////////////////
   // Display the title page
-  page[
+  page(footer: [])[
     //#set par(leading: 1em)
     #set text(
       //font: "Comfortaa",
