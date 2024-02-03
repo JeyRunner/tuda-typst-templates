@@ -64,11 +64,11 @@ And compile it:
 typst --watch main.typ --font-path templates/tuda-typst-templates/templates/tudapub/fonts
 ```
 
-This will watch your file and recompile it to a pdf when the file is saved. For writing you can use [Vscode](https://code.visualstudio.com/) with these extension: [Typst LSP](https://marketplace.visualstudio.com/items?itemName=nvarner.typst-lsp) and [Typst Preview](https://marketplace.visualstudio.com/items?itemName=mgt19937.typst-preview).
+This will watch your file and recompile it to a pdf when the file is saved. For writing, you can use [Vscode](https://code.visualstudio.com/) with these extensions: [Typst LSP](https://marketplace.visualstudio.com/items?itemName=nvarner.typst-lsp) and [Typst Preview](https://marketplace.visualstudio.com/items?itemName=mgt19937.typst-preview).
 
 Note that we add `--font-path` to ensure that the correct fonts are used.
 Due to a bug (typst/typst#2917 typst/typst#2098) typst sometimes uses the font `Roboto condensed` instead of `Roboto`.
-To on the safe side, double-check the embedded fonts in the pdf (there should be no `Roboto condensed`).
+To be on the safe side, double-check the embedded fonts in the pdf (there should be no `Roboto condensed`).
 What also works is to uninstall/deactivate all `Roboto condensed` fonts from your system.
 
 
