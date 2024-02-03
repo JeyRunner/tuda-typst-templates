@@ -66,7 +66,7 @@
   // Note that this path is relative to the location of this template file.
   logo_tuda_path: "logos/tuda_logo.svg",
 
-  // Path to an optional sub-logo of an institute containing the file name, has to be a svg or picture.
+  // Path to an optional sub-logo of an institute containing the file name, has to be an SVG or picture.
   // Note that this path is relative to the location of this template file.
   // E.g. "logos/iasLogo.jpeg"
   logo_institue_path: none,
@@ -141,7 +141,7 @@
   // Note that the numbers of the first two levels will always be shown.
   heading_numbering_max_level: 3,
 
-  // In the outline the max heading level that will be shown.
+  // In the outline the max heading level will be shown.
   // The heading with the lowest level has level 1.
   outline_table_of_contents_max_level: 3,
 
@@ -193,7 +193,7 @@
   // Set document metadata.
   set document(
     title: title,
-    //author: autor
+    author: author
   )
 
   // Set the default body font.

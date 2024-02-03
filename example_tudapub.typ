@@ -274,7 +274,7 @@ Some Text
 For the list of possible accent colors to select from see @sec_usage_accentcolors.
 
 == Template Options
-In the following, we show the show-command of this template with all doc and default options. Note that this may not be up to date, thus allways also look at the file `templates/tudapub/tudapub.typ`.
+In the following, we show the show-command of this template with all doc and default options. Note that this may not be up to date, thus always also look at the file `templates/tudapub/tudapub.typ`.
 ```typst
 #show: tudapub.with(
   title: [Title],
@@ -292,7 +292,7 @@ In the following, we show the show-command of this template with all doc and def
   accentcolor: "9c",
 
   // Size of the main text font
-  fontsize: 10.905pt, //11pt,
+  fontsize: 10.909pt,
 
   // Currently just a4 is supported
   paper: "a4",
@@ -317,18 +317,22 @@ In the following, we show the show-command of this template with all doc and def
 
   // Set the margins of the content pages.
   // The title page is not affected by this.
-  margin: (
-    top: 30mm, //35.25mm + 0.05mm,//+ 0.02mm,
-    left: 31.5mm,
-    right: 31.5mm,
-    bottom: 56mm
-  ),
+  // Some example margins are defined in 'common/props.typ':
+  //  - tud_page_margin_small  // same as title page margin
+  //  - tud_page_margin_big
+  // E.g.   margin: (
+  //   top: 30mm,
+  //   left: 31.5mm,
+  //   right: 31.5mm,
+  //   bottom: 56mm
+  // ),
+  margin: tud_page_margin_big,
 
   // Path to the tuda logo containing the file name, has to be a svg.
   // Note that this path is relative to the location of this template file.
   logo_tuda_path: "logos/tuda_logo.svg",
 
-  // Path to an optional sub-logo of an institute containing the file name, has to be a svg or picture.
+  // Path to an optional sub-logo of an institute containing the file name, has to be an SVG or picture.
   // Note that this path is relative to the location of this template file.
   // E.g. "logos/iasLogo.jpeg"
   logo_institue_path: none,
@@ -338,7 +342,7 @@ In the following, we show the show-command of this template with all doc and def
   // or     "height": use tud_logo_height*(2/3)
   logo_institue_sizeing_type: "width",
 
-  // Move the optinal sub-logo horizontally
+  // Move the optional sub-logo horizontally
   logo_institue_offset_right: 0mm,
 
   // An additional white box with content e.g. the institute, ... below the tud logo.
@@ -358,7 +362,7 @@ In the following, we show the show-command of this template with all doc and def
   bib: none,
 
 
-  // Add an english translation to the "Erklärung zur Abschlussarbeit".
+  // Add an English translation to the "Erklärung zur Abschlussarbeit".
   thesis_statement_pursuant_include_english_translation: false,
   
   // Which pages to insert
@@ -403,7 +407,7 @@ In the following, we show the show-command of this template with all doc and def
   // Note that the numbers of the first two levels will always be shown.
   heading_numbering_max_level: 3,
 
-  // In the outline the max heading level that will be shown.
+  // In the outline the max heading level will be shown.
   // The heading with the lowest level has level 1.
   outline_table_of_contents_max_level: 3,
 
@@ -435,13 +439,13 @@ In the following, we show the show-command of this template with all doc and def
 
   // Equations have the numbering <chapter-nr>.<equation-nr>
   // @todo This seems to increase the equation number in steps of 2 instead of one
-  equation_numbering_per_chapter: true
+  equation_numbering_per_chapter: false,
 )
 ```
 
 
 == TUDa Accent Color List <sec_usage_accentcolors>
-The list of colors which can be use in the template argument `accentcolor`:
+The list of colors that can be used in the template argument `accentcolor`:
 #grid(
   columns: auto,
   rows: auto,
@@ -462,6 +466,7 @@ The list of colors which can be use in the template argument `accentcolor`:
     )
   }
 )
+
 
 
 

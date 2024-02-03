@@ -92,5 +92,5 @@ What also works is to uninstall/deactivate all `Roboto condensed` fonts from you
   * after outline table of contents
 * [ ] fix equation numbering per chapter (somehow increases in steps of 2)
 * [x] provide some default page margins (small, medium, large)
-* ~~[ ] make all font sizes relative to the main text font size (e.g. headings)~~
+* [ ] ~~make all font sizes relative to the main text font size (e.g. headings)~~
 * [ ] switch to kebab case for template, function args
