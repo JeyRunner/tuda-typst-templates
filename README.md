@@ -1,4 +1,4 @@
-# Typst Template for the Corporate Design of TU Darmstadt [WIP]
+# Typst Template for the Corporate Design of TU Darmstadt :book:
 This **unofficial** template can be used to write in [Typst](https://github.com/typst/typst) with the corporate design of [TU Darmstadt](https://www.tu-darmstadt.de/).
 
 #### Disclaimer
@@ -13,7 +13,7 @@ You can use a converter to convert from the typst output to PDF/A, but check tha
 The templates imitate the style of the corresponding latex templates in [tuda_latex_templates](https://github.com/tudace/tuda_latex_templates).
 Note that there can be visual differences between the original latex template and the typst template (you may open an issue when you find one).
 
-For missing features, ideas or other problems you can open an issue. Contributions are also welcome.
+For missing features, ideas or other problems you can just open an issue :wink:. Contributions are also welcome.
 
 | Template | Preview | Example | Scope |
 |----------|---------|---------|-------|
@@ -74,7 +74,7 @@ What also works is to uninstall/deactivate all `Roboto condensed` fonts from you
 
 ## Todos
 * [ ] numbering/labeling of sub-equations (that are aligned with the other sub-equations)
-* [ ] remove page numbers in footer before and at table of contents
+* [x] remove page numbers in footer before ~~and at table of contents~~
 * [x] fix first-level heading page is wrong
   * in the outline, the page of the first-level heading is sometimes the previous page of the heading. Just appears in combination with `figure_numbering_per_chapter`.
 * [ ] fix referencing figures respect figure numbering when using `figure_numbering_per_chapter`
@@ -92,5 +92,5 @@ What also works is to uninstall/deactivate all `Roboto condensed` fonts from you
   * after outline table of contents
 * [ ] fix equation numbering per chapter (somehow increases in steps of 2)
 * [x] provide some default page margins (small, medium, large)
-* [ ] make all font sizes relative to the main text font size (e.g. headings)
+* ~~[ ] make all font sizes relative to the main text font size (e.g. headings)~~
 * [ ] switch to kebab case for template, function args
