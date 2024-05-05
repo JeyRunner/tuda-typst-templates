@@ -1,18 +1,25 @@
 // imports
-#import "@preview/cetz:0.1.2": canvas, plot
-#import "@preview/glossarium:0.2.5": make-glossary, print-glossary, gls, glspl 
-#import "@preview/mitex:0.2.0": *
+#import "@preview/cetz:0.2.2": canvas, plot
+#import "@preview/glossarium:0.4.0": make-glossary, print-glossary, gls, glspl 
+#import "@preview/mitex:0.2.3": *
+
+// add
+// - subpar for sub-figures
+#import "@preview/equate:0.1.0": equate
+
 #show: make-glossary
 
 
 #import "templates/tudapub/tudapub.typ": tudapub
 #import "templates/tudapub/tudacolors.typ": tuda_colors
 
+// equation sub numbering
+#show: equate.with(sub-numbering: true, number-mode: "label")
 
 // setup the template
 #show: tudapub.with(
   title: [
-    TUDa Thesis 
+    TUDa Thesis
     With Typst
   ],
   author: "Albert Author",
@@ -153,14 +160,20 @@ $
           \
           \
           & underbrace( cal(B) >= B , "This is fancy!")
-$
-$ 
+\
 x &= y^2 + 12  & "(This does A)"
-$
+\
+y &= z \/ 2  =  z / 2 & "(This does B)" #<eq.last>
 $ 
-y &= z \/ 2  =  z / 2 & "(This does B)"
-$ <eq.last>
 In @eq.last we can see cool stuff.
+
+Sub equations:
+$
+ a &= "with line number" #<eq.second.sub> \
+ b &= "no line number" \
+ b &= "with line number" #<eq.second.sub2>
+$
+
 
 
 === Math in Latex

@@ -442,7 +442,7 @@
   ///////////////////////////////////////
 
   // Configure equation numbering and spacing.
-  set math.equation(numbering: "(1)")
+  set math.equation(numbering: "(1.1.1)")
   show math.equation: set block(spacing: 0.65em)
   // equation numbering per chapter
   show math.equation.where(block: true): it => {

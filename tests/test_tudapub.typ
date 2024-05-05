@@ -1,7 +1,7 @@
 // imports
 #import "@preview/cetz:0.1.2": canvas, plot
 #import "@preview/glossarium:0.2.5": make-glossary, print-glossary, gls, glspl 
-#import "@preview/mitex:0.2.0": *
+#import "@preview/mitex:0.2.3": *
 #import "@preview/drafting:0.1.2": *
 #show: make-glossary
 
@@ -260,8 +260,8 @@ Some graphics: \
 ]
 
 Some more text here. #lorem(20)
-In @fig.myfig we can seee stuff.
-
+In @fig.myfig we can see stuff.
+==== Deep section
 #figure(
   [
     #rect(inset: 20.9pt)[Dummy Test]
@@ -284,6 +284,16 @@ Next is @fig:test_f. When using `figure_numbering_per_chapter: true` figures nee
 
 
 #lorem(100)
+===== Level 5 Heading
+#lorem(50)
+
+===== Level 5 Heading
+#lorem(50)
+
+A term list:
+/ A: This is a term. #lorem(20)
+/ B: This is a term. #lorem(20)
+/ C: This is a term. #lorem(20)
 
 
 = Next Chapter with Figures
