@@ -71,8 +71,9 @@
 
 
 // test content
-= Demo Chapter
-A first demo chapter.
+= First Chapter
+A first demo chapter. 
+An example reference is @TUDaGuideline.
 
 
 == Some Basic Elements
