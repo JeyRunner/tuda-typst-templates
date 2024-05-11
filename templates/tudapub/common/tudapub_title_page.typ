@@ -35,12 +35,12 @@
   // array of the names of the reviewers
   reviewer_names: ("SuperSupervisor 1", "SuperSupervisor 2"),
 
-  // path to the tuda logo containing the file name, has to be a svg.
-  logo_tuda_path: "../logos/tuda_logo.svg",
+  // tuda logo, has to be a svg. E.g. image("PATH/TO/LOGO")
+  logo_tuda: image("../logos/tuda_logo.svg"),
 
-  // path to an optional sub-logo of an institute containing the file name, has to be a svg.
-  // E.g. "logos/iasLogo.jpeg"
-  logo_institute_path: none,
+  // optional sub-logo of an institute.
+  // E.g. image("logos/iasLogo.jpeg")
+  logo_institute: none,
 
   // How to set the size of the optional sub-logo.
   // either "width": use tud_logo_width*(2/3)
@@ -141,7 +141,11 @@
         
         #v(logo_tud_height/2)
         #style(styles => {
-          let tud_logo = image(logo_tuda_path, height: logo_tud_height)
+          //let tud_logo = image(logo_tuda_path, height: logo_tud_height)
+          let tud_logo = [
+                #set image(height: logo_tud_height)
+                #logo_tuda
+          ]
           let tud_logo_width = measure(tud_logo, styles).width
           let tud_logo_offset_right = -6.3mm
           tud_logo_width += tud_logo_offset_right
@@ -152,19 +156,28 @@
               // tud logo
               // move logo(s) to the right
               box(inset: (right: tud_logo_offset_right), fill: black)[
+                #set image(height: logo_tud_height)
                 #tud_logo
               ],
               // sub logo
               v(5mm),
               // height from design guidelines
-              if logo_institute_path != none {
+              if logo_institute != none {
                 box(inset: (right: logo_institute_offset_right), fill: black)[
+                  #set image(height: tud_logo_width*(2/3))
                   #{
                     if logo_institute_sizeing_type == "width" {
-                      image(logo_institute_path, width: tud_logo_width*(2/3))
+                      //image(logo_institute_path, width: tud_logo_width*(2/3))
+                      set image(width: tud_logo_width*(2/3), height: auto)
+                      logo_institute
+                    }
+                    else if logo_institute_sizeing_type == "height" {
+                      //image(logo_institute_path, height: logo_tud_height*(2/3))
+                      set image(height: logo_tud_height*(2/3))
+                      logo_institute
                     }
                     else {
-                      image(logo_institute_path, height: logo_tud_height*(2/3))
+                      panic("logo_institute_sizeing_type has to be width or height")
                     }
                   }
                 ]

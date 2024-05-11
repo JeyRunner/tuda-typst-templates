@@ -9,6 +9,8 @@
     With Typst
   ],
   author: "Albert Author",
+
+  // to deactivate the sub logo text set logo_sub_content_text: none,
   logo_sub_content_text: [
     field of study: \
     Some Field of Study \
@@ -16,8 +18,7 @@
     Institute ABC
   ],
 
-  logo_tuda_path: "logos/tuda_logo.svg",
-
+  logo_tuda: image("logos/tuda_logo.svg"),
   accentcolor: "9c",
  
   abstract: [
@@ -38,11 +39,12 @@
   //   right: 31.5mm,
   //   bottom: 56mm
   // ),
+  margin: tud_page_margin_big,
 
 
-  //outline_table_of_contents_style: "adapted",
-  //reduce_heading_space_when_first_on_page: false
-  //figure_numbering_per_chapter: false
+  // outline_table_of_contents_style: "adapted",
+  // reduce_heading_space_when_first_on_page: false
+  // figure_numbering_per_chapter: false
 
   // Which pages to insert
   // Pages can be disabled individually.
@@ -63,6 +65,7 @@
     == List of Figures
   ]
 )
+
 
 
 

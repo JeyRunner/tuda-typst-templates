@@ -25,6 +25,8 @@
     With Typst
   ],
   author: "Albert Author",
+
+  // to deactivate the sub logo text set logo_sub_content_text: none,
   logo_sub_content_text: [
     field of study: \
     Some Field of Study \
@@ -41,6 +43,10 @@
 
   bib: bibliography("tests/latex_ref/DEMO-TUDaBibliography.bib", full: true), //, style: "spie")
 
+  logo_tuda: image("templates/tudapub/logos/tuda_logo.svg"),
+  
+  // logo_institute: image("templates/tudapub/logos/iasLogo.jpeg"),
+  // logo_institute_sizeing_type: "width",
 
   // Set the margins of the content pages.
   // The title page is not affected by this.
@@ -315,7 +321,7 @@ In the following, we show the show-command of this template with all doc and def
   accentcolor: "9c",
 
   // Size of the main text font
-  fontsize: 10.909pt,
+  fontsize: 10.909pt, //11pt,
 
   // Currently just a4 is supported
   paper: "a4",
@@ -351,14 +357,12 @@ In the following, we show the show-command of this template with all doc and def
   // ),
   margin: tud_page_margin_big,
 
-  // Path to the tuda logo containing the file name, has to be a svg.
-  // Note that this path is relative to the location of this template file.
-  logo_tuda_path: "logos/tuda_logo.svg",
+  // tuda logo - has to be a svg. E.g. image("PATH/TO/LOGO")
+  logo_tuda: image("logos/tuda_logo.svg"),
 
-  // Path to an optional sub-logo of an institute containing the file name, has to be an SVG or picture.
-  // Note that this path is relative to the location of this template file.
-  // E.g. "logos/iasLogo.jpeg"
-  logo_institute_path: none,
+  // optional sub-logo of an institute.
+  // E.g. image("logos/iasLogo.jpeg")
+  logo_institute: none,
 
   // How to set the size of the optional sub-logo
   // either "width": use tud_logo_width*(2/3)

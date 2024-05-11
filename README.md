@@ -22,7 +22,8 @@ For missing features, ideas or other problems you can just open an issue :wink:.
 ## Usage
 Create a new typst project based on this template locally.
 ```bash
-typst init @preview/<TODO_INSERT_NAME>
+typst init @preview/athena-tu-darmstadt-thesis
+cd athena-tu-darmstadt-thesis
 ```
 Or create a project on the typst web app based on this template.
 
@@ -80,7 +81,7 @@ Some Text
 typst --watch main.typ --font-path fonts/
 ```
 
-This will watch your file and recompile it to a pdf when the file is saved. For writing, you can use [Vscode](https://code.visualstudio.com/) with these extensions: [Typst LSP](https://marketplace.visualstudio.com/items?itemName=nvarner.typst-lsp) and [Typst Preview](https://marketplace.visualstudio.com/items?itemName=mgt19937.typst-preview).
+This will watch your file and recompile it to a pdf when the file is saved. For writing, you can use [Vscode](https://code.visualstudio.com/) with these extensions: [Typst LSP](https://marketplace.visualstudio.com/items?itemName=nvarner.typst-lsp) and [Typst Preview](https://marketplace.visualstudio.com/items?itemName=mgt19937.typst-preview). Or use the [typst web app](https://typst.app/) (here you need to upload the logo and the fonts).
 
 Note that we add `--font-path` to ensure that the correct fonts are used.
 Due to a bug (typst/typst#2917 typst/typst#2098) typst sometimes uses the font `Roboto condensed` instead of `Roboto`.
@@ -89,6 +90,7 @@ What also works is to uninstall/deactivate all `Roboto condensed` fonts from you
 
 
 ## Todos
+* [ ] some bug seems to insert an empty page at the end of the document when content (title page) appears before this second 'set page'
 * [ ] numbering/labeling of sub-equations (that are aligned with the other sub-equations)
 * [x] remove page numbers in footer before ~~and at table of contents~~
 * [x] fix first-level heading page is wrong

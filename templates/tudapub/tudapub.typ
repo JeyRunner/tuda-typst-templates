@@ -3,7 +3,6 @@
 #import "common/props.typ": *
 #import "common/tudapub_title_page.typ": *
 #import "common/thesis_statement_pursuant.typ": *
-#import "common/util.typ": *
 #import "util.typ": *
 
 #import "@preview/i-figured:0.2.3"
@@ -63,14 +62,12 @@
   // ),
   margin: tud_page_margin_big,
 
-  // Path to the tuda logo containing the file name, has to be a svg.
-  // Note that this path is relative to the location of this template file.
-  logo_tuda_path: "logos/tuda_logo.svg",
+  // tuda logo - has to be a svg. E.g. image("PATH/TO/LOGO")
+  logo_tuda: image("logos/tuda_logo.svg"),
 
-  // Path to an optional sub-logo of an institute containing the file name, has to be an SVG or picture.
-  // Note that this path is relative to the location of this template file.
-  // E.g. "logos/iasLogo.jpeg"
-  logo_institute_path: none,
+  // optional sub-logo of an institute.
+  // E.g. image("logos/iasLogo.jpeg")
+  logo_institute: none,
 
   // How to set the size of the optional sub-logo
   // either "width": use tud_logo_width*(2/3)
@@ -539,7 +536,7 @@
 
   // make image paths relative to this dir of this .typ file
   let make-path-rel-parent(path) = {
-    if not path == none and not path.starts-with("/") and not path.starts-with("./") {
+    if not path == none and not path.starts-with("/") and not path.starts-with("./") and path.starts-with("") {
       return "../" + path
     }
     else {return path}
@@ -556,8 +553,8 @@
       date_of_submission: date_of_submission,
       location: location,
       reviewer_names: reviewer_names,
-      logo_tuda_path: make-path-rel-parent(logo_tuda_path),
-      logo_institute_path: make-path-rel-parent(logo_institute_path),
+      logo_tuda: logo_tuda,
+      logo_institute: logo_institute,
       logo_institute_sizeing_type: logo_institute_sizeing_type,
       logo_institute_offset_right: logo_institute_offset_right,
       logo_sub_content_text: logo_sub_content_text
@@ -571,6 +568,7 @@
   // Content pages
   
   // body has different margins than title page
+  // @todo some bug seems to insert an empty page at the end when content (title page) appears before this second 'set page'
   set page(
     margin: (
       left: margin.left, //15mm,
