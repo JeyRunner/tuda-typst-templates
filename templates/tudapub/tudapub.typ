@@ -3,6 +3,7 @@
 #import "common/props.typ": *
 #import "common/tudapub_title_page.typ": *
 #import "common/thesis_statement_pursuant.typ": *
+#import "common/util.typ": *
 #import "util.typ": *
 
 #import "@preview/i-figured:0.2.3"
@@ -69,15 +70,15 @@
   // Path to an optional sub-logo of an institute containing the file name, has to be an SVG or picture.
   // Note that this path is relative to the location of this template file.
   // E.g. "logos/iasLogo.jpeg"
-  logo_institue_path: none,
+  logo_institute_path: none,
 
   // How to set the size of the optional sub-logo
   // either "width": use tud_logo_width*(2/3)
   // or     "height": use tud_logo_height*(2/3)
-  logo_institue_sizeing_type: "width",
+  logo_institute_sizeing_type: "width",
 
   // Move the optional sub-logo horizontally
-  logo_institue_offset_right: 0mm,
+  logo_institute_offset_right: 0mm,
 
   // An additional white box with content e.g. the institute, ... below the tud logo.
   // Disable it by setting its value to none.
@@ -251,15 +252,17 @@
         size: 10pt
     )[
       #set align(right)
-      #let counter_disp = counter(page).display()
-      //#hide(counter_disp)
-      //#counter_disp
-      #locate(loc => {
-        let after_table_of_contents = query(selector(<__after_table_of_contents>).before(loc), loc).len() >= 1
-        if after_table_of_contents {counter_disp}
-        else {hide(counter_disp)}
-      })
-
+      // context needed for page counter for typst >= 0.11.0
+      #context [
+        #let counter_disp = counter(page).display()
+        //#hide(counter_disp)
+        //#counter_disp
+        #locate(loc => {
+          let after_table_of_contents = query(selector(<__after_table_of_contents>).before(loc), loc).len() >= 1
+          if after_table_of_contents {counter_disp}
+          else {hide(counter_disp)}
+        })
+      ]
     ]
   )
 
@@ -506,6 +509,11 @@
   }
 
 
+  ///////////////////////////////////////
+  // Display font checks
+  check-font-exists("Roboto")
+  check-font-exists("XCharter")
+
 
 
   ///////////////////////////////////////
@@ -549,9 +557,9 @@
       location: location,
       reviewer_names: reviewer_names,
       logo_tuda_path: make-path-rel-parent(logo_tuda_path),
-      logo_institue_path: make-path-rel-parent(logo_institue_path),
-      logo_institue_sizeing_type: logo_institue_sizeing_type,
-      logo_institue_offset_right: logo_institue_offset_right,
+      logo_institute_path: make-path-rel-parent(logo_institute_path),
+      logo_institute_sizeing_type: logo_institute_sizeing_type,
+      logo_institute_offset_right: logo_institute_offset_right,
       logo_sub_content_text: logo_sub_content_text
     )
   }

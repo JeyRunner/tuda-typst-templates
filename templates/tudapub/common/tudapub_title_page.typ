@@ -38,17 +38,17 @@
   // path to the tuda logo containing the file name, has to be a svg.
   logo_tuda_path: "../logos/tuda_logo.svg",
 
-  // path to an optinal sub-logo of an institute containing the file name, has to be a svg.
+  // path to an optional sub-logo of an institute containing the file name, has to be a svg.
   // E.g. "logos/iasLogo.jpeg"
-  logo_institue_path: none,
+  logo_institute_path: none,
 
   // How to set the size of the optional sub-logo.
   // either "width": use tud_logo_width*(2/3)
   // or     "height": use tud_logo_height*(2/3)
-  logo_institue_sizeing_type: "width",
+  logo_institute_sizeing_type: "width",
 
   // Move the optional sub-logo horizontally
-  logo_institue_offset_right: 0mm,
+  logo_institute_offset_right: 0mm,
 
   // an additional white box with content for e.g. the institute, ... below the tud logo.
   // E.g. logo_sub_content_text: [ Institute A \ filed of study: \ B]
@@ -59,7 +59,7 @@
 
   // vars
   let accentcolor_rgb = tuda_colors.at(accentcolor)
-  let title_seperator_spacing = 15pt
+  let title_separator_spacing = 15pt
   let title = [#title]
   //let title_height = 150pt //measure(title, styles).height
   let title_page_inner_margin_left = 8pt
@@ -103,9 +103,9 @@
             )
             #align(bottom)[#title]
           ],
-        v(title_seperator_spacing),
+        v(title_separator_spacing),
         line(length: 100%, stroke: tud_heading_line_thin_stroke),
-        v(3mm), // title_seperator_spacing
+        v(3mm), // title_separator_spacing
         //
         // sub block with reviewers and other text
         block(inset: (left: title_page_inner_margin_left))[
@@ -157,14 +157,14 @@
               // sub logo
               v(5mm),
               // height from design guidelines
-              if logo_institue_path != none {
-                box(inset: (right: logo_institue_offset_right), fill: black)[
+              if logo_institute_path != none {
+                box(inset: (right: logo_institute_offset_right), fill: black)[
                   #{
-                    if logo_institue_sizeing_type == "width" {
-                      image(logo_institue_path, width: tud_logo_width*(2/3))
+                    if logo_institute_sizeing_type == "width" {
+                      image(logo_institute_path, width: tud_logo_width*(2/3))
                     }
                     else {
-                      image(logo_institue_path, height: logo_tud_height*(2/3))
+                      image(logo_institute_path, height: logo_tud_height*(2/3))
                     }
                   }
                 ]

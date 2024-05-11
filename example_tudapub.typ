@@ -10,11 +10,13 @@
 #show: make-glossary
 
 
-#import "templates/tudapub/tudapub.typ": tudapub
-#import "templates/tudapub/tudacolors.typ": tuda_colors
+//#import "templates/tudapub/tudapub.typ": tudapub
+//#import "templates/tudapub/tudacolors.typ": tuda_colors
+#import "templates/lib.typ": *
 
 // equation sub numbering
 #show: equate.with(sub-numbering: true, number-mode: "label")
+
 
 // setup the template
 #show: tudapub.with(
@@ -45,6 +47,7 @@
   // Some example margins are defined in 'common/props.typ':
   //  - tud_page_margin_small  // same as title page margin
   //  - tud_page_margin_big
+  // E.g.   margin: tud_page_margin_small,
   // E.g.   margin: (
   //   top: 30mm,
   //   left: 31.5mm,
@@ -66,7 +69,14 @@
     thesis_statement_pursuant: true
   ),
 
-  thesis_statement_pursuant_include_english_translation: false
+  thesis_statement_pursuant_include_english_translation: false,
+
+  // pages after outline that will not be included in the outline
+  additional_pages_after_outline_table_of_contents: [
+    == List of Symbols
+    - $t$ - time
+    == List of Figures
+  ]
 )
 
 
@@ -215,7 +225,7 @@ Usage:
   )
 ]
 
-=== #strike[Ajust Equation spacing]
+=== #strike[Adjust Equation spacing]
 To reduce the spacing above and below block equations use:
 ```typst
 #show math.equation: set block(spacing: 0.1em) // does not work!
@@ -348,15 +358,15 @@ In the following, we show the show-command of this template with all doc and def
   // Path to an optional sub-logo of an institute containing the file name, has to be an SVG or picture.
   // Note that this path is relative to the location of this template file.
   // E.g. "logos/iasLogo.jpeg"
-  logo_institue_path: none,
+  logo_institute_path: none,
 
   // How to set the size of the optional sub-logo
   // either "width": use tud_logo_width*(2/3)
   // or     "height": use tud_logo_height*(2/3)
-  logo_institue_sizeing_type: "width",
+  logo_institute_sizeing_type: "width",
 
   // Move the optional sub-logo horizontally
-  logo_institue_offset_right: 0mm,
+  logo_institute_offset_right: 0mm,
 
   // An additional white box with content e.g. the institute, ... below the tud logo.
   // Disable it by setting its value to none.

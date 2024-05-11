@@ -20,29 +20,43 @@ For missing features, ideas or other problems you can just open an issue :wink:.
 | [tudapub](templates/tudapub/tudapub.typ) | <img src="img/tudapub_prev.png" height="300px"> | [example_tudapub.pdf](example_tudapub.pdf) <br/> [example_tudapub.typ](example_tudapub.typ) | Master and Bachelor thesis |
 
 ## Usage
-Create a folder for your writing project and download this template into the `templates` folder:
+Create a new typst project based on this template locally.
+```bash
+typst init @preview/<TODO_INSERT_NAME>
+```
+Or create a project on the typst web app based on this template.
+
+<details>
+<summary>Or do a manual installation of this template.</summary>
+For a manual setup create a folder for your writing project and download this template into the `templates` folder:
 
 ```bash
 mkdir my_thesis && cd my_thesis
 mkdir templates && cd templates
 git clone https://github.com/JeyRunner/tuda-typst-templates templates/
 ```
-Download the tud logo from [download.hrz.tu-darmstadt.de/protected/ULB/tuda_logo.pdf](https://download.hrz.tu-darmstadt.de/protected/ULB/tuda_logo.pdf) and put it into the `templates/tuda-typst-templates/templates/tudapub/logos` folder.
+</details>
+
+### Logo and Font Setup
+Download the tud logo from [download.hrz.tu-darmstadt.de/protected/ULB/tuda_logo.pdf](https://download.hrz.tu-darmstadt.de/protected/ULB/tuda_logo.pdf) and put it into the `logos` folder.
 Now execute the following script in the `logos` folder to convert it into an svg:
 
 ```bash
-cd templates/tuda-typst-templates/templates/tudapub/logos
+cd logos
 ./convert_logo.sh
 ```
 
 Also download the required fonts `Roboto` and `XCharter`:
 ```bash
-cd templates/tuda-typst-templates/templates/tudapub/fonts
+cd fonts
 ./download_fonts.sh
 ```
-Now you can install all fonts in the folders in `templates/tuda-typst-templates/templates/tudapub/fonts` on your system.
+Now you can install all fonts in the folders in `fonts` on your system.
 
+<details>
+<summary>Create a main.typ file for the manual template installation.</summary>
 Create a simple `main.typ` in the root folder (`my_thesis`) of your new project:
+
 ```js
 #import " templates/tuda-typst-templates/templates/tudapub/tudapub.typ": tudapub
 
@@ -58,10 +72,12 @@ Create a simple `main.typ` in the root folder (`my_thesis`) of your new project:
 Some Text
 ```
 
-And compile it:
+</details>
+
+### Compile you typst file
 
 ```bash
-typst --watch main.typ --font-path templates/tuda-typst-templates/templates/tudapub/fonts
+typst --watch main.typ --font-path fonts/
 ```
 
 This will watch your file and recompile it to a pdf when the file is saved. For writing, you can use [Vscode](https://code.visualstudio.com/) with these extensions: [Typst LSP](https://marketplace.visualstudio.com/items?itemName=nvarner.typst-lsp) and [Typst Preview](https://marketplace.visualstudio.com/items?itemName=mgt19937.typst-preview).
@@ -84,7 +100,7 @@ What also works is to uninstall/deactivate all `Roboto condensed` fonts from you
   * [ ] list of figures, tables, ... other
   * [ ] list of abbreviations (glossary)
   * [x] references
-* [ ] references list: use same citation style is 'numberic' in latex
+* [ ] references list: use same citation style is 'numeric' in latex
 * [ ] reduce vertical spacing between adjacent headings when there is no text in between (looks better, latex template also does this)
 * [x] add arguments for optional pages:
   * after title page
