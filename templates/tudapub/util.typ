@@ -39,6 +39,7 @@
   ]
   if measured.width == 0pt [
     #rect(stroke: (paint: red), radius: 1mm, inset: 1.5em, width: 100%)[
+      #set text(fallback: true)
       #set heading(numbering: none)
       #show link: it => underline(text(blue)[#it])
       === Error - Can Not Find Font "#font-name"
