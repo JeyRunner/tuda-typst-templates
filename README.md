@@ -17,7 +17,8 @@ For missing features, ideas or other problems you can just open an issue :wink:.
 
 | Template | Preview | Example | Scope |
 |----------|---------|---------|-------|
-| [tudapub](templates/tudapub/tudapub.typ) | <img src="templates/tudapub/preview/tudapub_prev-01.png" height="300px"> | [example_tudapub.pdf](example_tudapub.pdf) <br/> [example_tudapub.typ](example_tudapub.typ) | Master and Bachelor thesis |
+| [tudapub](templates/tudapub/template/tudapub.typ) | <img src="templates/tudapub/preview/tudapub_prev-01.png" height="300px"> | [example_tudapub.pdf](example_tudapub.pdf) <br/> [example_tudapub.typ](example_tudapub.typ) | Master and Bachelor thesis |
+| [tuda-exercise](templates/tudaexercise/template/tudaexercise.typ) | <img src="templates/tudapub/preview/tudaexercies_prev-01.png" height="300px"> | [example_tudaexercise-TODO.pdf](TODO) <br/> [example_tudaexercise-TODO-.typ](TODO.typ) | Exercises |
 
 ## Usage
 Create a new typst project based on this template locally.
@@ -39,17 +40,17 @@ git clone https://github.com/JeyRunner/tuda-typst-templates templates/
 </details>
 
 ### Logo and Font Setup
-Download the tud logo from [download.hrz.tu-darmstadt.de/protected/ULB/tuda_logo.pdf](https://download.hrz.tu-darmstadt.de/protected/ULB/tuda_logo.pdf) and put it into the `logos` folder.
-Now execute the following script in the `logos` folder to convert it into an svg:
+Download the tud logo from [download.hrz.tu-darmstadt.de/protected/ULB/tuda_logo.pdf](https://download.hrz.tu-darmstadt.de/protected/ULB/tuda_logo.pdf) and put it into the `asssets/logos` folder.
+Now execute the following script in the `asssets/logos` folder to convert it into an svg:
 
 ```bash
-cd logos
+cd asssets/logos
 ./convert_logo.sh
 ```
 
 Also download the required fonts `Roboto` and `XCharter`:
 ```bash
-cd fonts
+cd asssets/fonts
 ./download_fonts.sh
 ```
 Now you can install all fonts in the folders in `fonts` on your system.
@@ -59,7 +60,7 @@ Now you can install all fonts in the folders in `fonts` on your system.
 Create a simple `main.typ` in the root folder (`my_thesis`) of your new project:
 
 ```js
-#import " templates/tuda-typst-templates/templates/tudapub/tudapub.typ": tudapub
+#import "templates/tuda-typst-templates/templates/tudapub/template/lib.typ": *
 
 #show: tudapub.with(
   title: [
@@ -78,7 +79,7 @@ Some Text
 ### Compile you typst file
 
 ```bash
-typst --watch main.typ --font-path fonts/
+typst --watch main.typ --font-path asssets/fonts/
 ```
 
 This will watch your file and recompile it to a pdf when the file is saved. For writing, you can use [Vscode](https://code.visualstudio.com/) with these extensions: [Typst LSP](https://marketplace.visualstudio.com/items?itemName=nvarner.typst-lsp) and [Typst Preview](https://marketplace.visualstudio.com/items?itemName=mgt19937.typst-preview). Or use the [typst web app](https://typst.app/) (here you need to upload the logo and the fonts).
