@@ -11,6 +11,8 @@ import re
 # gitignore style pattern relative to repo root
 publish_ignore_files = """
 /example_tudapub.pdf
+/example_tudapub.typ
+/.typos.toml
 
 /.git/
 /scripts/
@@ -28,6 +30,12 @@ publish_ignore_files = """
 /assets/
 
 """
+
+# template folder names
+templates = [
+    'tudapub',
+    'tudaexercise'
+]
 
 
 # set working dir to repo root
@@ -145,4 +153,5 @@ def copy_template(copy_dest_dir, template_folder_name = 'tudapub'):
         readme.truncate()
 
 
-copy_template(copy_dest_dir=copy_dest_dir)
+for name in templates:
+    copy_template(copy_dest_dir=copy_dest_dir, template_folder_name=name)
