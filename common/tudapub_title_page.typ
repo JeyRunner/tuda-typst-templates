@@ -1,6 +1,6 @@
 #import "props.typ": *
 #import "format.typ": *
-#import "../tudacolors.typ": tuda_colors
+#import "tudacolors.typ": tuda_colors
 
 
 // note the page needs to have the correct margins.

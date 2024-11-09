@@ -7,7 +7,7 @@
 
 
 #import "../templates/tudapub/tudapub.typ": tudapub
-#import "../templates/tudapub/tudacolors.typ": tuda_colors
+#import "../templates/tudapub/common/tudacolors.typ": tuda_colors
 #import "../templates/tudapub/common/props.typ": *
 
 

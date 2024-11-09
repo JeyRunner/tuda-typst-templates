@@ -43,7 +43,7 @@
 
   bib: bibliography("tests/latex_ref/DEMO-TUDaBibliography.bib", full: true), //, style: "spie")
 
-  logo_tuda: image("templates/tudapub/logos/tuda_logo.svg"),
+  logo_tuda: image("logos/tuda_logo.svg"),
   
   // logo_institute: image("templates/tudapub/logos/iasLogo.jpeg"),
   // logo_institute_sizeing_type: "width",
