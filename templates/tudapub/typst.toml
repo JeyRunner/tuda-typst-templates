@@ -1,7 +1,7 @@
 [package]
 name = "athena-tu-darmstadt-thesis"
 version = "0.1.0"
-entrypoint = "templates/lib.typ"
+entrypoint = "template/lib.typ"
 authors = ["JeyRunner <https://github.com/JeyRunner>"]
 license = "MIT"
 description = "Thesis template for TU Darmstadt (Technische Universität Darmstadt)."
@@ -11,6 +11,6 @@ categories = ["thesis"]
 exclude = ["tests", "example_tudapub.pdf", "example_tudapub.typ"]
 
 [template]
-path = "templates_examples/tudapub"
+path = "example"
 entrypoint = "main.typ"
-thumbnail = "img/tudapub_prev-01.png"
+thumbnail = "preview/tudapub_prev-01.png"

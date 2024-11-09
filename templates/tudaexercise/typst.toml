@@ -1,7 +1,7 @@
 [package]
 name = "athena-tu-darmstadt-exercise"
 version = "0.1.0"
-entrypoint = "templates/lib.typ"
+entrypoint = "template/lib.typ"
 authors = ["JeyRunner <https://github.com/JeyRunner>"]
 license = "MIT"
 description = "Exercise template for TU Darmstadt (Technische Universität Darmstadt)."
@@ -11,6 +11,6 @@ categories = ["thesis"]
 exclude = ["tests", "example_tudapub.pdf", "example_tudapub.typ"]
 
 [template]
-path = "templates_examples/tudaexercise"
+path = "example"
 entrypoint = "main.typ"
-thumbnail = "img/tudaexercise_prev-01.png"
+thumbnail = "preview/tudaexercise_prev-01.png"

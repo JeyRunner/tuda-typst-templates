@@ -16,15 +16,15 @@ publish_ignore_files = """
 
 /.git/
 /scripts/
-# /templates/tudapub/fonts
-# /templates/tudapub/logos
+
 /tests/
 /tud_design_guide/
 
-#/templates_examples/tudapub/logos/*
-!/template_examples/tudapub/logos/*.sh
-#/templates_examples/tudapub/fonts/*
-!/template_examples/tudapub/fonts/*.sh
+/templates_examples/*/logos/*
+!/templates_examples/*/logos/*.sh
+/templates_examples/*/fonts/*
+!/templates_examples/*/fonts/*.sh
+/templates_examples/*/template
 
 /common/
 /assets/
@@ -80,6 +80,31 @@ elif args.universe is not None:
     copy_dest_dir = args.universe + '/packages/preview/'
 
 
+def copy_by_ignore_pattern(root, pattern: str, copy_dest_dir):
+    ignore_pattern = pathspec.PathSpec.from_lines(
+        pathspec.patterns.GitWildMatchPattern, 
+        pattern.splitlines()
+    )
+    # filter files and also resolve symlinks
+    for match in ignore_pattern.match_tree_files(root=root, negate=True):
+        dest = copy_dest_dir / match
+        print(f'  - copy {match} to {dest}')
+        os.makedirs(pathlib.Path(dest).parent, exist_ok=True)
+        shutil.copy(match, dest)
+
+
+def delete_by_ignore_pattern(root, pattern: str):
+    ignore_pattern = pathspec.PathSpec.from_lines(
+        pathspec.patterns.GitWildMatchPattern, 
+        pattern.splitlines()
+    )
+    # filter files and also resolve symlinks
+    for match in ignore_pattern.match_tree_files(root=root, negate=False):
+        orig = root / match
+        print(f'  - remove {orig}')
+        #os.remove(orig)
+
+
 def copy_template(copy_dest_dir, template_folder_name = 'tudapub'):
     template_folder = pathlib.Path('templates') / template_folder_name
 
@@ -104,11 +129,13 @@ def copy_template(copy_dest_dir, template_folder_name = 'tudapub'):
     os.makedirs(copy_dest_dir, exist_ok=True)
 
     # filter files and also resolve symlinks
-    for match in ignore_pattern.match_tree_files(root=repo_root, negate=True):
-        dest = copy_dest_dir / match
-        print(f'  - copy {match} to {dest}')
-        os.makedirs(pathlib.Path(dest).parent, exist_ok=True)
-        shutil.copy(match, dest)
+    copy_by_ignore_pattern(repo_root, publish_ignore_files, copy_dest_dir)
+    delete_by_ignore_pattern(copy_dest_dir, f"""
+    /templates_examples/*/logos/*
+    !/templates_examples/*/logos/*.sh
+    /templates_examples/*/fonts/*
+    !/template_examples/*/fonts/*.sh
+    """)
 
     
     # now move template sub-folder to root dir and remove other templates
@@ -120,6 +147,10 @@ def copy_template(copy_dest_dir, template_folder_name = 'tudapub'):
     # remove template folder
     shutil.rmtree(copy_dest_dir / 'templates')
     
+    # copy example
+    examples_folder = copy_dest_dir / 'templates_examples'
+    shutil.copytree(examples_folder / template_folder_name, copy_dest_dir / 'example')
+    shutil.rmtree(examples_folder)
 
 
     # replace links in readme -> add full repo path in front
