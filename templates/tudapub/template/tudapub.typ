@@ -1,5 +1,5 @@
 #import "common/tudacolors.typ": tuda_colors
-#import "common/outline.typ": *
+#import "common/tudapub_outline.typ": *
 #import "common/props.typ": *
 #import "common/tudapub_title_page.typ": *
 #import "common/thesis_statement_pursuant.typ": *

@@ -1,6 +1,6 @@
 tud_design_guide/**
 templates/tudapub/fonts/*/*
-fonts/*/*
+assets/fonts/*/*
 
 *.pdf
 tudapub*.pdf

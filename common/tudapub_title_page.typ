@@ -33,7 +33,7 @@
   location: "Darmstadt",
 
   // array of the names of the reviewers
-  reviewer_names: ("SuperSupervisor 1", "SuperSupervisor 2"),
+  reviewer_names: ("Super Supervisor 1", "Super Supervisor 2"),
 
   // tuda logo, has to be a svg. E.g. image("PATH/TO/LOGO")
   logo_tuda: none,
@@ -144,7 +144,11 @@
           //let tud_logo = image(logo_tuda_path, height: logo_tud_height)
           let tud_logo = [
                 #set image(height: logo_tud_height)
-                #logo_tuda
+                #if logo_tuda == none {
+                  box(fill: white)[logo_tuda \ not set!]
+                } else {
+                  logo_tuda
+                } 
           ]
           let tud_logo_width = measure(tud_logo, styles).width
           let tud_logo_offset_right = -6.3mm
