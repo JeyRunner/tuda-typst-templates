@@ -1,5 +1,5 @@
 
-#import "@preview/athena-tu-darmstadt-thesis:0.1.0": *
+#import "@preview/athena-tu-darmstadt-exercise:0.1.0": *
 
 
 
@@ -7,8 +7,7 @@
 
 // test content
 = First Chapter
-A first demo chapter. 
-An example reference is @TUDaGuideline.
+A first demo chapter.
 
 
 == Some Basic Elements
