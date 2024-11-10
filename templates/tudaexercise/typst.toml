@@ -7,7 +7,7 @@ license = "MIT"
 description = "Exercise template for TU Darmstadt (Technische Universität Darmstadt)."
 repository = "https://github.com/JeyRunner/tuda-typst-templates"
 keywords = ["TU Darmstadt", "Technische Universität Darmstadt", "Exercise"]
-categories = ["thesis"]
+categories = ["exercise"]
 exclude = ["tests", "example_tudapub.pdf", "example_tudapub.typ"]
 
 [template]

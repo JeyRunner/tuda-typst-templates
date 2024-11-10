@@ -1,8 +1,5 @@
 #import "common/tudacolors.typ": tuda_colors
-#import "common/tudapub_outline.typ": *
 #import "common/props.typ": *
-#import "common/tudapub_title_page.typ": *
-#import "common/thesis_statement_pursuant.typ": *
 #import "common/util.typ": *
 #import "common/footnotes.typ": *
 #import "common/headings.typ": *
@@ -167,7 +164,7 @@
   )
   show heading.where(
   ): it => {
-    assert(it.level <= 3)
+    assert(it.level <= 2)
 
     let title-prefix = if it.level <= 1 {"Taks "} else {""}
     tud-heading-with-lines(
@@ -187,7 +184,11 @@
 
   ///////////////////////////////////////
   // configure footnotes
-  show: tud-footnote-show
+  set footnote.entry(
+    separator: line(length: 40%, stroke: 0.5pt)
+  )
+  // somehow broken: 
+  //show footnote.entry: it => tud-footnote(it)
 
 
   ///////////////////////////////////////
