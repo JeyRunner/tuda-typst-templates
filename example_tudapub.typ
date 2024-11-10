@@ -12,7 +12,7 @@
 
 //#import "templates/tudapub/tudapub.typ": tudapub
 //#import "templates/tudapub/tudacolors.typ": tuda_colors
-#import "templates/lib.typ": *
+#import "templates/tudapub/template/lib.typ": *
 
 // equation sub numbering
 #show: equate.with(sub-numbering: true, number-mode: "label")
@@ -41,9 +41,9 @@
     For instructions on how to set up this template see @sec_usage.
   ],
 
-  bib: bibliography("tests/latex_ref/DEMO-TUDaBibliography.bib", full: true), //, style: "spie")
+  bib: bibliography("tests/tudapub/latex_ref/DEMO-TUDaBibliography.bib", full: true), //, style: "spie")
 
-  logo_tuda: image("templates/tudapub/logos/tuda_logo.svg"),
+  logo_tuda: image("assets/logos/tuda_logo.svg"),
   
   // logo_institute: image("templates/tudapub/logos/iasLogo.jpeg"),
   // logo_institute_sizeing_type: "width",

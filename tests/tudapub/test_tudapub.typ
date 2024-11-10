@@ -6,9 +6,9 @@
 #show: make-glossary
 
 
-#import "../templates/tudapub/tudapub.typ": tudapub
-#import "../templates/tudapub/tudacolors.typ": tuda_colors
-#import "../templates/tudapub/common/props.typ": *
+#import "template/tudapub.typ": tudapub
+#import "template/common/tudacolors.typ": tuda_colors
+#import "template/common/props.typ": *
 
 
 // setup
@@ -27,6 +27,7 @@
 
 
   abstract: [The abstract...],
+  logo_tuda: image("logos/tuda_logo.svg"),
 
   margin: tud_page_margin_big,
 
