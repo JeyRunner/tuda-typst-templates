@@ -1,238 +1,149 @@
 #import "common/tudacolors.typ": tuda_colors
-#import "common/props.typ": *
-#import "common/util.typ": *
-#import "common/footnotes.typ": *
-#import "common/headings.typ": *
-#import "common/page_components.typ": *
+#import "title.typ": *
+#import "sections.typ": tuda-section, tuda-subsection
+#import "locales.typ": *
 
-#import "@preview/i-figured:0.2.3"
+#let tudaexercise(
+  accentcolor: "0b",
+  // Supported: "eng", "ger"
+  locale: "eng",
 
-
-#let tuda-exercise(
-  title: [Title],
-  exercise-number: 1,
-
-  // The code of the accentcolor.
-  // A list of all available accentcolors is in the list tuda_colors
-  accentcolor: "9c",
-
-  // Size of the main text font
-  fontsize: 10pt,//10.909pt, //11pt,
-
-  // Currently just a4 is supported
-  paper: "a4",
-
-  // Author name as text, e.g "Albert Author"
-  author: "An Author",
-
-  // Date of submission as string
-  data: datetime(
-    year: 2023,
-    month: 10,
-    day: 4,
+  margins: (
+    top: 15mm,
+    left: 15mm,
+    right: 15mm,
+    bottom: 20mm,
   ),
 
-  // language for correct hyphenation
-  language: "eng",
+  // Currently not supported as typst lacks the feature of dynamically adjusting page margins
+  headline: ("title", "name", "id"),
 
-  // Set the margins of the content pages.
-  // The title page is not affected by this.
-  // Some example margins are defined in 'common/props.typ':
-  //  - tud_page_margin_small  // same as title page margin
-  //  - tud_page_margin_big
-  // E.g.   margin: (
-  //   top: 30mm,
-  //   left: 31.5mm,
-  //   right: 31.5mm,
-  //   bottom: 56mm
-  // ),
-  margin: tud_page_margin_small,
+  paper: "a4",
 
-  show-extended-header: true,
+  logo_path: none,
+
+  info: (
+    title: none,
+    // Currently not supported
+    header_title: none,
+    subtitle: none,
+    author: none,
+    term: none,
+    date: none,
+    sheetnumber: none,
+  ),
 
   body
+) = {
+  if paper != "a4" {
+    panic("currently just a4 paper is supported")
+  }
 
-) = context {
-  // checks
-  //assert(tuda_colors.keys().contains(accentcolor), "accentcolor unknown")
-  //assert.eq(paper, "a4", "currently just a4 is supported as paper size")
-  //[#paper]
+  let ex = 4.3pt // typst does not have ex
 
-  // vars
-  let accentcolor_rgb = tuda_colors.at(accentcolor)
-  let heading_line_spacing = 4.4pt
-  let heading_margin_before = 12pt
-  let heading_3_margin_before = 12pt
-  let font-default = "XCharter"
-
-
-  // Set document metadata.
   set document(
-    title: title,
-    author: author
+    title: info.subtitle, // Should probably add the sheet number or something else
+    author: info.author
   )
 
-  // Set the default body font.
   set par(
     justify: true,
     //leading: 4.7pt//0.42em//4.7pt   // line spacing
-    leading: 4.8pt//0.42em//4.7pt   // line spacing
+    leading: 4.8pt,//0.42em//4.7pt   // line spacing
+    spacing: 1.1em
   )
-  show par: set block(below: 1.1em) // was 1.2em
-
-
+  
   set text(
-    font: font-default,
-    size: fontsize,
+    font: "XCharter",
+    size: 10.909pt,
     fallback: false,
-    lang: language,
     kerning: true,
     ligatures: false,
-    //spacing: 92%  // to make it look like the latex template
-    //spacing: 84%  // to make it look like the latex template
     spacing: 91%  // to make it look like the latex template
   )
 
-  if paper != "a4" {
-    panic("currently just a4 as paper is supported")
+  let dict = if locale == "eng" {
+    dict_en
+  } else if locale == "ger" {
+    dict_de
+  } else {
+    panic("Unsupported locale")
   }
 
+  set heading(numbering: "1.a)")
 
+  let title_rule = 1.2pt
+
+  show heading: it => {
+    let c = counter(heading).get()
+    if it.level == 1 {
+      let sec_title = dict.task + " "
+      if info.sheetnumber != none {
+        sec_title += str(info.sheetnumber) + "."
+      }
+      sec_title += str(c.first()) + "."
+      tuda-section(sec_title + " " + it.body)
+    } else if it.level == 2 {
+      let sec_title = ""
+      if info.sheetnumber != none {
+        sec_title += str(info.sheetnumber) + "."
+      }
+      sec_title += numbering("1a)", c)
+      tuda-subsection(sec_title + " " + it.body)
+    } else {
+      it
+    }
+  }
+
+  let ty_accentcolor = color.rgb(tuda_colors.at(accentcolor))
+
+  let identbar = rect(
+    fill: ty_accentcolor,
+    width: 100%,
+    height: 4mm
+  )
+
+  let header_frontpage = grid(
+    rows: auto,
+    row-gutter: 1.4mm + 0.25mm,
+    identbar,
+    line(length: 100%, stroke: title_rule),
+  )
+
+  let inner_page_margin_top = 22pt
+  let logo_height = 22mm
   
 
-  ///////////////////////////////////////
-  // page setup
-  // with header and footer
-  let header = tud-header(
-    accentcolor_rgb: accentcolor_rgb,
-    content: if show-extended-header {
-      set text(
-        font: font-default,
-        size: fontsize
-      )
-      v(2.5mm)
-      stack(
-        [Exercise #title],
-        v(2mm),
-        [Last Name, First Name: ],
-        v(2.5mm),
-        line(length: 100%, stroke: tud_heading_line_thin_stroke),
-      ) 
-    }
-  )
+  context {
+    let height_header = measure(header_frontpage).height
 
-  let footer = [
-    #text(
-        font: "Roboto",
-        stretch: 100%,
-        fallback: false,
-        weight: "regular",
-        size: 10pt
-    )[
-      #set align(right)
-      // context needed for page counter for typst >= 0.11.0
-      #context [
-        #let counter_disp = counter(page).display()
-        #counter_disp
-      ]
-    ]
-  ]
-
-  let header_height = measure(header).height
-  let footer_height = measure(footer).height
-
-  // inner page margins (from header to text and text to footer)
-  let inner_page_margin_top = 5mm //0pt//20pt //3mm
-  let inner_page_margin_bottom = 30pt
-
-
-
-
-
-  ////////////////////////////
-  // content page setup
-  let content_page_margin_full_top = margin.top + inner_page_margin_top + 1*header_height
-
-
-  ///////////////////////////////////////
-  // headings
-  set heading(
-    numbering: (..numbers) => {
-      [#exercise-number.]
-      numbering("1 a", ..numbers)
-    }
-  )
-  show heading.where(
-  ): it => {
-    assert(it.level <= 2)
-
-    let title-prefix = if it.level <= 1 {"Taks "} else {""}
-    tud-heading-with-lines(
-        heading_margin_before: heading_margin_before,
-        heading_line_spacing: heading_line_spacing,
-        text-size: 10pt,
-        text-prefix: title-prefix,
-        counter-suffix: if it.level > 1 {")"} else {":"},
-        text-weight: if it.level > 1 {"regular"} else {"bold"},
-        it
+    set page(
+      paper: paper,
+      numbering: "1",
+      number-align: right,
+      margin: (
+        top: margins.top + inner_page_margin_top + height_header, 
+        bottom: margins.bottom, 
+        left: margins.left, 
+        right: margins.right
+      ),
+      header: header_frontpage,
+      header-ascent: inner_page_margin_top,
+      footer: none,
+      footer-descent: 0mm
     )
-    
+
+    tuda-make-title(
+      inner_page_margin_top, 
+      title_rule,
+      ty_accentcolor, 
+      logo_path, 
+      logo_height, 
+      info,
+      dict
+      )
+
+    body
   }
 
-
-
-
-  ///////////////////////////////////////
-  // configure footnotes
-  set footnote.entry(
-    separator: line(length: 40%, stroke: 0.5pt)
-  )
-  // somehow broken: 
-  //show footnote.entry: it => tud-footnote(it)
-
-
-  ///////////////////////////////////////
-  // Display font checks
-  check-font-exists("Roboto")
-  check-font-exists("XCharter")
-
-
-
-
-
-  ///////////////////////////////////////
-  // Content pages
-  
-  // body has different margins than title page
-  // @todo some bug seems to insert an empty page at the end when content (title page) appears before this second 'set page'
-  set page(
-    margin: (
-      left: margin.left, //15mm,
-      right: margin.right, //15mm,
-      top: margin.top + inner_page_margin_top + 1*header_height,  // 15mm
-      bottom: margin.bottom + inner_page_margin_bottom + footer_height //20mm
-    ),
-     // header
-    header: header,
-    // don't move header up -> so that upper side is at 15mm from top
-    header-ascent: inner_page_margin_top,//0%,
-    // footer
-    footer: footer,
-    footer-descent: inner_page_margin_bottom //footer_height // @todo
-  )
-
-  // disable heading outlined for outline
-  set heading(outlined: false)
-
-  // restart page counter
-  counter(page).update(1)
-  // restart heading counter
-  counter(heading).update(0)
-
-
-  // enable heading outlined for body
-  set heading(outlined: true)
-
-  // Display the paper's contents.
-  body
 }
