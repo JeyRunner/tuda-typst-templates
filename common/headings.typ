@@ -2,6 +2,8 @@
 
 #let tud_body_line_height = tud_header_line_height / 2
 
+#let line_color = state("section_line_color", black)
+
 #let tud-heading-with-lines(
   heading_margin_before: 0mm,
   heading_line_spacing: 0mm,
@@ -46,7 +48,7 @@
   ]
 }
 
-#let tuda-section-lines(above, below, body) = {
+#let tuda-section-lines(above, below, body) = context {
   block(
     width: 100%,
     inset: 0mm,
@@ -55,9 +57,9 @@
     below: 1em,
     {
       set block(spacing: 0.2em)
-      line(length: 100%, stroke: tud_body_line_height)
+      line(length: 100%, stroke: tud_body_line_height + line_color.get())
       body
-      line(length: 100%, stroke: tud_body_line_height)
+      line(length: 100%, stroke: tud_body_line_height + line_color.get())
     }
   )
 }

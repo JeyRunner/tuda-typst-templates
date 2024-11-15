@@ -67,7 +67,7 @@
         }
       )
       v(6pt)
-      line(length: 100%, stroke: title_rule / 2)
+      line(length: 100%, stroke: title_rule / 2 + text_color)
       if info.term != none or info.date != none or info.sheetnumber != none {
         set text(fill: text_on_accent_color)
         grid(
@@ -87,7 +87,7 @@
             dict.sheet + " " + str(info.sheetnumber)
           }
         )
-        line(length: 100%, stroke: title_rule  /2)
+        line(length: 100%, stroke: title_rule/2 + text_color)
       }
     }
   )

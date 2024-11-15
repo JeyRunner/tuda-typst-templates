@@ -1,6 +1,6 @@
 #import "common/tudacolors.typ": tuda_colors, text_colors
 #import "common/props.typ": tud_exercise_page_margin, tud_header_line_height, tud_inner_page_margin_top, tud_title_logo_height
-#import "common/headings.typ": tuda-section, tuda-subsection
+#import "common/headings.typ": tuda-section, tuda-subsection, line_color as section_line_color
 #import "common/util.typ": check-font-exists
 #import "common/colorutil.typ": calc-relative-luminance, calc-contrast
 #import "common/dictutil.typ": overwrite-dict
@@ -53,6 +53,15 @@
   } else {
     black
   }
+
+  section_line_color.update(text_color)
+
+  let background_color = if design.darkmode {
+    rgb(29,31,33)
+  } else {
+    white
+  }
+  
 
   set document(
     title: info.subtitle + sym.dash.em + info.title, // Should probably add the sheet number or something else
@@ -135,7 +144,7 @@
     rows: auto,
     row-gutter: 1.4mm + 0.25mm,
     identbar,
-    line(length: 100%, stroke: tud_header_line_height),
+    line(length: 100%, stroke: tud_header_line_height + text_color),
   )
 
   context {
@@ -154,7 +163,8 @@
       header: header_frontpage,
       header-ascent: tud_inner_page_margin_top,
       footer: none,
-      footer-descent: 0mm
+      footer-descent: 0mm,
+      fill: background_color
     )
 
     tuda-make-title(
