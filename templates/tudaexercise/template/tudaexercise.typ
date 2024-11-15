@@ -9,7 +9,7 @@
 
 #let design_defaults = (
   accentcolor: "0b",
-  colorback: false,
+  colorback: true,
   darkmode: false
 )
 
@@ -48,6 +48,12 @@
   let margins = overwrite-dict(margins, tud_exercise_page_margin)
   let design = overwrite-dict(design, design_defaults)
 
+  let text_color = if design.darkmode {
+    white
+  } else {
+    black
+  }
+
   set document(
     title: info.subtitle + sym.dash.em + info.title, // Should probably add the sheet number or something else
     author: info.author
@@ -66,7 +72,8 @@
     fallback: false,
     kerning: true,
     ligatures: false,
-    spacing: 91%  // to make it look like the latex template
+    spacing: 91%, // to make it look like the latex template,
+    fill: text_color
   )
 
   let dict = if language == "eng" {
@@ -155,6 +162,8 @@
       tud_header_line_height,
       ty_accentcolor,
       text_on_accent_color,
+      text_color,
+      design.colorback,
       logo, 
       tud_title_logo_height, 
       info,
