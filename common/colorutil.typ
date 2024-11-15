@@ -19,5 +19,5 @@
 #let calc-contrast(rl1, rl2) = {
   let l1 = calc.max(rl1, rl2)
   let l2 = calc.min(rl1, rl2)
-  return (rl1 + 0.05) / (rl2 + 0.05)
+  return (l1 + 0.05) / (l2 + 0.05)
 }

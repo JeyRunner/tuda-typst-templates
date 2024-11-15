@@ -4,6 +4,7 @@
   inner_page_margin_top,
   title_rule,
   accent_color,
+  text_on_accent_color,
   logo_element,
   logo_height,
   info,
@@ -22,7 +23,7 @@
         grid(
           columns: (1fr, auto),
           box(inset: 3mm,{
-            set text(font: "Roboto", weight: "bold", fill: white)
+            set text(font: "Roboto", weight: "bold", fill: text_on_accent_color)
             grid(row-gutter: 1em,
               if info.title != none {
                 text(info.title, size: 20pt)
@@ -53,7 +54,7 @@
         v(6pt)
         line(length: 100%, stroke: title_rule / 2)
         if info.term != none or info.date != none or info.sheetnumber != none {
-          set text(fill: white)
+          set text(fill: text_on_accent_color)
           grid(
             inset: (left: 3mm),
             row-gutter: 0.4em,

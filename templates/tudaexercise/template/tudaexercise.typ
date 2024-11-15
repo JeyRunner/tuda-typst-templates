@@ -153,7 +153,8 @@
     tuda-make-title(
       tud_inner_page_margin_top, 
       tud_header_line_height,
-      ty_accentcolor, 
+      ty_accentcolor,
+      text_on_accent_color,
       logo, 
       tud_title_logo_height, 
       info,
