@@ -1,26 +1,30 @@
-#import "common/tudacolors.typ": tuda_colors
+#import "common/tudacolors.typ": tuda_colors, text_colors
+#import "common/props.typ": tud_exercise_page_margin, tud_header_line_height, tud_inner_page_margin_top, tud_title_logo_height
+#import "common/headings.typ": tuda-section, tuda-subsection
+#import "common/util.typ": check-font-exists
+#import "common/colorutil.typ": calc-relative-luminance, calc-contrast
+#import "common/dictutil.typ": overwrite-dict
 #import "title.typ": *
-#import "sections.typ": tuda-section, tuda-subsection
 #import "locales.typ": *
 
-#let tudaexercise(
+#let design_defaults = (
   accentcolor: "0b",
-  // Supported: "eng", "ger"
-  locale: "eng",
+  colorback: false,
+  darkmode: false
+)
 
-  margins: (
-    top: 15mm,
-    left: 15mm,
-    right: 15mm,
-    bottom: 20mm,
-  ),
+#let tudaexercise(
+  // Supported: "eng", "ger"
+  language: "eng",
+
+  margins: tud_exercise_page_margin,
 
   // Currently not supported as typst lacks the feature of dynamically adjusting page margins
   headline: ("title", "name", "id"),
 
   paper: "a4",
 
-  logo_path: none,
+  logo: none,
 
   info: (
     title: none,
@@ -33,16 +37,19 @@
     sheetnumber: none,
   ),
 
+  design: design_defaults,
+
   body
 ) = {
   if paper != "a4" {
     panic("currently just a4 paper is supported")
   }
 
-  let ex = 4.3pt // typst does not have ex
+  let margins = overwrite-dict(margins, tud_exercise_page_margin)
+  let design = overwrite-dict(design, design_defaults)
 
   set document(
-    title: info.subtitle, // Should probably add the sheet number or something else
+    title: info.subtitle + sym.dash.em + info.title, // Should probably add the sheet number or something else
     author: info.author
   )
 
@@ -62,40 +69,54 @@
     spacing: 91%  // to make it look like the latex template
   )
 
-  let dict = if locale == "eng" {
+  let dict = if language == "eng" {
     dict_en
-  } else if locale == "ger" {
+  } else if language == "ger" {
     dict_de
   } else {
-    panic("Unsupported locale")
+    panic("Unsupported language")
   }
 
-  set heading(numbering: "1.a)")
-
-  let title_rule = 1.2pt
+  set heading(numbering: (..numbers) => {
+    if info.sheetnumber != none {
+      numbering("1.1a", info.sheetnumber, ..numbers)
+    } else {
+      numbering("1a", ..numbers)
+    }
+  })
 
   show heading: it => {
-    let c = counter(heading).get()
+    if not it.outlined or it.numbering == none {
+      it
+      return
+    }
+    let c = counter(heading).display(it.numbering)
     if it.level == 1 {
-      let sec_title = dict.task + " "
-      if info.sheetnumber != none {
-        sec_title += str(info.sheetnumber) + "."
-      }
-      sec_title += str(c.first()) + "."
-      tuda-section(sec_title + " " + it.body)
+      tuda-section(dict.task + " " + c + ": " + it.body)
     } else if it.level == 2 {
-      let sec_title = ""
-      if info.sheetnumber != none {
-        sec_title += str(info.sheetnumber) + "."
-      }
-      sec_title += numbering("1a)", c.at(0), c.at(1))
-      tuda-subsection(sec_title + " " + it.body)
+      tuda-subsection(c + ") " + it.body)
     } else {
       it
     }
   }
 
-  let ty_accentcolor = color.rgb(tuda_colors.at(accentcolor))
+  let ty_accentcolor = if type(design.accentcolor) == color {
+    design.accentcolor
+  } else if type(design.accentcolor) == str {
+    rgb(tuda_colors.at(design.accentcolor))
+  } else {
+    panic("Unsupported color format. Either pass a color code as a string or pass an actual color.")
+  }
+  let text_on_accent_color = if type(design.accentcolor) == str {
+    text_colors.at(design.accentcolor)
+  } else {
+    let lum = calc-relative-luminance(design.accentcolor)
+    if calc-contrast(lum, 0) > calc-contrast(lum, 1) {
+      black
+    } else {
+      white
+    }
+  }
 
   let identbar = rect(
     fill: ty_accentcolor,
@@ -107,12 +128,8 @@
     rows: auto,
     row-gutter: 1.4mm + 0.25mm,
     identbar,
-    line(length: 100%, stroke: title_rule),
+    line(length: 100%, stroke: tud_header_line_height),
   )
-
-  let inner_page_margin_top = 22pt
-  let logo_height = 22mm
-  
 
   context {
     let height_header = measure(header_frontpage).height
@@ -122,26 +139,29 @@
       numbering: "1",
       number-align: right,
       margin: (
-        top: margins.top + inner_page_margin_top + height_header, 
+        top: margins.top + tud_inner_page_margin_top + height_header, 
         bottom: margins.bottom, 
         left: margins.left, 
         right: margins.right
       ),
       header: header_frontpage,
-      header-ascent: inner_page_margin_top,
+      header-ascent: tud_inner_page_margin_top,
       footer: none,
       footer-descent: 0mm
     )
 
     tuda-make-title(
-      inner_page_margin_top, 
-      title_rule,
+      tud_inner_page_margin_top, 
+      tud_header_line_height,
       ty_accentcolor, 
-      logo_path, 
-      logo_height, 
+      logo, 
+      tud_title_logo_height, 
       info,
       dict
       )
+
+    check-font-exists("Roboto")
+    check-font-exists("XCharter")
 
     body
   }

@@ -4,7 +4,7 @@
   inner_page_margin_top,
   title_rule,
   accent_color,
-  logo_path,
+  logo_element,
   logo_height,
   info,
   dict
@@ -39,10 +39,13 @@
           }
           ),
           { 
-            if logo_path != none {
+            if logo_element != none {
               move(
                 dx: 6mm,
-                image(logo_path,height: logo_height)
+                {
+                  set image(height: logo_height)
+                  logo_element
+                }
               )
             }
           }

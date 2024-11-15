@@ -2,7 +2,9 @@
 
 #let tud_heading_line_thin_stroke = 0.75pt
 
-
+#let tud_header_line_height = 1.2pt
+#let tud_inner_page_margin_top = 22pt
+#let tud_title_logo_height = 22mm
 
 
 #let tud_page_margin_title_page = (
@@ -31,4 +33,11 @@
   left: 25mm,
   right: 25mm,
   bottom: 15mm - 1mm  // should be 20mm according to guidelines
+)
+
+#let tud_exercise_page_margin = (
+  top: 15mm,
+  left: 15mm,
+  right: 15mm,
+  bottom: 20mm,
 )
