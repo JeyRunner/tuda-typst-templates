@@ -39,17 +39,24 @@
       grid(
         columns: (1fr, auto),
         box(inset: (y:3mm),{
-          set text(font: "Roboto", weight: "bold", fill: text_on_accent_color)
+          set text(font: "Roboto", weight: "bold", size: 12pt, fill: text_on_accent_color)
           grid(row-gutter: 1em,
             inset: text_inset,
             if info.title != none {
               text(info.title, size: 20pt)
             },
             if info.subtitle != none {
-              text(info.subtitle, size: 12pt)
+              info.subtitle
             },
             if info.author != none {
-              text(info.author, size: 12pt)
+              if type(info.author) == array {
+                for author in info.author {
+                   author
+                   linebreak()
+                }
+              } else {
+                info.author
+              }
             }
           )
 

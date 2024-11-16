@@ -46,7 +46,7 @@
   ]
 }
 
-#let tuda-section-lines(above: 1.8em, below: 1.2em, body) = {
+#let tuda-section-lines(above: 1.8em, below: 1.2em, ruled: true, body) = {
   block(
     width: 100%,
     inset: 0mm,
@@ -55,9 +55,13 @@
     below: below,
     {
       set block(spacing: 0.2em)
-      line(length: 100%, stroke: tud_body_line_height)
+      if ruled {
+        line(length: 100%, stroke: tud_body_line_height)
+      }
       body
-      line(length: 100%, stroke: tud_body_line_height)
+      if ruled {
+        line(length: 100%, stroke: tud_body_line_height)
+      }
     }
   )
 }
@@ -74,5 +78,9 @@
 }
 
 #let tuda-subsection(title) = {
-  tuda-section-lines(above: 0.9em, below: 1em, text(title, font: "Roboto", weight: "regular", size: 11pt))
+  tuda-section-lines(above: 1.4em, below: 1em, text(title, font: "Roboto", weight: "regular", size: 11pt))
+}
+
+#let tuda-subsection-unruled(title) = {
+  tuda-section-lines(above: 1.4em, below: 1em, ruled: false, text(title, font: "Roboto", weight: "regular", size: 11pt))
 }

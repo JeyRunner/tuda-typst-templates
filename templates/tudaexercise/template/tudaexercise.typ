@@ -1,6 +1,6 @@
 #import "common/tudacolors.typ": tuda_colors, text_colors
 #import "common/props.typ": tud_exercise_page_margin, tud_header_line_height, tud_inner_page_margin_top, tud_title_logo_height
-#import "common/headings.typ": tuda-section, tuda-subsection
+#import "common/headings.typ": tuda-section, tuda-subsection, tuda-subsection-unruled
 #import "common/util.typ": check-font-exists
 #import "common/colorutil.typ": calc-relative-luminance, calc-contrast
 #import "common/dictutil.typ": overwrite-dict
@@ -40,6 +40,8 @@
   design: design_defaults,
 
   show_title: true,
+
+  subtask: "ruled",
 
   body
 ) = {
@@ -89,11 +91,32 @@
   ))
 
   set line(stroke: text_color)
+
+  let ruled_subtask = if subtask == "ruled" {
+    true
+  } else if subtask == "plain" {
+    false
+  } else {
+    panic("Only 'ruled' and 'plain' are supported subtask options")
+  }
   
+  let meta_document_title = if info.subtitle != none and info.title != none {
+    [#info.subtitle #sym.dash.em #info.title]
+  } else if info.title != none {
+    info.title
+  } else if info.subtitle != none {
+    info.subtitle
+  } else {
+    none
+  }
 
   set document(
-    title: info.subtitle + sym.dash.em + info.title, // Should probably add the sheet number or something else
-    author: info.author
+    title: meta_document_title,
+    author: if info.author != none {
+      info.author
+    } else {
+      ()
+    }
   )
 
   set par(
@@ -138,7 +161,11 @@
     if it.level == 1 {
       tuda-section(dict.task + " " + c + ": " + it.body)
     } else if it.level == 2 {
-      tuda-subsection(c + ") " + it.body)
+      if ruled_subtask {
+        tuda-subsection(c + ") " + it.body)
+      } else {
+        tuda-subsection-unruled(c + ") " + it.body)
+      }
     } else {
       it
     }
