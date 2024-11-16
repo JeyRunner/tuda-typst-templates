@@ -13,13 +13,27 @@
   darkmode: false
 )
 
+/// The heart of this template.
+/// Usage:
+/// ```
+/// #show: tudaexercise.with(<options>)
+/// ```
+/// 
+/// - language ("eng", "ger"): The language for dates and certain keywords
+/// - margins (dictionary): The page margins, possible entries: `top`, `left`, `bottom`, `right`
+/// - headline (array): Currently not supported. Should be used to configure the headline.
+/// - paper (str): The type of paper to be used. Currently only a4 is supported.
+/// - logo (content): The tuda logo as an image to be used in the title.
+/// - info (dictionary): Info about the document mostly used in the title.
+/// - design (dictionary): Options for the design of the template. Possible entries: `accentcolor`, `colorback` and `darkmode`
+/// - show_title (bool): Whether to show a title or not
+/// - subtask ("ruled", "plain"): How subtasks are shown
+/// - body (content): 
 #let tudaexercise(
-  // Supported: "eng", "ger"
   language: "eng",
 
   margins: tud_exercise_page_margin,
 
-  // Currently not supported as typst lacks the feature of dynamically adjusting page margins
   headline: ("title", "name", "id"),
 
   paper: "a4",

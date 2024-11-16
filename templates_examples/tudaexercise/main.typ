@@ -89,7 +89,7 @@ Similarly subtasks are created using
 
 #tuda-subsection("Sections")
 
-If you want to create a unnumbered section you can use the `tuda-section` or `tuda-subsection` functions accordingly. Simply pass the section title as a string although technically any content is technically supported.
+If you want to create a unnumbered section you can use the `tuda-section` or `tuda-subsection` functions accordingly. Simply pass the section title as a string.
 ```
 #tuda-subsection("Sections")
 ```

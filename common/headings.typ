@@ -67,16 +67,22 @@
 }
 
 
-// Creates a section similar to headers
-// But does not add other text or a counter.
-// ```
-// #tuda-section("Lorem ipsum")
-// 
-// ```
+/// Creates a section similar to headers
+/// But does not add other text or a counter.
+/// ```
+/// #tuda-section("Lorem ipsum")
+/// ```
+/// - title (str): The title of this section
 #let tuda-section(title) = {
   tuda-section-lines(text(title, font: "Roboto", weight: "bold", size: 11pt))
 }
 
+/// Creates a subsection similar to level 2 headers.
+/// But does not add other text or a counter.
+/// ```
+/// #tuda-subsection("Lorem ipsum")
+/// ```
+/// - title (str): The title of this subsection
 #let tuda-subsection(title) = {
   tuda-section-lines(above: 1.4em, below: 1em, text(title, font: "Roboto", weight: "regular", size: 11pt))
 }
