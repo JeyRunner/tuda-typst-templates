@@ -8,7 +8,6 @@ description = "Exercise template for TU Darmstadt (Technische Universität Darms
 repository = "https://github.com/JeyRunner/tuda-typst-templates"
 keywords = ["TU Darmstadt", "Technische Universität Darmstadt", "Exercise"]
 categories = ["layout"]
-exclude = ["tests", "example_tudapub.pdf", "example_tudapub.typ"]
 compiler = "0.12.0"
 
 [template]

@@ -17,11 +17,12 @@
 
 = Most basic usage
 
+The easiest way is by using `typst init` like on this templates universe page. But here is everything broken down:
+
 == Add to typst
 + Import the package: `#import "@preview/athena-tu-darmstadt-exercise:0.1.0": *`
 
 + Apply the template using `#show: tudaexercise.with(<options>)`
-
 
 == Fonts
 The template requires the following fonts: Roboto and XCharter. Typst right now does not allow fonts to be installed as packages so you will either need to install them locally or configure Typst and co. to use the fonts.
@@ -45,7 +46,7 @@ info: (
   sheetnumber: 0 // The current sheetnumber
 )
 ```
-The options can also be left empty. Then their correspondig item will not appear.
+The options can also be left empty. Then their corresponding item will not appear.
 
 You might notice that there also is a `header_title` option. This option is not currently used as headlines are not yet implemented.
 
