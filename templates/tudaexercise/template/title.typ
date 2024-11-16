@@ -24,6 +24,8 @@
     ()
   }
 
+  let stroke = (paint: text_color, thickness: title_rule / 2)
+
   v(-inner_page_margin_top + 0.2mm) // would else draw over header
 
   box(
@@ -67,7 +69,7 @@
         }
       )
       v(6pt)
-      line(length: 100%, stroke: title_rule / 2 + text_color)
+      line(length: 100%, stroke: stroke)
       if info.term != none or info.date != none or info.sheetnumber != none {
         set text(fill: text_on_accent_color)
         grid(
@@ -87,7 +89,7 @@
             dict.sheet + " " + str(info.sheetnumber)
           }
         )
-        line(length: 100%, stroke: title_rule/2 + text_color)
+        line(length: 100%, stroke: stroke)
       }
     }
   )

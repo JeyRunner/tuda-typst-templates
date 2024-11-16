@@ -1,6 +1,6 @@
 #import "common/tudacolors.typ": tuda_colors, text_colors
 #import "common/props.typ": tud_exercise_page_margin, tud_header_line_height, tud_inner_page_margin_top, tud_title_logo_height
-#import "common/headings.typ": tuda-section, tuda-subsection, line_color as section_line_color
+#import "common/headings.typ": tuda-section, tuda-subsection
 #import "common/util.typ": check-font-exists
 #import "common/colorutil.typ": calc-relative-luminance, calc-contrast
 #import "common/dictutil.typ": overwrite-dict
@@ -39,6 +39,8 @@
 
   design: design_defaults,
 
+  show_title: true,
+
   body
 ) = {
   if paper != "a4" {
@@ -54,13 +56,39 @@
     black
   }
 
-  section_line_color.update(text_color)
-
   let background_color = if design.darkmode {
     rgb(29,31,33)
   } else {
     white
   }
+
+  let accent_color = if type(design.accentcolor) == color {
+    design.accentcolor
+  } else if type(design.accentcolor) == str {
+    rgb(tuda_colors.at(design.accentcolor))
+  } else {
+    panic("Unsupported color format. Either pass a color code as a string or pass an actual color.")
+  }
+
+  let text_on_accent_color = if type(design.accentcolor) == str {
+    text_colors.at(design.accentcolor)
+  } else {
+    let lum = calc-relative-luminance(design.accentcolor)
+    if calc-contrast(lum, 0) > calc-contrast(lum, 1) {
+      black
+    } else {
+      white
+    }
+  }
+
+  state("tud_design").update((
+    text_color: text_color,
+    background_color: background_color,
+    accent_color: accent_color,
+    text_on_accent_color: text_on_accent_color
+  ))
+
+  set line(stroke: text_color)
   
 
   set document(
@@ -116,26 +144,8 @@
     }
   }
 
-  let ty_accentcolor = if type(design.accentcolor) == color {
-    design.accentcolor
-  } else if type(design.accentcolor) == str {
-    rgb(tuda_colors.at(design.accentcolor))
-  } else {
-    panic("Unsupported color format. Either pass a color code as a string or pass an actual color.")
-  }
-  let text_on_accent_color = if type(design.accentcolor) == str {
-    text_colors.at(design.accentcolor)
-  } else {
-    let lum = calc-relative-luminance(design.accentcolor)
-    if calc-contrast(lum, 0) > calc-contrast(lum, 1) {
-      black
-    } else {
-      white
-    }
-  }
-
   let identbar = rect(
-    fill: ty_accentcolor,
+    fill: accent_color,
     width: 100%,
     height: 4mm
   )
@@ -144,7 +154,7 @@
     rows: auto,
     row-gutter: 1.4mm + 0.25mm,
     identbar,
-    line(length: 100%, stroke: tud_header_line_height + text_color),
+    line(length: 100%, stroke: tud_header_line_height),
   )
 
   context {
@@ -167,18 +177,20 @@
       fill: background_color
     )
 
-    tuda-make-title(
-      tud_inner_page_margin_top, 
-      tud_header_line_height,
-      ty_accentcolor,
-      text_on_accent_color,
-      text_color,
-      design.colorback,
-      logo, 
-      tud_title_logo_height, 
-      info,
-      dict
-      )
+    if show_title {
+      tuda-make-title(
+        tud_inner_page_margin_top, 
+        tud_header_line_height,
+        accent_color,
+        text_on_accent_color,
+        text_color,
+        design.colorback,
+        logo, 
+        tud_title_logo_height, 
+        info,
+        dict
+        )
+    }
 
     check-font-exists("Roboto")
     check-font-exists("XCharter")
