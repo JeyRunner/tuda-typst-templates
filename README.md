@@ -1,5 +1,5 @@
-# Typst Template for the Corporate Design of TU Darmstadt :book:
-This **unofficial** template can be used to write in [Typst](https://github.com/typst/typst) with the corporate design of [TU Darmstadt](https://www.tu-darmstadt.de/).
+# Typst Templates for the Corporate Design of TU Darmstadt :book:
+These **unofficial** templates can be used to write in [Typst](https://github.com/typst/typst) with the corporate design of [TU Darmstadt](https://www.tu-darmstadt.de/).
 
 #### Disclaimer
 Please ask your supervisor if you are allowed to use typst and this template for your thesis or other documents.
@@ -18,13 +18,18 @@ For missing features, ideas or other problems you can just open an issue :wink:.
 | Template | Preview | Example | Scope |
 |----------|---------|---------|-------|
 | [tudapub](templates/tudapub/template/tudapub.typ) | <img src="templates/tudapub/preview/tudapub_prev-01.png" height="300px"> | [example_tudapub.pdf](example_tudapub.pdf) <br/> [example_tudapub.typ](example_tudapub.typ) | Master and Bachelor thesis |
-| [tuda-exercise](templates/tudaexercise/template/tudaexercise.typ) | <img src="templates/tudaexercise/preview/tudaexercise_prev-1.png" height="300px"> | [example_tudaexercise-TODO.pdf](TODO) <br/> [example_tudaexercise-TODO-.typ](TODO.typ) | Exercises |
+| [tudaexercise](templates/tudaexercise/template/tudaexercise.typ) | <img src="templates/tudaexercise/preview/tudaexercise_prev-1.png" height="300px"> | --- | Exercises |
 
 ## Usage
 Create a new typst project based on this template locally.
 ```bash
+# for tudapub
 typst init @preview/athena-tu-darmstadt-thesis
 cd athena-tu-darmstadt-thesis
+
+# for tudaexercise
+typst init @preview/athena-tu-darmstadt-exercise
+cd athena-tu-darmstadt-exercise
 ```
 Or create a project on the typst web app based on this template.
 
