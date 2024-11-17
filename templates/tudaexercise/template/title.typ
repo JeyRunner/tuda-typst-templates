@@ -24,7 +24,13 @@
     ()
   }
 
-  let stroke = (paint: text_color, thickness: title_rule / 2)
+  let stroke_color = if colorback {
+    black
+  } else {
+    text_color
+  }
+
+  let stroke = (paint: stroke_color, thickness: title_rule / 2)
 
   v(-inner_page_margin_top + 0.2mm) // would else draw over header
 

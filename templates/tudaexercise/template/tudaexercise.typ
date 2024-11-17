@@ -213,8 +213,6 @@
       ),
       header: header_frontpage,
       header-ascent: tud_inner_page_margin_top,
-      footer: none,
-      footer-descent: 0mm,
       fill: background_color
     )
 
