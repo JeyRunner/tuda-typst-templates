@@ -65,6 +65,15 @@
 
   let margins = overwrite-dict(margins, tud_exercise_page_margin)
   let design = overwrite-dict(design, design_defaults)
+  let info = overwrite-dict(info, (
+    title: none,
+    header_title: none,
+    subtitle: none,
+    author: none,
+    term: none,
+    date: none,
+    sheetnumber: none,
+  ))
 
   let text_color = if design.darkmode {
     white

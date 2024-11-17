@@ -1,6 +1,6 @@
 // imports
 
-#import "template/lib.typ": tuda-exercise
+#import "template/lib.typ": tudaexercise
 #import "template/common/tudacolors.typ": tuda_colors
 #import "template/common/props.typ": *
 
@@ -11,14 +11,17 @@
 // #set par(justify: true)
 
 
-#show: tuda-exercise.with(
-  title: [
-    TUDaThesis
-  ],
-  exercise-number: 5,
-  author: "Albert Author",
-  accentcolor: "9c",
+#show: tudaexercise.with(
+  info: (
+    title: "TUDaExercise",
+    author: "Albert Author",
+    sheetnumber: 5,
+  ),
   language: "eng",
+  design: (
+    accentcolor: "9c",
+  ),
+  logo: image("../../assets/logos/tuda_logo.svg")
 )
 
 
