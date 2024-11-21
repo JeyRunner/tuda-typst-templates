@@ -19,12 +19,14 @@ publish_ignore_files = """
 
 /tests/
 /tud_design_guide/
+**/TODO.md
 
 /templates_examples/*/logos/*
 !/templates_examples/*/logos/*.sh
 /templates_examples/*/fonts/*
 !/templates_examples/*/fonts/*.sh
 /templates_examples/*/template
+/templates_examples/*/*.pdf
 
 /common/
 /assets/
@@ -159,6 +161,7 @@ def copy_template(copy_dest_dir, template_folder_name = 'tudapub'):
         'example_tudapub.pdf',
         'example_tudapub.typ',
         'templates/tudapub/tudapub.typ',
+        'templates/tudapub/TODO.md',
         'templates/tudaexercise/template/tudaexercise.typ',
         'templates_examples/tudaexercise/main.typ'
     ]
@@ -183,7 +186,8 @@ def copy_template(copy_dest_dir, template_folder_name = 'tudapub'):
 
         # replace image links in readme
         img_tag_start = '<img src="'
-        c = c.replace(img_tag_start, img_tag_start + repo_path)
+        repo_path_raw = package_repository.replace('https://github.com/', 'https://raw.githubusercontent.com/') + '/refs/heads/main/'
+        c = c.replace(img_tag_start, img_tag_start + repo_path_raw)
 
         # overwrite
         readme.seek(0)
