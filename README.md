@@ -91,6 +91,7 @@ What also works is to uninstall/deactivate all `Roboto condensed` fonts from you
 
 
 ## Todos
+### Thesis Template:
 * [ ] some bug seems to insert an empty page at the end of the document when content (title page) appears before this second 'set page'
 * [ ] numbering/labeling of sub-equations (that are aligned with the other sub-equations)
 * [x] remove page numbers in footer before ~~and at table of contents~~
