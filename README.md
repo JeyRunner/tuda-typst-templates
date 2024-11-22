@@ -18,7 +18,7 @@ For missing features, ideas or other problems you can just open an issue :wink:.
 | Template | Preview | Example | Scope |
 |----------|---------|---------|-------|
 | [tudapub](templates/tudapub/template/tudapub.typ) | <img src="templates/tudapub/preview/tudapub_prev-01.png" height="300px"> | [example_tudapub.pdf](example_tudapub.pdf) <br/> [example_tudapub.typ](example_tudapub.typ) | Master and Bachelor thesis |
-| [tudaexercise](templates/tudaexercise/template/tudaexercise.typ) | <img src="templates/tudaexercise/preview/tudaexercise_prev-1.png" height="300px"> | --- | Exercises |
+| [tudaexercise](templates/tudaexercise/template/tudaexercise.typ) | <img src="templates/tudaexercise/preview/tudaexercise_prev-1.png" height="300px"> | [Example File](templates_examples/tudaexercise/main.typ) | Exercises |
 
 ## Usage
 Create a new typst project based on this template locally.
