@@ -10,7 +10,7 @@
     date: datetime.today(),
     sheetnumber: 5
   ),
-  logo: image("logos/tuda_logo.svg"),
+  logo: image("logos/tuda_replace.svg"),
 )
 
 #set enum(spacing: 1em, numbering: "1.", indent: 5pt)
