@@ -8,3 +8,7 @@ example_*.pdf
 test*.pdf
 
 !example_tudapub.pdf
+
+.vscode
+.DS_Store
+.venv

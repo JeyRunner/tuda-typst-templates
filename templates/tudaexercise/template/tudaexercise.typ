@@ -1,238 +1,249 @@
-#import "common/tudacolors.typ": tuda_colors
-#import "common/props.typ": *
-#import "common/util.typ": *
-#import "common/footnotes.typ": *
-#import "common/headings.typ": *
-#import "common/page_components.typ": *
+#import "common/tudacolors.typ": tuda_colors, text_colors
+#import "common/props.typ": tud_exercise_page_margin, tud_header_line_height, tud_inner_page_margin_top, tud_title_logo_height
+#import "common/headings.typ": tuda-section, tuda-subsection, tuda-subsection-unruled
+#import "common/util.typ": check-font-exists
+#import "common/colorutil.typ": calc-relative-luminance, calc-contrast
+#import "common/dictutil.typ": overwrite-dict
+#import "title.typ": *
+#import "locales.typ": *
 
-#import "@preview/i-figured:0.2.3"
+#let design_defaults = (
+  accentcolor: "0b",
+  colorback: true,
+  darkmode: false
+)
 
-
-#let tuda-exercise(
-  title: [Title],
-  exercise-number: 1,
-
-  // The code of the accentcolor.
-  // A list of all available accentcolors is in the list tuda_colors
-  accentcolor: "9c",
-
-  // Size of the main text font
-  fontsize: 10pt,//10.909pt, //11pt,
-
-  // Currently just a4 is supported
-  paper: "a4",
-
-  // Author name as text, e.g "Albert Author"
-  author: "An Author",
-
-  // Date of submission as string
-  data: datetime(
-    year: 2023,
-    month: 10,
-    day: 4,
-  ),
-
-  // language for correct hyphenation
+/// The heart of this template.
+/// Usage:
+/// ```
+/// #show: tudaexercise.with(<options>)
+/// ```
+/// 
+/// - language ("eng", "ger"): The language for dates and certain keywords
+/// - margins (dictionary): The page margins, possible entries: `top`, `left`, `bottom`, `right`
+/// - headline (array): Currently not supported. Should be used to configure the headline.
+/// - paper (str): The type of paper to be used. Currently only a4 is supported.
+/// - logo (content): The tuda logo as an image to be used in the title.
+/// - info (dictionary): Info about the document mostly used in the title.
+/// - design (dictionary): Options for the design of the template. Possible entries: `accentcolor`, `colorback` and `darkmode`
+/// - show_title (bool): Whether to show a title or not
+/// - subtask ("ruled", "plain"): How subtasks are shown
+/// - body (content): 
+#let tudaexercise(
   language: "eng",
 
-  // Set the margins of the content pages.
-  // The title page is not affected by this.
-  // Some example margins are defined in 'common/props.typ':
-  //  - tud_page_margin_small  // same as title page margin
-  //  - tud_page_margin_big
-  // E.g.   margin: (
-  //   top: 30mm,
-  //   left: 31.5mm,
-  //   right: 31.5mm,
-  //   bottom: 56mm
-  // ),
-  margin: tud_page_margin_small,
+  margins: tud_exercise_page_margin,
 
-  show-extended-header: true,
+  headline: ("title", "name", "id"),
+
+  paper: "a4",
+
+  logo: none,
+
+  info: (
+    title: none,
+    // Currently not supported
+    header_title: none,
+    subtitle: none,
+    author: none,
+    term: none,
+    date: none,
+    sheetnumber: none,
+  ),
+
+  design: design_defaults,
+
+  show-title: true,
+
+  subtask: "ruled",
 
   body
+) = {
+  if paper != "a4" {
+    panic("currently just a4 paper is supported")
+  }
 
-) = context {
-  // checks
-  //assert(tuda_colors.keys().contains(accentcolor), "accentcolor unknown")
-  //assert.eq(paper, "a4", "currently just a4 is supported as paper size")
-  //[#paper]
+  let margins = overwrite-dict(margins, tud_exercise_page_margin)
+  let design = overwrite-dict(design, design_defaults)
+  let info = overwrite-dict(info, (
+    title: none,
+    header_title: none,
+    subtitle: none,
+    author: none,
+    term: none,
+    date: none,
+    sheetnumber: none,
+  ))
 
-  // vars
-  let accentcolor_rgb = tuda_colors.at(accentcolor)
-  let heading_line_spacing = 4.4pt
-  let heading_margin_before = 12pt
-  let heading_3_margin_before = 12pt
-  let font-default = "XCharter"
+  let text_color = if design.darkmode {
+    white
+  } else {
+    black
+  }
 
+  let background_color = if design.darkmode {
+    rgb(29,31,33)
+  } else {
+    white
+  }
 
-  // Set document metadata.
+  let accent_color = if type(design.accentcolor) == color {
+    design.accentcolor
+  } else if type(design.accentcolor) == str {
+    rgb(tuda_colors.at(design.accentcolor))
+  } else {
+    panic("Unsupported color format. Either pass a color code as a string or pass an actual color.")
+  }
+
+  let text_on_accent_color = if type(design.accentcolor) == str {
+    text_colors.at(design.accentcolor)
+  } else {
+    let lum = calc-relative-luminance(design.accentcolor)
+    if calc-contrast(lum, 0) > calc-contrast(lum, 1) {
+      black
+    } else {
+      white
+    }
+  }
+
+  state("tud_design").update((
+    text_color: text_color,
+    background_color: background_color,
+    accent_color: accent_color,
+    text_on_accent_color: text_on_accent_color
+  ))
+
+  set line(stroke: text_color)
+
+  let ruled_subtask = if subtask == "ruled" {
+    true
+  } else if subtask == "plain" {
+    false
+  } else {
+    panic("Only 'ruled' and 'plain' are supported subtask options")
+  }
+  
+  let meta_document_title = if info.subtitle != none and info.title != none {
+    [#info.subtitle #sym.dash.em #info.title]
+  } else if info.title != none {
+    info.title
+  } else if info.subtitle != none {
+    info.subtitle
+  } else {
+    none
+  }
+
   set document(
-    title: title,
-    author: author
+    title: meta_document_title,
+    author: if info.author != none {
+      info.author
+    } else {
+      ()
+    }
   )
 
-  // Set the default body font.
   set par(
     justify: true,
     //leading: 4.7pt//0.42em//4.7pt   // line spacing
-    leading: 4.8pt//0.42em//4.7pt   // line spacing
+    leading: 4.8pt,//0.42em//4.7pt   // line spacing
+    spacing: 1.1em
   )
-  show par: set block(below: 1.1em) // was 1.2em
-
-
+  
   set text(
-    font: font-default,
-    size: fontsize,
+    font: "XCharter",
+    size: 10.909pt,
     fallback: false,
-    lang: language,
     kerning: true,
     ligatures: false,
-    //spacing: 92%  // to make it look like the latex template
-    //spacing: 84%  // to make it look like the latex template
-    spacing: 91%  // to make it look like the latex template
+    spacing: 91%, // to make it look like the latex template,
+    fill: text_color
   )
 
-  if paper != "a4" {
-    panic("currently just a4 as paper is supported")
+  let dict = if language == "eng" {
+    dict_en
+  } else if language == "ger" {
+    dict_de
+  } else {
+    panic("Unsupported language")
   }
 
-
-  
-
-  ///////////////////////////////////////
-  // page setup
-  // with header and footer
-  let header = tud-header(
-    accentcolor_rgb: accentcolor_rgb,
-    content: if show-extended-header {
-      set text(
-        font: font-default,
-        size: fontsize
-      )
-      v(2.5mm)
-      stack(
-        [Exercise #title],
-        v(2mm),
-        [Last Name, First Name: ],
-        v(2.5mm),
-        line(length: 100%, stroke: tud_heading_line_thin_stroke),
-      ) 
+  set heading(numbering: (..numbers) => {
+    if info.sheetnumber != none {
+      numbering("1.1a", info.sheetnumber, ..numbers)
+    } else {
+      numbering("1a", ..numbers)
     }
+  })
+
+  show heading: it => {
+    if not it.outlined or it.numbering == none {
+      it
+      return
+    }
+    let c = counter(heading).display(it.numbering)
+    if it.level == 1 {
+      tuda-section(dict.task + " " + c + ": " + it.body)
+    } else if it.level == 2 {
+      if ruled_subtask {
+        tuda-subsection(c + ") " + it.body)
+      } else {
+        tuda-subsection-unruled(c + ") " + it.body)
+      }
+    } else {
+      it
+    }
+  }
+
+  let identbar = rect(
+    fill: accent_color,
+    width: 100%,
+    height: 4mm
   )
 
-  let footer = [
-    #text(
-        font: "Roboto",
-        stretch: 100%,
-        fallback: false,
-        weight: "regular",
-        size: 10pt
-    )[
-      #set align(right)
-      // context needed for page counter for typst >= 0.11.0
-      #context [
-        #let counter_disp = counter(page).display()
-        #counter_disp
-      ]
-    ]
-  ]
-
-  let header_height = measure(header).height
-  let footer_height = measure(footer).height
-
-  // inner page margins (from header to text and text to footer)
-  let inner_page_margin_top = 5mm //0pt//20pt //3mm
-  let inner_page_margin_bottom = 30pt
-
-
-
-
-
-  ////////////////////////////
-  // content page setup
-  let content_page_margin_full_top = margin.top + inner_page_margin_top + 1*header_height
-
-
-  ///////////////////////////////////////
-  // headings
-  set heading(
-    numbering: (..numbers) => {
-      [#exercise-number.]
-      numbering("1 a", ..numbers)
-    }
+  let header_frontpage = grid(
+    rows: auto,
+    row-gutter: 1.4mm + 0.25mm,
+    identbar,
+    line(length: 100%, stroke: tud_header_line_height),
   )
-  show heading.where(
-  ): it => {
-    assert(it.level <= 2)
 
-    let title-prefix = if it.level <= 1 {"Taks "} else {""}
-    tud-heading-with-lines(
-        heading_margin_before: heading_margin_before,
-        heading_line_spacing: heading_line_spacing,
-        text-size: 10pt,
-        text-prefix: title-prefix,
-        counter-suffix: if it.level > 1 {")"} else {":"},
-        text-weight: if it.level > 1 {"regular"} else {"bold"},
-        it
+  context {
+    let height_header = measure(header_frontpage).height
+
+    set page(
+      paper: paper,
+      numbering: "1",
+      number-align: right,
+      margin: (
+        top: margins.top + tud_inner_page_margin_top + height_header, 
+        bottom: margins.bottom, 
+        left: margins.left, 
+        right: margins.right
+      ),
+      header: header_frontpage,
+      header-ascent: tud_inner_page_margin_top,
+      fill: background_color
     )
-    
+
+    if show-title {
+      tuda-make-title(
+        tud_inner_page_margin_top, 
+        tud_header_line_height,
+        accent_color,
+        text_on_accent_color,
+        text_color,
+        design.colorback,
+        logo, 
+        tud_title_logo_height, 
+        info,
+        dict
+        )
+    }
+
+    check-font-exists("Roboto")
+    check-font-exists("XCharter")
+
+    body
   }
 
-
-
-
-  ///////////////////////////////////////
-  // configure footnotes
-  set footnote.entry(
-    separator: line(length: 40%, stroke: 0.5pt)
-  )
-  // somehow broken: 
-  //show footnote.entry: it => tud-footnote(it)
-
-
-  ///////////////////////////////////////
-  // Display font checks
-  check-font-exists("Roboto")
-  check-font-exists("XCharter")
-
-
-
-
-
-  ///////////////////////////////////////
-  // Content pages
-  
-  // body has different margins than title page
-  // @todo some bug seems to insert an empty page at the end when content (title page) appears before this second 'set page'
-  set page(
-    margin: (
-      left: margin.left, //15mm,
-      right: margin.right, //15mm,
-      top: margin.top + inner_page_margin_top + 1*header_height,  // 15mm
-      bottom: margin.bottom + inner_page_margin_bottom + footer_height //20mm
-    ),
-     // header
-    header: header,
-    // don't move header up -> so that upper side is at 15mm from top
-    header-ascent: inner_page_margin_top,//0%,
-    // footer
-    footer: footer,
-    footer-descent: inner_page_margin_bottom //footer_height // @todo
-  )
-
-  // disable heading outlined for outline
-  set heading(outlined: false)
-
-  // restart page counter
-  counter(page).update(1)
-  // restart heading counter
-  counter(heading).update(0)
-
-
-  // enable heading outlined for body
-  set heading(outlined: true)
-
-  // Display the paper's contents.
-  body
 }
