@@ -87,7 +87,6 @@
       size: 35.86pt,
       //height: 
     )
-    #let title_height = 3.5em //measure(title, styles).height
 
     //#v(80pt)
     #grid(
