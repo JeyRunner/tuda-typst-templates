@@ -5,7 +5,7 @@ These **unofficial** templates enable you to write documents in [Typst](https://
 Please ask your supervisor if you are allowed to use Typst and one of these templates for your thesis or other documents.
 Note that this template is not checked by TU Darmstadt for correctness.
 Thus, this template does not guarantee completeness or correctness.
-For notes for publishing on TUbama see the [Publishing].(#publishing-on-tubamer)
+For notes for publishing on TUbama see the [Publishing](#publishing-on-tubamer)
 
 
 ## Implemented Templates
