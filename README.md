@@ -1,17 +1,16 @@
 # Typst Templates for the Corporate Design of TU Darmstadt :book:
-These **unofficial** templates can be used to write in [Typst](https://github.com/typst/typst) with the corporate design of [TU Darmstadt](https://www.tu-darmstadt.de/).
+These **unofficial** templates enable you to write documents in [Typst](https://github.com/typst/typst) with the corporate design of [TU Darmstadt](https://www.tu-darmstadt.de/).
 
 #### Disclaimer
-Please ask your supervisor if you are allowed to use typst and this template for your thesis or other documents.
+Please ask your supervisor if you are allowed to use Typst and one of these templates for your thesis or other documents.
 Note that this template is not checked by TU Darmstadt for correctness.
 Thus, this template does not guarantee completeness or correctness.
-Also, note that submission in TUbama requires PDF/A which typst currently can't export to (https://github.com/typst/typst/issues/2942).
-You can use a converter to convert from the typst output to PDF/A, but check that there are no losses during the conversion. CMYK color space support may be required for printing which is also currently not supported by typst (https://github.com/typst/typst/issues/2942), but this is not relevant when you just submit online.
+For notes for publishing on TUbama see [Publishing Section](#publishing-on-tubamer)
 
 
 ## Implemented Templates
 The templates imitate the style of the corresponding latex templates in [tuda_latex_templates](https://github.com/tudace/tuda_latex_templates).
-Note that there can be visual differences between the original latex template and the typst template (you may open an issue when you find one).
+Note that there can be visual differences between the original latex template and the Typst template (you may open an issue when you find one).
 
 For missing features, ideas or other problems you can just open an issue :wink:. Contributions are also welcome.
 
@@ -97,6 +96,14 @@ Note that we add `--font-path` to ensure that the correct fonts are used.
 Due to a bug (typst/typst#2917 typst/typst#2098) typst sometimes uses the font `Roboto condensed` instead of `Roboto`.
 To be on the safe side, double-check the embedded fonts in the pdf (there should be no `Roboto condensed`).
 What also works is to uninstall/deactivate all `Roboto condensed` fonts from your system.
+
+### Publishing on TUBamer
+For publishing your compiled document (e.g. thesis) on TUBamer, the document has to comply with the pdf/A standard. 
+Therefore, set the PDF standard for compiling for the final submission:
+```bash
+typst compile main.typ --font-path asssets/fonts/ --pdf-standard a-2b
+```
+In case this should not yield a PDF which is accepted by TUBamer, you can use a converter to convert from the Typst output to PDF/A, but check that there are no losses during the conversion. 
 
 ## Todos
 - [todos of thesis template](templates/tudapub/TODO.md)
