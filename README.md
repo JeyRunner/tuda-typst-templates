@@ -5,7 +5,7 @@ These **unofficial** templates enable you to write documents in [Typst](https://
 Please ask your supervisor if you are allowed to use Typst and one of these templates for your thesis or other documents.
 Note that this template is not checked by TU Darmstadt for correctness.
 Thus, this template does not guarantee completeness or correctness.
-For notes for publishing on TUbama see the [Publishing](#publishing-on-tubamer).
+For notes for publishing on TUbama see the [Publishing](#publishing-on-tubama).
 
 
 ## Implemented Templates
@@ -97,13 +97,13 @@ Due to a bug (typst/typst#2917 typst/typst#2098) typst sometimes uses the font `
 To be on the safe side, double-check the embedded fonts in the pdf (there should be no `Roboto condensed`).
 What also works is to uninstall/deactivate all `Roboto condensed` fonts from your system.
 
-### Publishing on TUBamer
-For publishing your compiled document (e.g. thesis) on TUBamer, the document has to comply with the pdf/A standard. 
+### Publishing on TUbama
+For publishing your compiled document (e.g. thesis) on TUbama, the document has to comply with the pdf/A standard. 
 Therefore, set the PDF standard for compiling for the final submission:
 ```bash
 typst compile main.typ --font-path asssets/fonts/ --pdf-standard a-2b
 ```
-In case this should not yield a PDF which is accepted by TUBamer, you can use a converter to convert from the Typst output to PDF/A, but check that there are no losses during the conversion. 
+In case this should not yield a PDF which is accepted by TUbama, you can use a converter to convert from the Typst output to PDF/A, but check that there are no losses during the conversion. 
 
 ## Todos
 - [todos of thesis template](templates/tudapub/TODO.md)
