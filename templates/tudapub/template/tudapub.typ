@@ -175,7 +175,7 @@
 
   // content.
   body
-) = style(styles => {
+) = context {
   // checks
   //assert(tuda_colors.keys().contains(accentcolor), "accentcolor unknown")
   //assert.eq(paper, "a4", "currently just a4 is supported as paper size")
@@ -254,17 +254,17 @@
         #let counter_disp = counter(page).display()
         //#hide(counter_disp)
         //#counter_disp
-        #locate(loc => {
-          let after_table_of_contents = query(selector(<__after_table_of_contents>).before(loc), loc).len() >= 1
+        #context {
+          let after_table_of_contents = query(selector(<__after_table_of_contents>).before(here())).len() >= 1
           if after_table_of_contents {counter_disp}
           else {hide(counter_disp)}
-        })
+        }
       ]
     ]
   )
 
-  let header_height = measure(header, styles).height
-  let footer_height = measure(footer, styles).height
+  let header_height = measure(header).height
+  let footer_height = measure(footer).height
 
   // inner page margins (from header to text and text to footer)
   let inner_page_margin_top = 22pt //0pt//20pt //3mm
@@ -288,7 +288,7 @@
   set heading(numbering: "1.1")
 
   // default heading (handle cases with level >= 3 < 5)
-  show heading: it => locate(loc => {
+  show heading: it => context {
     if it.level > 5 {
       panic("Just heading with a level < 4 are supported.")
     }
@@ -301,7 +301,7 @@
     // change heading margin depending on its the first on the page
     let (heading_margin_before, is_first_on_page) = get-spacing-zero-if-first-on-page(
       heading_3_margin_before, 
-      loc, 
+      here(), 
       content_page_margin_full_top,
       enable: reduce_heading_space_when_first_on_page
     )
@@ -325,7 +325,7 @@
         v(10pt)
       )
     ]
-  })
+  }
 
 
   // heading level 5
@@ -395,11 +395,11 @@
   // heading level 2 
   show heading.where(
     level: 2
-  ): it => locate(loc => {
+  ): it => context {
     // change heading margin depending if its the first on the page
     let (heading_margin_before, is_first_on_page) = get-spacing-zero-if-first-on-page(
       heading_2_margin_before, 
-      loc, 
+      here(), 
       content_page_margin_full_top,
       enable: reduce_heading_space_when_first_on_page
     )
@@ -434,7 +434,7 @@
         v(10pt)
       )
     ]
-  })
+  }
 
 
 
@@ -660,4 +660,4 @@
     #set bibliography(style: "ieee")
     #bib
   ]
-})
+}
