@@ -200,7 +200,8 @@
     //leading: 4.7pt//0.42em//4.7pt   // line spacing
     leading: 4.8pt//0.42em//4.7pt   // line spacing
   )
-  show par: set block(below: 1.1em) // was 1.2em
+  // show par: set block(below: 1.1em) // was 1.2em
+  set par(spacing: 1.1em)
 
   set text(
     font: "XCharter",
