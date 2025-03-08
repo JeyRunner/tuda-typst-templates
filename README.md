@@ -107,3 +107,10 @@ In case this should not yield a PDF which is accepted by TUbama, you can use a c
 
 ## Todos
 - [todos of thesis template](templates/tudapub/TODO.md)
+
+## Dev Notes
+### Publish Locally
+For creating a local package you need to use the `scripts/publish.py` script.
+```python
+python ./scripts/publish.py --local
+```

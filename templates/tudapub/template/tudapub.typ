@@ -184,8 +184,8 @@
   // vars
   let accentcolor_rgb = tuda_colors.at(accentcolor)
   let heading_2_line_spacing = 5.2pt
-  let heading_2_margin_before = 12pt
-  let heading_3_margin_before = 12pt
+  let heading_2_margin_before = 13.5pt // typst 0.12: 12pt
+  let heading_3_margin_before = 13.5pt // typst 0.12: 12pt
 
 
   // Set document metadata.
@@ -194,14 +194,20 @@
     author: author
   )
 
+  // for typst 0.12:
+  // set par(
+  //  leading: 4.8pt
+  //  spacing: 91%
+  // )
+
   // Set the default body font.
   set par(
     justify: true,
-    //leading: 4.7pt//0.42em//4.7pt   // line spacing
-    leading: 4.8pt//0.42em//4.7pt   // line spacing
+    //leading: 4.8pt//0.42em//4.7pt   // line spacing
+    leading: 6.25pt//0.42em//4.7pt   // line spacing
   )
-  // show par: set block(below: 1.1em) // was 1.2em
-  set par(spacing: 1.1em)
+  //show par: set block(below: 1.1em) // was 1.2em
+  set par(spacing: 1.2em)
 
   set text(
     font: "XCharter",
@@ -212,7 +218,8 @@
     ligatures: false,
     //spacing: 92%  // to make it look like the latex template
     //spacing: 84%  // to make it look like the latex template
-    spacing: 91%  // to make it look like the latex template
+    //spacing: 91%  // to make it look like the latex template
+    spacing: 95%  // to make it look like the latex template
   )
 
   if paper != "a4" {
@@ -268,7 +275,7 @@
   let footer_height = measure(footer).height
 
   // inner page margins (from header to text and text to footer)
-  let inner_page_margin_top = 22pt //0pt//20pt //3mm
+  let inner_page_margin_top = 22.4pt // typst 0.12: 22pt
   let inner_page_margin_bottom = 30pt
 
   // title page has different margins
@@ -444,7 +451,8 @@
 
   // Configure equation numbering and spacing.
   set math.equation(numbering: "(1.1.1)")
-  show math.equation: set block(spacing: 0.65em)
+  // typst0.12:  show math.equation: set block(spacing: 0.65em)
+  show math.equation: set block(spacing: 0.9em)
   // equation numbering per chapter
   show math.equation.where(block: true): it => {
     if equation_numbering_per_chapter {
