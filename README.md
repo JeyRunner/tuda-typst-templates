@@ -18,6 +18,7 @@ For missing features, ideas or other problems you can just open an issue :wink:.
 |----------|---------|---------|-------|
 | [tudapub](templates/tudapub/template/tudapub.typ) | <img src="templates/tudapub/preview/tudapub_prev-01.png" height="300px"> | [example_tudapub.pdf](example_tudapub.pdf) <br/> [example_tudapub.typ](example_tudapub.typ) | Master and Bachelor thesis |
 | [tudaexercise](templates/tudaexercise/template/tudaexercise.typ) | <img src="templates/tudaexercise/preview/tudaexercise_prev-1.png" height="300px"> | [Example File](templates_examples/tudaexercise/main.typ) | Exercises |
+| [not-tudabeamer-2023](templates/not-tudabeamer-2023/template/lib.typ) | <img src="templates/not-tudabeamer-2023/preview/thumbnail.webp" height="300px"> | [Example File](templates_examples/not-tudabeamer-2023/main.typ) | Presentations |
 
 ## Usage
 Create a new typst project based on this template locally.
@@ -29,6 +30,10 @@ cd athena-tu-darmstadt-thesis
 # for tudaexercise
 typst init @preview/athena-tu-darmstadt-exercise
 cd athena-tu-darmstadt-exercise
+
+# for not-tudabeamer-2023
+typst init @preview/not-tudabeamer-2023
+cd not-tudabeamer-2023
 ```
 Or create a project on the typst web app based on this template.
 
