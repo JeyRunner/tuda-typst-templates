@@ -1,6 +1,6 @@
 [package]
 name = "not-tudabeamer-2023"
-version = "0.2.0"
+version = "0.2.1"
 entrypoint = "template/lib.typ"
 authors = ["Moritz Hedtke <https://github.com/mohe2015>"]
 license = "MIT"
