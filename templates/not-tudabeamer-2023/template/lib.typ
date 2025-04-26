@@ -96,7 +96,7 @@
   touying-slide(self: self, body)
 })
 
-#let new-section-slide(section) = touying-slide-wrapper(self => {
+#let new-section-slide(body) = touying-slide-wrapper(self => {
   let body = {
     grid(
       columns: 100%,
@@ -107,7 +107,7 @@
       ),
       gutter: (0in, 0.05in),
       grid.cell([]),
-      grid.cell(align: bottom, slide-title-font(upper(section))),
+      grid.cell(align: bottom, slide-title-font(upper(utils.display-current-heading(level: 1)))),
       grid.cell(align: top, subtitle-font([]))
     )
   }
