@@ -115,7 +115,7 @@ In case this should not yield a PDF which is accepted by TUbama, you can use a c
 Create a symlink to more easily develop your package changes:
 ```
 DEV_TEMPLATE=not-tudabeamer-2023
-DEV_VERSION=0.2.0
+DEV_VERSION=0.2.1
 
 mkdir -p ~/.cache/typst/packages/preview/$DEV_TEMPLATE
 rm -R ~/.cache/typst/packages/preview/$DEV_TEMPLATE/$DEV_VERSION
