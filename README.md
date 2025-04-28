@@ -92,7 +92,7 @@ Some Text
 ### Compile you typst file
 
 ```bash
-typst --watch main.typ --font-path assets/fonts/
+typst watch main.typ --font-path assets/fonts/
 ```
 
 This will watch your file and recompile it to a pdf when the file is saved. For writing, you can use [Vscode](https://code.visualstudio.com/) with these extensions: [Tinymist Typst](https://marketplace.visualstudio.com/items?itemName=myriad-dreamin.tinymist). Or use the [typst web app](https://typst.app/) (here you need to upload the logo and the fonts).
