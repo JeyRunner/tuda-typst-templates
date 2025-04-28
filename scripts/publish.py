@@ -41,7 +41,8 @@ publish_ignore_files = """
 # template folder names
 templates = [
     'tudapub',
-    'tudaexercise'
+    'tudaexercise',
+    'not-tudabeamer-2023'
 ]
 
 

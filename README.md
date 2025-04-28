@@ -18,6 +18,7 @@ For missing features, ideas or other problems you can just open an issue :wink:.
 |----------|---------|---------|-------|
 | [tudapub](templates/tudapub/template/tudapub.typ) | <img src="templates/tudapub/preview/tudapub_prev-01.png" height="300px"> | [example_tudapub.pdf](example_tudapub.pdf) <br/> [example_tudapub.typ](example_tudapub.typ) | Master and Bachelor thesis |
 | [tudaexercise](templates/tudaexercise/template/tudaexercise.typ) | <img src="templates/tudaexercise/preview/tudaexercise_prev-1.png" height="300px"> | [Example File](templates_examples/tudaexercise/main.typ) | Exercises |
+| [not-tudabeamer-2023](templates/not-tudabeamer-2023/template/lib.typ) | <img src="templates/not-tudabeamer-2023/preview/thumbnail.webp" height="300px"> | [Example File](templates_examples/not-tudabeamer-2023/main.typ) | Presentations |
 
 ## Usage
 Create a new typst project based on this template locally.
@@ -29,6 +30,10 @@ cd athena-tu-darmstadt-thesis
 # for tudaexercise
 typst init @preview/athena-tu-darmstadt-exercise
 cd athena-tu-darmstadt-exercise
+
+# for not-tudabeamer-2023
+typst init @preview/not-tudabeamer-2023
+cd not-tudabeamer-2023
 ```
 Or create a project on the typst web app based on this template.
 
@@ -104,6 +109,19 @@ Therefore, set the PDF standard for compiling for the final submission:
 typst compile main.typ --font-path asssets/fonts/ --pdf-standard a-2b
 ```
 In case this should not yield a PDF which is accepted by TUbama, you can use a converter to convert from the Typst output to PDF/A, but check that there are no losses during the conversion. 
+
+## Development
+
+Create a symlink to more easily develop your package changes:
+```
+DEV_TEMPLATE=not-tudabeamer-2023
+DEV_VERSION=0.2.0
+
+mkdir -p ~/.cache/typst/packages/preview/$DEV_TEMPLATE
+rm -R ~/.cache/typst/packages/preview/$DEV_TEMPLATE/$DEV_VERSION
+cd templates/$DEV_TEMPLATE/
+ln -s $PWD ~/.cache/typst/packages/preview/$DEV_TEMPLATE/$DEV_VERSION
+```
 
 ## Todos
 - [todos of thesis template](templates/tudapub/TODO.md)
