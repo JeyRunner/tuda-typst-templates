@@ -1,6 +1,6 @@
 // imports
 #import "@preview/cetz:0.2.2": canvas, plot
-#import "@preview/glossarium:0.4.0": make-glossary, print-glossary, gls, glspl 
+#import "@preview/glossarium:0.5.4":  make-glossary, register-glossary, print-glossary, gls, glspl //make-glossary, print-glossary, gls, glspl 
 #import "@preview/mitex:0.2.3": *
 
 // add
@@ -501,20 +501,23 @@ The list of colors that can be used in the template argument `accentcolor`:
 
 
 = Glossary
-#print-glossary((
+#let glossary = (
   // minimal term
   (key: "kuleuven", short: "KU Leuven"),
   // a term with a long form
   (key: "unamur", short: "UNamur", long: "Université de Namur"),
   // no long form here
-  (key: "kdecom", short: "KDE Community", desc:"An international team developing and distributing Open Source software."),
+  (key: "kdecom", short: "KDE Community", description:"An international team developing and distributing Open Source software."),
   // a full term with description containing markup
   (
     key: "oidc", 
     short: "OIDC", 
     long: "OpenID Connect", 
-    desc: [OpenID is an open standard and decentralized authentication protocol promoted by the non-profit
+    description: [OpenID is an open standard and decentralized authentication protocol promoted by the non-profit
      #link("https://en.wikipedia.org/wiki/OpenID#OpenID_Foundation")[OpenID Foundation].]),
-),
+)
+#register-glossary(glossary)
+#print-glossary(
+  glossary,
   show-all: true
 )

@@ -139,7 +139,7 @@
       )[
         
         #v(logo_tud_height/2)
-        #style(styles => {
+        #context {
           //let tud_logo = image(logo_tuda_path, height: logo_tud_height)
           let tud_logo = [
                 #set image(height: logo_tud_height)
@@ -149,7 +149,7 @@
                   logo_tuda
                 } 
           ]
-          let tud_logo_width = measure(tud_logo, styles).width
+          let tud_logo_width = measure(tud_logo).width
           let tud_logo_offset_right = -6.3mm
           tud_logo_width += tud_logo_offset_right
 
@@ -203,7 +203,7 @@
             }
             )
           ]
-        })
+        }
         
       ]
     )
