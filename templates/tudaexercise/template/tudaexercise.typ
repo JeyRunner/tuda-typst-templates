@@ -13,6 +13,8 @@
   darkmode: false
 )
 
+#let s = state("tud_design")
+
 /// The heart of this template.
 /// Usage:
 /// ```
@@ -113,12 +115,13 @@
       white
     }
   }
-
-  state("tud_design").update((
+  
+  s.update((
     text_color: text_color,
     background_color: background_color,
     accent_color: accent_color,
-    text_on_accent_color: text_on_accent_color
+    text_on_accent_color: text_on_accent_color,
+    darkmode: design.darkmode,
   ))
 
   set line(stroke: text_color)
@@ -268,9 +271,10 @@
 }
 
 #let tuda-gray-info(body) = {
-  let lgray = rgb(240, 240, 240)
+  let darkmode = context s.get().darkmode
+  let background = if(darkmode == true) {rgb("#f0f0f0")} else {rgb("#3F4647")}
   rect(
-    fill: lgray,
+    fill: background,
     inset: 1em,
     radius: 4pt,
     width: 100%,
