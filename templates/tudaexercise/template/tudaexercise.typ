@@ -265,7 +265,7 @@
 
 }
 
-#let task(body) = {
+#let tuda-gray-info(body) = {
   let lgray = rgb(240, 240, 240)
   rect(
     fill: lgray,
@@ -274,6 +274,6 @@
     width: 100%,
     stroke: (left: 3pt + gray),
   [
-    #text(font: "Roboto", weight: "bold", "Aufgabenstellung:") #body // This needs to be changed / moved but I don't know how
+    #body
   ])
 }
