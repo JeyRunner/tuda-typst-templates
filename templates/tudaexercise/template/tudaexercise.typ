@@ -56,6 +56,8 @@
 
   design: design_defaults,
 
+  task-prefix: none,
+
   show-title: true,
 
   subtask: "ruled",
@@ -199,7 +201,7 @@
     }
     let c = counter(heading).display(it.numbering)
     if it.level == 1 {
-      tuda-section(dict.task + " " + c + ": " + it.body)
+      tuda-section(if (task-prefix != none) {task-prefix} else {dict.task + " "} + c + ": " + it.body)
     } else if it.level == 2 {
       if ruled_subtask {
         tuda-subsection(c + ") " + it.body)

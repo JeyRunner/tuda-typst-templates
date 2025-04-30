@@ -19,6 +19,7 @@
     colorback: true,
     darkmode: false,
   ),
+  task-prefix: "H",
 )
 
 #set enum(spacing: 1em, numbering: "1.", indent: 5pt)
