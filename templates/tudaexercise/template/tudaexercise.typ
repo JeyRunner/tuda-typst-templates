@@ -49,6 +49,9 @@
     term: none,
     date: none,
     sheetnumber: none,
+    groupnumber: none,
+    tutor: none,
+    lecturer: none,
   ),
 
   design: design_defaults,
@@ -73,6 +76,9 @@
     term: none,
     date: none,
     sheetnumber: none,
+    groupnumber: none,
+    tutor: none,
+    lecturer: none,
   ))
 
   let text_color = if design.darkmode {
@@ -136,7 +142,18 @@
   set document(
     title: meta_document_title,
     author: if info.author != none {
-      info.author
+      if type(info.author) == array {
+        let authors = info.author.map(
+          it => if type(it) == array {
+            it.at(0)
+          } else {
+            it
+          }
+        )
+        authors
+      } else {
+        info.author
+      }
     } else {
       ()
     }
@@ -246,4 +263,17 @@
     body
   }
 
+}
+
+#let task(body) = {
+  let lgray = rgb(240, 240, 240)
+  rect(
+    fill: lgray,
+    inset: 1em,
+    radius: 4pt,
+    width: 100%,
+    stroke: (left: 3pt + gray),
+  [
+    #text(font: "Roboto", weight: "bold", "Aufgabenstellung:") #body // This needs to be changed / moved but I don't know how
+  ])
 }

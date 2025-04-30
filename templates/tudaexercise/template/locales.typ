@@ -1,11 +1,17 @@
 #let dict_de = (
+  locale: "ger",
   sheet: "Übungsblatt",
   task: "Aufgabe",
-  locale: "ger"
+  group: "Übungsgruppe",
+  tutor: "Tutor",
+  lecturer: "Dozent",
 )
 
 #let dict_en = (
-  sheet: "Sheet",
+  locale: "eng",
+  sheet: "Sheet number",
   task: "Task",
-  locale: "eng"
+  group: "Exercise group",
+  tutor: "Tutor",
+  lecturer: "Lecturer",
 )

@@ -1,16 +1,24 @@
-#import "@local/athena-tu-darmstadt-exercise:0.1.0": tudaexercise, tuda-section, tuda-subsection
+#import "@local/athena-tu-darmstadt-exercise:0.1.0": tudaexercise, tuda-section, tuda-subsection, task
 
 #show: tudaexercise.with(
   language: "eng",
   info: (
     title: "Usage of TUDaExercise",
     subtitle: "A small guide.",
-    author: "Andreas",
+    author: (("Andreas", "129219"), "Dennis"),
     term: "Summer semester 2042",
     date: datetime.today(),
-    sheetnumber: 5
+    sheetnumber: 5,
+    groupnumber: 14,
+    tutor: "Dr. John Smith",
+    lecturer: "Prof. Dr. Jane Doe",
   ),
   logo: image("logos/tuda_replace.svg"),
+  design: (
+    accentcolor: "0b",
+    colorback: true,
+    darkmode: false,
+  ),
 )
 
 #set enum(spacing: 1em, numbering: "1.", indent: 5pt)

@@ -19,7 +19,7 @@
   }
 
   let text_inset = if colorback {
-    (left:3mm)
+    (x:3mm)
   } else {
     ()
   }
@@ -57,8 +57,13 @@
             if info.author != none {
               if type(info.author) == array {
                 for author in info.author {
+                  if type(author) == array {
+                    author.at(0) + " (Mat.: " + author.at(1) + ")"
+                    linebreak()
+                  } else {
                    author
                    linebreak()
+                  }
                 }
               } else {
                 info.author
@@ -86,21 +91,39 @@
       if info.term != none or info.date != none or info.sheetnumber != none {
         set text(fill: text_on_accent_color)
         grid(
+          columns: (1fr, 1fr),
+          align: (left, right),
           inset: text_inset,
           row-gutter: 0.4em,
+          grid.cell(
           if info.term != none {
               info.term
-          },
+          } + "\n" +
           if info.date != none {
             if type(info.date) == datetime {
               format-date(info.date, dict.locale)
             } else {
               info.date
             }
-          },
+          }),
+          grid.cell(
           if info.sheetnumber != none {
-            dict.sheet + " " + str(info.sheetnumber)
+            text(font: "Roboto", weight: "bold", dict.sheet) + ": " + str(info.sheetnumber)
+            linebreak()
+          } +
+          if info.groupnumber != none {
+            text(font: "Roboto", weight: "bold", dict.group) + ": " + str(info.groupnumber)
+            linebreak()
+          } +
+          if info.tutor != none {
+            text(font: "Roboto", weight: "bold", dict.tutor) + ": " + info.tutor
+            linebreak()
+          } + 
+          if info.lecturer != none {
+            text(font: "Roboto", weight: "bold", dict.lecturer) + ": " + info.lecturer
+            linebreak()
           }
+          ),
         )
         line(length: 100%, stroke: stroke)
       }
