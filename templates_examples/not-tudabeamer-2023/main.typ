@@ -1,4 +1,4 @@
-#import "@preview/not-tudabeamer-2023:0.2.0": *
+#import "@preview/not-tudabeamer-2023:0.2.1": *
 
 #show: not-tudabeamer-2023-theme.with(
   config-info(
