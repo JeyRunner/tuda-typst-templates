@@ -271,8 +271,7 @@
 
 }
 
-#let tuda-gray-info(body) = {
-  context{
+#let tuda-gray-info(body) = context {
   let darkmode = s.get().darkmode
   let background = if(darkmode == false) {rgb("#f0f0f0")} else {rgb("#3F4647")}
   rect(
@@ -284,5 +283,4 @@
   [
     #body
   ])
-  }
 }
