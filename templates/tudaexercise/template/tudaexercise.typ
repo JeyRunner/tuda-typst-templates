@@ -28,6 +28,7 @@
 /// - logo (content): The tuda logo as an image to be used in the title.
 /// - info (dictionary): Info about the document mostly used in the title.
 /// - design (dictionary): Options for the design of the template. Possible entries: `accentcolor`, `colorback` and `darkmode`
+/// - task-prefix (str): How the task numbers are prefixed. If unset, the tasks use the language default.
 /// - show_title (bool): Whether to show a title or not
 /// - subtask ("ruled", "plain"): How subtasks are shown
 /// - body (content): 
