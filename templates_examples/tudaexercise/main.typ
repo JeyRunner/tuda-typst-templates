@@ -36,9 +36,9 @@ The easiest way is by using `typst init` like on this templates universe page. B
 == Fonts
 The template requires the following fonts: Roboto and XCharter. Typst right now does not allow fonts to be installed as packages so you will either need to install them locally or configure Typst and co. to use the fonts.
 
-#tuda-gray-info(text(font: "Roboto", weight: "bold", "For more info:") + "
+#tuda-gray-info[#text(font: "Roboto", weight: "bold", "For more info:") \
 https://github.com/JeyRunner/tuda-typst-templates?tab=readme-ov-file#logo-and-font-setup
-")
+]
 
 == Logo
 Similarly as the logo is protected and Typst does not have a folder for global resources you will need to setup the logo manually. You will need to download the logo and convert it into a pdf. Then pass the `logo: image(<path to logo>)` option to this package. The height of the logo will automatically be set to 22mm.
