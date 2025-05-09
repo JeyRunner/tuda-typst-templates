@@ -13,6 +13,8 @@
   darkmode: false
 )
 
+#let s = state("tud_design")
+
 /// The heart of this template.
 /// Usage:
 /// ```
@@ -26,6 +28,7 @@
 /// - logo (content): The tuda logo as an image to be used in the title.
 /// - info (dictionary): Info about the document mostly used in the title.
 /// - design (dictionary): Options for the design of the template. Possible entries: `accentcolor`, `colorback` and `darkmode`
+/// - task-prefix (str): How the task numbers are prefixed. If unset, the tasks use the language default.
 /// - show_title (bool): Whether to show a title or not
 /// - subtask ("ruled", "plain"): How subtasks are shown
 /// - body (content): 
@@ -49,9 +52,14 @@
     term: none,
     date: none,
     sheetnumber: none,
+    groupnumber: none,
+    tutor: none,
+    lecturer: none,
   ),
 
   design: design_defaults,
+
+  task-prefix: none,
 
   show-title: true,
 
@@ -73,6 +81,9 @@
     term: none,
     date: none,
     sheetnumber: none,
+    groupnumber: none,
+    tutor: none,
+    lecturer: none,
   ))
 
   let text_color = if design.darkmode {
@@ -105,12 +116,13 @@
       white
     }
   }
-
-  state("tud_design").update((
+  
+  s.update((
     text_color: text_color,
     background_color: background_color,
     accent_color: accent_color,
-    text_on_accent_color: text_on_accent_color
+    text_on_accent_color: text_on_accent_color,
+    darkmode: design.darkmode,
   ))
 
   set line(stroke: text_color)
@@ -136,7 +148,18 @@
   set document(
     title: meta_document_title,
     author: if info.author != none {
-      info.author
+      if type(info.author) == array {
+        let authors = info.author.map(
+          it => if type(it) == array {
+            it.at(0)
+          } else {
+            it
+          }
+        )
+        authors
+      } else {
+        info.author
+      }
     } else {
       ()
     }
@@ -182,7 +205,7 @@
     }
     let c = counter(heading).display(it.numbering)
     if it.level == 1 {
-      tuda-section(dict.task + " " + c + ": " + it.body)
+      tuda-section(if (task-prefix != none) {task-prefix} else {dict.task + " "} + c + ": " + it.body)
     } else if it.level == 2 {
       if ruled_subtask {
         tuda-subsection(c + ") " + it.body)
@@ -246,4 +269,18 @@
     body
   }
 
+}
+
+#let tuda-gray-info(body) = context {
+  let darkmode = s.get().darkmode
+  let background = if(darkmode == false) {rgb("#f0f0f0")} else {rgb("#3F4647")}
+  rect(
+    fill: background,
+    inset: 1em,
+    radius: 4pt,
+    width: 100%,
+    stroke: (left: 3pt + gray),
+  [
+    #body
+  ])
 }
