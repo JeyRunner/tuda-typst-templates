@@ -125,3 +125,10 @@ ln -s $PWD ~/.cache/typst/packages/preview/$DEV_TEMPLATE/$DEV_VERSION
 
 ## Todos
 - [todos of thesis template](templates/tudapub/TODO.md)
+
+## Dev Notes
+### Publish Locally
+For creating a local package you need to use the `scripts/publish.py` script.
+```python
+python ./scripts/publish.py --local
+```
