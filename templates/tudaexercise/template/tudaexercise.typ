@@ -43,19 +43,7 @@
 
   logo: none,
 
-  info: (
-    title: none,
-    // Currently not supported
-    header_title: none,
-    subtitle: none,
-    author: none,
-    term: none,
-    date: none,
-    sheetnumber: none,
-    groupnumber: none,
-    tutor: none,
-    lecturer: none,
-  ),
+  info: (:),
 
   design: design_defaults,
 
@@ -71,9 +59,9 @@
     panic("currently just a4 paper is supported")
   }
 
-  let margins = overwrite-dict(margins, tud_exercise_page_margin)
-  let design = overwrite-dict(design, design_defaults)
-  let info = overwrite-dict(info, (
+  let margins = tud_exercise_page_margin + margins
+  let design = design_defaults + design
+  /*let info = overwrite-dict(info, (
     title: none,
     header_title: none,
     subtitle: none,
@@ -84,7 +72,7 @@
     groupnumber: none,
     tutor: none,
     lecturer: none,
-  ))
+  ))*/
 
   let text_color = if design.darkmode {
     white
@@ -135,11 +123,11 @@
     panic("Only 'ruled' and 'plain' are supported subtask options")
   }
   
-  let meta_document_title = if info.subtitle != none and info.title != none {
+  let meta_document_title = if "subtitle" in info and "title" in info {
     [#info.subtitle #sym.dash.em #info.title]
-  } else if info.title != none {
+  } else if "title" in info {
     info.title
-  } else if info.subtitle != none {
+  } else if "subtitle" in info {
     info.subtitle
   } else {
     none
@@ -147,7 +135,7 @@
 
   set document(
     title: meta_document_title,
-    author: if info.author != none {
+    author: if "author" in info {
       if type(info.author) == array {
         let authors = info.author.map(
           it => if type(it) == array {
@@ -191,7 +179,7 @@
   }
 
   set heading(numbering: (..numbers) => {
-    if info.sheetnumber != none {
+    if "sheetnumber" in info {
       numbering("1.1a", info.sheetnumber, ..numbers)
     } else {
       numbering("1a", ..numbers)
@@ -205,7 +193,12 @@
     }
     let c = counter(heading).display(it.numbering)
     if it.level == 1 {
-      tuda-section(if (task-prefix != none) {task-prefix} else {dict.task + " "} + c + ": " + it.body)
+      let final-prefix = if (task-prefix != none) {
+        task-prefix
+      } else {
+        dict.task + " "
+      }
+      tuda-section[#final-prefix #c: #it.body]
     } else if it.level == 2 {
       if ruled_subtask {
         tuda-subsection(c + ") " + it.body)

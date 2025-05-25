@@ -48,13 +48,13 @@
           set text(font: "Roboto", weight: "bold", size: 12pt, fill: text_on_accent_color)
           grid(row-gutter: 1em,
             inset: text_inset,
-            if info.title != none {
+            if "title" in info {
               text(info.title, size: 20pt)
             },
-            if info.subtitle != none {
+            if "subtitle" in info {
               info.subtitle
             },
-            if info.author != none {
+            if "author" in info {
               if type(info.author) == array {
                 for author in info.author {
                   if type(author) == array {
@@ -88,7 +88,7 @@
       )
       v(6pt)
       line(length: 100%, stroke: stroke)
-      if info.term != none or info.date != none or info.sheetnumber != none {
+      if "term" in info or "date" in info or "sheetnumber" in info {
         set text(fill: text_on_accent_color)
         grid(
           columns: (1fr, 1fr),
@@ -107,19 +107,19 @@
             }
           }),
           grid.cell(
-          if info.sheetnumber != none {
+          if "sheetnumber" in info {
             text(font: "Roboto", weight: "bold", dict.sheet) + ": " + str(info.sheetnumber)
             linebreak()
           } +
-          if info.groupnumber != none {
+          if "groupnumber" in info {
             text(font: "Roboto", weight: "bold", dict.group) + ": " + str(info.groupnumber)
             linebreak()
           } +
-          if info.tutor != none {
+          if "tutor" in info {
             text(font: "Roboto", weight: "bold", dict.tutor) + ": " + info.tutor
             linebreak()
           } + 
-          if info.lecturer != none {
+          if "lecturer" in info {
             text(font: "Roboto", weight: "bold", dict.lecturer) + ": " + info.lecturer
             linebreak()
           }
