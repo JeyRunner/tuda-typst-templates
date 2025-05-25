@@ -1,7 +1,15 @@
-#let format-date(date, language) = {
-  let date_cont = date.display("[month repr:long] [day], [year]")
-  if (language == "ger") {
-    date_cont = date.display("[day].[month repr:numerical].[year]")
-  }
-  return date_cont
+#let format-date(date, language) = if (language == "ger") {
+  date.display("[day].[month repr:numerical].[year]")
+} else {
+  date.display("[month repr:long] [day], [year]")
+}
+
+#let text-roboto(body) = {
+  set text(font: "Roboto")
+  body
+}
+
+#let text-xcharter(body) = {
+  set text(font: "XCharter")
+  body
 }
