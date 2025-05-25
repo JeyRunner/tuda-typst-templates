@@ -187,8 +187,8 @@
   }
 
   set heading(numbering: (..numbers) => {
-    if "sheetnumber" in info {
-      numbering("1.1a", info.sheetnumber, ..numbers)
+    if "sheet" in info {
+      numbering("1.1a", info.sheet, ..numbers)
     } else {
       numbering("1a", ..numbers)
     }
