@@ -3,9 +3,10 @@
 #import "common/headings.typ": tuda-section, tuda-subsection, tuda-subsection-unruled
 #import "common/util.typ": check-font-exists
 #import "common/colorutil.typ": calc-relative-luminance, calc-contrast
-#import "common/dictutil.typ": overwrite-dict
+#import "common/format.typ": text-roboto
 #import "title.typ": *
 #import "locales.typ": *
+#import "title-sub.typ" as title-sub
 
 #let design_defaults = (
   accentcolor: "0b",
@@ -27,15 +28,20 @@
 /// - paper (str): The type of paper to be used. Currently only a4 is supported.
 /// - logo (content): The tuda logo as an image to be used in the title.
 /// - info (dictionary): Info about the document mostly used in the title.
+/// - title-sub (content, function, none): The content of the subline in the title card.
+///   By default the `title-sub.exercise` style.
+/// 
+///   See the `title-sub` export for functions to insert here or if you do not find something
+///   fitting to your needs you can also pass raw content and completely customize it yourself.
 /// - design (dictionary): Options for the design of the template. Possible entries: `accentcolor`, `colorback` and `darkmode`
 /// - task-prefix (str): How the task numbers are prefixed. If unset, the tasks use the language default.
-/// - show_title (bool): Whether to show a title or not
+/// - show-title (bool): Whether to show a title or not
 /// - subtask ("ruled", "plain"): How subtasks are shown
 /// - body (content): 
 #let tudaexercise(
   language: "eng",
 
-  margins: tud_exercise_page_margin,
+  margins: (:),
 
   headline: ("title", "name", "id"),
 
@@ -44,6 +50,8 @@
   logo: none,
 
   info: (:),
+
+  title-sub: title-sub.exercise(),
 
   design: design_defaults,
 
@@ -61,18 +69,18 @@
 
   let margins = tud_exercise_page_margin + margins
   let design = design_defaults + design
-  /*let info = overwrite-dict(info, (
+  /*let info = (
     title: none,
     header_title: none,
     subtitle: none,
     author: none,
     term: none,
     date: none,
-    sheetnumber: none,
-    groupnumber: none,
+    sheet: none,
+    group: none,
     tutor: none,
     lecturer: none,
-  ))*/
+  ) + info*/
 
   let text_color = if design.darkmode {
     white
@@ -198,7 +206,7 @@
       } else {
         dict.task + " "
       }
-      tuda-section[#final-prefix #c: #it.body]
+      tuda-section[#final-prefix#c: #it.body]
     } else if it.level == 2 {
       if ruled_subtask {
         tuda-subsection(c + ") " + it.body)
@@ -252,6 +260,7 @@
         logo, 
         tud_title_logo_height, 
         info,
+        title-sub,
         dict
         )
     }
@@ -264,7 +273,7 @@
 
 }
 
-#let tuda-gray-info(body) = context {
+#let tuda-gray-info(title: none, body) = context {
   let darkmode = s.get().darkmode
   let background = if(darkmode == false) {rgb("#f0f0f0")} else {rgb("#3F4647")}
   rect(
@@ -274,6 +283,7 @@
     width: 100%,
     stroke: (left: 3pt + gray),
   [
+    #{if title != none [#text-roboto(strong(title)): \ ]}
     #body
   ])
 }
