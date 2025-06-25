@@ -283,7 +283,7 @@
     width: 100%,
     stroke: (left: 3pt + gray),
   [
-    #{if title != none [#text-roboto(strong(title)): \ ]}
+    #{if title != none [#text-roboto(strong(title)) \ ]}
     #body
   ])
 }
