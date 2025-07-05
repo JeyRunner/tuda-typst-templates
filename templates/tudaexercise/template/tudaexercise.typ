@@ -6,6 +6,7 @@
 #import "common/dictutil.typ": overwrite-dict
 #import "title.typ": *
 #import "locales.typ": *
+#import "@preview/cetz:0.4.0"
 
 #let design_defaults = (
   accentcolor: "0b",
@@ -276,11 +277,156 @@
   let background = if(darkmode == false) {rgb("#f0f0f0")} else {rgb("#3F4647")}
   rect(
     fill: background,
-    inset: 1em,
-    radius: 4pt,
+    // inset: 1em,
+    inset: (
+      left: 8pt,
+      y: 2mm,
+    ),
+    radius: 3pt,
     width: 100%,
-    stroke: (left: 3pt + gray),
+    stroke: (left: 5pt + gray),
   [
     #body
   ])
+}
+
+#let textsf(body) = text(
+  font: "Roboto",
+  fallback: false,
+  body,
+)
+
+
+/// Draws a star at the given position with the given number of edges, size, stroke width, fill color and rotation. Usage:
+/// ```example
+/// #cetz.canvas({
+///  #draw-star((0,0),fill: red})
+/// })
+/// ```
+///
+/// - pos (position): The position where the star should be drawn.
+/// - edges (int): The number of edges of the star. Default is 5.
+/// - size (length): The size of the star. Default is 1cm.
+/// - stroke (length): The stroke width of the star. Default is 1.5pt.
+/// - fill (color): The fill color of the star. Default is red.
+/// - rotation (angle): The rotation of the star in degrees. Default is 90deg.
+/// -> Returns: A star shape.
+#let draw-star(pos, edges: 5, size: 1cm, stroke: 1.5pt, fill: red, rotation: 90deg) = {
+  let inner_size = size / 2 - stroke * 2
+  let outer_r = inner_size
+  let inner_r = inner_size * 0.4
+  let points = ()
+  for idx in range(edges * 2) {
+    let angle = idx * (360deg / (edges * 2)) + rotation
+    let radius = if calc.rem(idx, 2) == 0 { outer_r } else { inner_r }
+    points.push((
+      pos.at(0) + radius.cm() * calc.cos(angle),
+      pos.at(1) + radius.cm() * calc.sin(angle),
+    ))
+  }
+  cetz.draw.line(
+    ..points,
+    close: true,
+    stroke: stroke,
+    fill: fill,
+  )
+}
+
+/// Draws a number of stars to represent the difficulty of a task.
+///
+/// - difficulty (float): The difficulty of the task, must be between 0 and `max_difficulty`.
+/// - max_difficulty (int): The maximum difficulty, default is 5.
+/// - fill (color): The fill color of the stars, default is `rgb(tuda_colors.at("3b"))`.
+/// - size (length): The size of the stars, default is 1.2em.
+/// - spacing (length): The spacing between the stars, default is 2pt.
+/// - stroke (length): The stroke width of the stars, default is .8pt.
+/// -> Returns: A canvas with the stars drawn on it.
+#let difficulty-stars(difficulty, max_difficulty: 5, fill: rgb(tuda_colors.at("3b")), size: 1.2em, spacing: 2pt, stroke: .8pt) = context {
+  if (type(difficulty) != float) {
+    panic("difficulty must be a number")
+  }
+  if (difficulty < 0 or difficulty > max_difficulty) {
+    panic("difficulty must be between 0 and " + str(max_difficulty))
+  }
+  let remaining_difficulty = difficulty
+  return cetz.canvas(baseline: (0,.3em), for d in range(max_difficulty) {
+    let fill_percentage = if remaining_difficulty > 0 {
+      100% * calc.min(1, remaining_difficulty)
+    } else {
+      0%
+    }
+    draw-star((d * (size.to-absolute().cm() + spacing.cm() - 2 *stroke.cm()), 0), size: size.to-absolute(), fill: if fill_percentage
+      > 0% {
+      gradient.linear(
+        (fill, 0%),
+        (fill, fill_percentage),
+        (rgb("#00000000"), fill_percentage),
+        (rgb("#00000000"), 100%),
+        angle: 0deg,
+      )
+    } else {
+      rgb("#00000000")
+    }, stroke: stroke.to-absolute())
+    remaining_difficulty -= 1
+  })
+}
+
+/// A task is a paragraph with a numbering and an indent. The numbering is either the task prefix or the default numbering.
+/// - title (content): The title of the task.
+/// - points (int): The number of points the task is worth, optional.
+/// - difficulty (float): The difficulty of the task, optional.
+/// - maxdifficulty (int): The maximum difficulty, default is 5.
+#let task(
+  title: content,
+  points: none,
+  difficulty: none,
+  maxdifficulty: 5, // default maximum difficulty
+) = {
+  heading(
+    {
+      title
+      h(1fr) // move remaining text to the right
+      if(points != none or difficulty != none) {
+        let details = ()
+        if(points != none) {
+          details.push([#points Punkte])
+        }
+        if(difficulty != none) {
+          details.push([#difficulty-stars(difficulty,max_difficulty: maxdifficulty)])
+        }
+        details.join(", ")
+      }
+    },
+  )
+}
+
+/// A subtask is a heading with a numbering and an indent. The numbering is either the task prefix or the default numbering.
+///
+/// - title (content): The title of the subtask.
+/// - points (int): The number of points the subtask is worth, optional.
+/// - difficulty (float): The difficulty of the subtask, optional.
+/// - maxdifficulty (int): The maximum difficulty, default is 5.
+#let subtask(
+  title: content,
+  points: none,
+  difficulty: none,
+  maxdifficulty: 5, // default maximum difficulty
+) = {
+  heading(
+    {
+      title
+      h(1fr) // move remaining text to the right
+      if(points != none or difficulty != none) {
+        let details = ()
+        if(points != none) {
+          details.push([#points Punkte])
+        }
+        if(difficulty != none) {
+          details.push([#difficulty-stars(difficulty, max_difficulty: maxdifficulty)])
+        }
+        details.join(", ")
+      }
+    },
+    level: 2,
+  )
 }
