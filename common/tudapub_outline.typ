@@ -122,11 +122,8 @@
     )[Contents]
 
 
-    locate(loc => {
-      let headings = query(
-        selector(heading.where(outlined: true)).after(loc),
-        loc,
-      )
+    context {
+      let headings = query(selector(heading.where(outlined: true)).after(here()))
 
 
       
@@ -205,7 +202,7 @@
           \
         ]
       }
-    })
+    }
 
   }
 

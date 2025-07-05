@@ -1,7 +1,7 @@
-#let natural-image(..args) = style(styles => {
-  let (width, height) = measure(image(..args), styles)
+#let natural-image(..args) = context {
+  let (width, height) = measure(image(..args))
   image(..args, width: width, height: height)
-})
+}
 
 
 
