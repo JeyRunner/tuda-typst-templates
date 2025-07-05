@@ -1,4 +1,5 @@
-#import "@local/athena-tu-darmstadt-exercise:0.1.0": tudaexercise, tuda-section, tuda-subsection, tuda-gray-info
+#import "@local/athena-tu-darmstadt-exercise:0.1.0": task, subtask, tuda-gray-info, tuda-section, tuda-subsection, tudaexercise
+#import "@preview/cetz:0.4.0"
 
 #show: tudaexercise.with(
   language: "eng",
@@ -37,7 +38,7 @@ The easiest way is by using `typst init` like on this templates universe page. B
 The template requires the following fonts: Roboto and XCharter. Typst right now does not allow fonts to be installed as packages so you will either need to install them locally or configure Typst and co. to use the fonts.
 
 #tuda-gray-info[#text(font: "Roboto", weight: "bold", "For more info:") \
-https://github.com/JeyRunner/tuda-typst-templates?tab=readme-ov-file#logo-and-font-setup
+  https://github.com/JeyRunner/tuda-typst-templates?tab=readme-ov-file#logo-and-font-setup
 ]
 
 == Logo
@@ -83,6 +84,22 @@ If you do not like lines around subtasks you can pass `subtask: "plain"` to not 
 = More options
 
 The leftover options are `language` to control the language of certain keywords (can either be `"ger"` or `"eng"`) and `margins` which is a dictionary controlling the page margins. There are also the options `paper` which currently only supports `"a4"` and `headline` which currently is unsupported.
+
+#task(
+  title: [A Task with points and difficulty],
+  points: 5,
+  difficulty: 3.65,
+)
+
+#subtask(
+  title: "A subtask with points and difficulty + custom max difficulty",
+  points: 2,
+  difficulty: 1.5,
+  maxdifficulty: 3,
+)
+
+Such cetz, much wow
+
 
 = Creating tasks
 

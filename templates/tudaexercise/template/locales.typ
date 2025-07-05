@@ -5,6 +5,9 @@
   group: "Übungsgruppe",
   tutor: "Tutor",
   lecturer: "Dozent",
+  point_singular: "Punkt",
+  point_plural: "Punkte",
+  difficulty: "Schwierigkeitsgrad",
 )
 
 #let dict_en = (
@@ -14,4 +17,7 @@
   group: "Exercise group",
   tutor: "Tutor",
   lecturer: "Lecturer",
+  point_singular: "Point",
+  point_plural: "Points",
+  difficulty: "Difficulty",
 )
