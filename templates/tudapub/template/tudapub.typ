@@ -146,7 +146,7 @@
   // Set space above the heading to zero if it's the first element on a page.
   // This is currently implemented as a hack (check the y pos of the heading).
   // Thus when you experience compilation problems (slow, no convergence) set this to false.
-  reduce_heading_space_when_first_on_page: true,
+  reduce_heading_space_when_first_on_page: false,
 
 
   // How the table of contents outline is displayed.
