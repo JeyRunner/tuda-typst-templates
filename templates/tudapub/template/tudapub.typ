@@ -36,7 +36,7 @@
 
   // Date of submission as string
   date_of_submission: datetime(
-    year: 2023,
+    year: 2042,
     month: 10,
     day: 4,
   ),
@@ -637,6 +637,10 @@
   ]
 
 
+  // main body starts at the next page after table of contents
+  pagebreak(weak: true)
+  additional_pages_after_outline_table_of_contents
+
   // mark start of body
   //box[#figure(none) <__after_table_of_contents>]
   [#metadata("After Table of Contents") <__after_table_of_contents>]
@@ -647,9 +651,6 @@
   // restart heading counter
   counter(heading).update(0)
 
-  // additional_pages_after_outline_table_of_contents
-  pagebreak(weak: true)
-  additional_pages_after_outline_table_of_contents
 
 
   // enable heading outlined for body
