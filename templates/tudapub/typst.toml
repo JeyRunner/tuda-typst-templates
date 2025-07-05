@@ -1,6 +1,6 @@
 [package]
 name = "athena-tu-darmstadt-thesis"
-version = "0.1.0"
+version = "0.1.1"
 entrypoint = "template/lib.typ"
 authors = ["JeyRunner <https://github.com/JeyRunner>"]
 license = "MIT"

@@ -72,6 +72,8 @@ parser.add_argument('--universe', type=str,
                     metavar='GIVEN_TYPST_PACKAGES_LOCAL_REPO_PATH')
 parser.add_argument('--not-clean-dist-folder', action='store_true', 
                     help='Not delete the contents of the destinatio folder before copying.')
+parser.add_argument('--template', type=str, 
+                    help='If set only publish the template with this name, otherwise all templates.')
 args = parser.parse_args()
 
 
@@ -208,6 +210,14 @@ def copy_template(copy_dest_dir, template_folder_name = 'tudapub'):
         readme.write(c)
         readme.truncate()
 
+
+if args.template:
+    if args.template not in templates:
+        print(f'> template {args.template} not valid. Has to be one of {templates}')
+        exit(1)
+    templates = [
+        args.template
+    ]
 
 for name in templates:
     copy_template(copy_dest_dir=copy_dest_dir, template_folder_name=name)
