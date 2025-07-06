@@ -41,7 +41,7 @@
 #let tudaexercise(
   language: "eng",
 
-  margins: (:),
+  margins: tud_exercise_page_margin,
 
   headline: ("title", "name", "id"),
 
