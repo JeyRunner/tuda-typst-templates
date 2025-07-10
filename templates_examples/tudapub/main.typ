@@ -1,6 +1,5 @@
-
-#import "@preview/athena-tu-darmstadt-thesis:0.1.0": *
-//#import "@local/athena-tu-darmstadt-thesis:0.1.0": *
+//#import "@preview/athena-tu-darmstadt-thesis:0.1.1": *
+#import "@local/athena-tu-darmstadt-thesis:0.1.1": *
 
 // setup the template
 #show: tudapub.with(
@@ -18,7 +17,9 @@
     Institute ABC
   ],
 
-  logo_tuda: image("logos/tuda_logo.svg"),
+  // TODO: download actual log and convert according to README,
+  // then replace with image("logos/tuda_logo.svg")
+  logo_tuda: image("logos/tuda_logo_replace.svg"),
   accentcolor: "9c",
  
   abstract: [
@@ -43,8 +44,13 @@
 
 
   // outline_table_of_contents_style: "adapted",
-  // reduce_heading_space_when_first_on_page: false
   // figure_numbering_per_chapter: false
+  // 
+  // Set space above the heading to zero if it's the first element on a page.
+  // This is currently implemented as a hack (check the y pos of the heading).
+  // Thus when you experience compilation problems (slow, no convergence) set this to false.
+  reduce_heading_space_when_first_on_page: false,
+
 
   // Which pages to insert
   // Pages can be disabled individually.
@@ -61,9 +67,9 @@
 
   // pages after outline that will not be included in the outline
   additional_pages_after_outline_table_of_contents: [
-    == List of Symbols
+    === List of Symbols
     - $t$ - time
-    == List of Figures
+    - $m$ - mass
   ]
 )
 

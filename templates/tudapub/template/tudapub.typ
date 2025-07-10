@@ -36,7 +36,7 @@
 
   // Date of submission as string
   date_of_submission: datetime(
-    year: 2023,
+    year: 2042,
     month: 10,
     day: 4,
   ),
@@ -146,7 +146,7 @@
   // Set space above the heading to zero if it's the first element on a page.
   // This is currently implemented as a hack (check the y pos of the heading).
   // Thus when you experience compilation problems (slow, no convergence) set this to false.
-  reduce_heading_space_when_first_on_page: true,
+  reduce_heading_space_when_first_on_page: false,
 
 
   // How the table of contents outline is displayed.
@@ -175,7 +175,7 @@
 
   // content.
   body
-) = style(styles => {
+) = context {
   // checks
   //assert(tuda_colors.keys().contains(accentcolor), "accentcolor unknown")
   //assert.eq(paper, "a4", "currently just a4 is supported as paper size")
@@ -184,8 +184,8 @@
   // vars
   let accentcolor_rgb = tuda_colors.at(accentcolor)
   let heading_2_line_spacing = 5.2pt
-  let heading_2_margin_before = 12pt
-  let heading_3_margin_before = 12pt
+  let heading_2_margin_before = 13.5pt // typst 0.12: 12pt
+  let heading_3_margin_before = 13.5pt // typst 0.12: 12pt
 
 
   // Set document metadata.
@@ -194,13 +194,20 @@
     author: author
   )
 
+  // for typst 0.12:
+  // set par(
+  //  leading: 4.8pt
+  //  spacing: 91%
+  // )
+
   // Set the default body font.
   set par(
     justify: true,
-    //leading: 4.7pt//0.42em//4.7pt   // line spacing
-    leading: 4.8pt//0.42em//4.7pt   // line spacing
+    //leading: 4.8pt//0.42em//4.7pt   // line spacing
+    leading: 6.25pt//0.42em//4.7pt   // line spacing
   )
-  show par: set block(below: 1.1em) // was 1.2em
+  //show par: set block(below: 1.1em) // was 1.2em
+  set par(spacing: 1.2em)
 
   set text(
     font: "XCharter",
@@ -211,7 +218,8 @@
     ligatures: false,
     //spacing: 92%  // to make it look like the latex template
     //spacing: 84%  // to make it look like the latex template
-    spacing: 91%  // to make it look like the latex template
+    //spacing: 91%  // to make it look like the latex template
+    spacing: 95%  // to make it look like the latex template
   )
 
   if paper != "a4" {
@@ -254,20 +262,20 @@
         #let counter_disp = counter(page).display()
         //#hide(counter_disp)
         //#counter_disp
-        #locate(loc => {
-          let after_table_of_contents = query(selector(<__after_table_of_contents>).before(loc), loc).len() >= 1
+        #context {
+          let after_table_of_contents = query(selector(<__after_table_of_contents>).before(here())).len() >= 1
           if after_table_of_contents {counter_disp}
           else {hide(counter_disp)}
-        })
+        }
       ]
     ]
   )
 
-  let header_height = measure(header, styles).height
-  let footer_height = measure(footer, styles).height
+  let header_height = measure(header).height
+  let footer_height = measure(footer).height
 
   // inner page margins (from header to text and text to footer)
-  let inner_page_margin_top = 22pt //0pt//20pt //3mm
+  let inner_page_margin_top = 22.4pt // typst 0.12: 22pt
   let inner_page_margin_bottom = 30pt
 
   // title page has different margins
@@ -288,7 +296,7 @@
   set heading(numbering: "1.1")
 
   // default heading (handle cases with level >= 3 < 5)
-  show heading: it => locate(loc => {
+  show heading: it => context {
     if it.level > 5 {
       panic("Just heading with a level < 4 are supported.")
     }
@@ -301,7 +309,7 @@
     // change heading margin depending on its the first on the page
     let (heading_margin_before, is_first_on_page) = get-spacing-zero-if-first-on-page(
       heading_3_margin_before, 
-      loc, 
+      here(), 
       content_page_margin_full_top,
       enable: reduce_heading_space_when_first_on_page
     )
@@ -325,7 +333,7 @@
         v(10pt)
       )
     ]
-  })
+  }
 
 
   // heading level 5
@@ -395,11 +403,11 @@
   // heading level 2 
   show heading.where(
     level: 2
-  ): it => locate(loc => {
+  ): it => context {
     // change heading margin depending if its the first on the page
     let (heading_margin_before, is_first_on_page) = get-spacing-zero-if-first-on-page(
       heading_2_margin_before, 
-      loc, 
+      here(), 
       content_page_margin_full_top,
       enable: reduce_heading_space_when_first_on_page
     )
@@ -434,7 +442,7 @@
         v(10pt)
       )
     ]
-  })
+  }
 
 
 
@@ -443,7 +451,8 @@
 
   // Configure equation numbering and spacing.
   set math.equation(numbering: "(1.1.1)")
-  show math.equation: set block(spacing: 0.65em)
+  // typst0.12:  show math.equation: set block(spacing: 0.65em)
+  show math.equation: set block(spacing: 0.9em)
   // equation numbering per chapter
   show math.equation.where(block: true): it => {
     if equation_numbering_per_chapter {
@@ -628,6 +637,10 @@
   ]
 
 
+  // main body starts at the next page after table of contents
+  pagebreak(weak: true)
+  additional_pages_after_outline_table_of_contents
+
   // mark start of body
   //box[#figure(none) <__after_table_of_contents>]
   [#metadata("After Table of Contents") <__after_table_of_contents>]
@@ -638,9 +651,6 @@
   // restart heading counter
   counter(heading).update(0)
 
-  // additional_pages_after_outline_table_of_contents
-  pagebreak(weak: true)
-  additional_pages_after_outline_table_of_contents
 
 
   // enable heading outlined for body
@@ -660,4 +670,4 @@
     #set bibliography(style: "ieee")
     #bib
   ]
-})
+}

@@ -14,7 +14,7 @@
     lecturer: "Prof. Dr. Jane Doe",
   ),
   title-sub: title-sub.exercise(),
-  logo: image("logos/tuda_replace.svg"),
+  logo: image("logos/tuda_logo_replace.svg"),
   design: (
     accentcolor: "0b",
     colorback: true,
