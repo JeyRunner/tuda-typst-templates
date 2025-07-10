@@ -1,4 +1,3 @@
-
 //#import "@preview/athena-tu-darmstadt-thesis:0.1.1": *
 #import "@local/athena-tu-darmstadt-thesis:0.1.1": *
 
@@ -18,8 +17,8 @@
     Institute ABC
   ],
 
-  // todo: download actual log and convert according to README
-  // the replace with image("logos/tuda_logo.svg")
+  // TODO: download actual log and convert according to README,
+  // then replace with image("logos/tuda_logo.svg")
   logo_tuda: image("logos/tuda_logo_replace.svg"),
   accentcolor: "9c",
  

@@ -124,6 +124,7 @@
             #(i+1). Review: #reviewer_name
             \
           ]
+          // looked better with -5pt (but -8pt fits latext template)
           #v(-8pt) // spacing optional
           #location
         ],
