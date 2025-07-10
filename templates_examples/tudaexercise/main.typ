@@ -13,7 +13,7 @@
     tutor: "Dr. John Smith",
     lecturer: "Prof. Dr. Jane Doe",
   ),
-  logo: image("logos/tuda_replace.svg"),
+  logo: image("logos/tuda_logo_replace.svg"),
   design: (
     accentcolor: "0b",
     colorback: true,

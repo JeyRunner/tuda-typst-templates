@@ -1,6 +1,6 @@
 
-#import "@preview/athena-tu-darmstadt-thesis:0.1.1": *
-//#import "@local/athena-tu-darmstadt-thesis:0.1.1": *
+//#import "@preview/athena-tu-darmstadt-thesis:0.1.1": *
+#import "@local/athena-tu-darmstadt-thesis:0.1.1": *
 
 // setup the template
 #show: tudapub.with(
@@ -18,7 +18,9 @@
     Institute ABC
   ],
 
-  logo_tuda: image("logos/tuda_logo.svg"),
+  // todo: download actual log and convert according to README
+  // the replace with image("logos/tuda_logo.svg")
+  logo_tuda: image("logos/tuda_logo_replace.svg"),
   accentcolor: "9c",
  
   abstract: [
@@ -66,9 +68,9 @@
 
   // pages after outline that will not be included in the outline
   additional_pages_after_outline_table_of_contents: [
-    == List of Symbols
+    === List of Symbols
     - $t$ - time
-    == List of Figures
+    - $m$ - mass
   ]
 )
 
