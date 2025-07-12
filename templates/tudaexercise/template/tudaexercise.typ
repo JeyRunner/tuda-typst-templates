@@ -8,7 +8,7 @@
 #import "locales.typ": *
 #import "title-sub.typ" as title-sub
 
-#let design_defaults = (
+#let design-defaults = (
   accentcolor: "0b",
   colorback: true,
   darkmode: false
@@ -23,20 +23,50 @@
 /// ```
 /// 
 /// - language ("eng", "ger"): The language for dates and certain keywords
-/// - margins (dictionary): The page margins, possible entries: `top`, `left`, `bottom`, `right`
+/// 
+/// - margins (dictionary): The page margins, possible entries: `top`, `left`,
+///   `bottom`, `right`
+/// 
 /// - headline (array): Currently not supported. Should be used to configure the headline.
+/// 
 /// - paper (str): The type of paper to be used. Currently only a4 is supported.
+/// 
 /// - logo (content): The tuda logo as an image to be used in the title.
+/// 
 /// - info (dictionary): Info about the document mostly used in the title.
+///   
+///   By default accepts the following items:
+///   - `title`
+///   - `subtitle`
+///   - `author` 
+///   
+///   Additionally the following items are used by the `exercise` `title-sub`:
+///   - `term`
+///   - `date`
+///   - `sheet`
+///   
+///   Other `title-sub`s may use more options, which can be added here. See the documentation
+///   of the `title-sub` for corresponding items.
+///   
+///   Note: Items mapped to `none` are ignored aka. internally the dict is processed without
+///   them.
+/// 
 /// - title-sub (content, function, none): The content of the subline in the title card.
 ///   By default the `title-sub.exercise` style.
 /// 
 ///   See the `title-sub` export for functions to insert here or if you do not find something
 ///   fitting to your needs you can also pass raw content and completely customize it yourself.
-/// - design (dictionary): Options for the design of the template. Possible entries: `accentcolor`, `colorback` and `darkmode`
-/// - task-prefix (str): How the task numbers are prefixed. If unset, the tasks use the language default.
+/// 
+/// - design (dictionary): Options for the design of the template. Possible entries: 
+///   `accentcolor`, `colorback` and `darkmode`
+/// 
+/// - task-prefix (str,none): How the task numbers are prefixed. If unset, the tasks use the 
+///   language default.
+/// 
 /// - show-title (bool): Whether to show a title or not
+/// 
 /// - subtask ("ruled", "plain"): How subtasks are shown
+/// 
 /// - body (content): 
 #let tudaexercise(
   language: "eng",
@@ -49,11 +79,22 @@
 
   logo: none,
 
-  info: (:),
+  info: (
+    title: none,
+    header_title: none,
+    subtitle: none,
+    author: none,
+    term: none,
+    date: none,
+    sheet: none,
+    group: none,
+    tutor: none,
+    lecturer: none,
+  ),
 
   title-sub: title-sub.exercise(),
 
-  design: design_defaults,
+  design: design-defaults,
 
   task-prefix: none,
 
@@ -68,19 +109,8 @@
   }
 
   let margins = tud_exercise_page_margin + margins
-  let design = design_defaults + design
-  /*let info = (
-    title: none,
-    header_title: none,
-    subtitle: none,
-    author: none,
-    term: none,
-    date: none,
-    sheet: none,
-    group: none,
-    tutor: none,
-    lecturer: none,
-  ) + info*/
+  let design = design-defaults + design
+  let info = info.pairs().filter(x => x.at(1) != none).to-dict()
 
   let text_color = if design.darkmode {
     white

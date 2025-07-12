@@ -8,10 +8,13 @@
 
 /// To be used as `title-sub`
 /// 
-/// The default version of the title subline with fields "term", "date" and "sheet"
-/// Takes the values of these fields from `info`. Thus if they are not defined there
-/// they won't be displayed here.
-///
+/// The default version of the title subline.
+/// 
+/// *Possible `info` items:*
+/// - `term`: The current term (types: #str)
+/// - `date`: A date related to the exercise (types: #str, #datetime)
+/// - `sheet`: The number of this sheet/exercise (types: #int)
+/// 
 /// - additional (content,none): Additional content to be displayed after the previous options
 /// -> function
 #let exercise(additional: none) = (info, dict) => {
@@ -44,8 +47,15 @@
 /// To be used as `title-sub`
 /// 
 /// Allows more customization about how to display information about this document.
-/// For the fields "term", "date", "sheet", "group", "tutor" and "lecturer" you can simply
-/// type in these strings on either side and define the fields in `info`.
+/// 
+/// *Possible `info` items:*
+/// - `term`: The current term (types: #str)
+/// - `date`: The due date of the submission (types: #str, #datetime)
+/// - `sheet`: The number of this sheet/exercise (types: #int)
+/// - `group`: A identifier for the lecture group (types: #int, #str)
+/// - `tutor`: The name of the tutor of the lecture group (types: #str)
+/// - `lecturer`: The name of the lecturer (types: #str)
+/// 
 /// If you want to add more options you have two options:
 /// 
 /// 1. Pass the option as key-value pair:
@@ -66,7 +76,7 @@
 ///   dict-addon: (magic: "Magic")
 /// )
 /// ```
-/// Additionally other names for fields can be overwritten by putting a new definition in 
+/// Additionally the names for fields can be overwritten by putting a new definition in 
 /// `dict-addon`
 /// 
 /// If you pass something other than a string to left or right the item will simply be
