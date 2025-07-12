@@ -1,5 +1,13 @@
 #import "common/format.typ": format-date
 
+#let resolve-title-sub(title-sub, info, dict) = if type(title-sub) == content {
+  title-sub
+} else if type(title-sub) == function {
+  title-sub(info, dict)
+} else {
+  panic("title-sub has unsupported type. Expected content, function or none. Got " + type(title-sub))
+}
+
 #let tuda-make-title(
   inner_page_margin_top,
   title_rule,
@@ -10,6 +18,7 @@
   logo_element,
   logo_height,
   info,
+  title-sub,
   dict
 ) = {
   let text_on_accent_color = if colorback {
@@ -21,7 +30,7 @@
   let text_inset = if colorback {
     (x:3mm)
   } else {
-    ()
+    (:)
   }
 
   let stroke_color = if colorback {
@@ -34,6 +43,8 @@
 
   v(-inner_page_margin_top + 0.2mm) // would else draw over header
 
+  set text(fill: text_on_accent_color)
+
   box(
     fill: if colorback {accent_color}, 
     width: 100%,
@@ -45,20 +56,21 @@
       grid(
         columns: (1fr, auto),
         box(inset: (y:3mm),{
-          set text(font: "Roboto", weight: "bold", size: 12pt, fill: text_on_accent_color)
+          set text(font: "Roboto", weight: "bold", size: 12pt)
           grid(row-gutter: 1em,
             inset: text_inset,
-            if info.title != none {
+            if "title" in info {
               text(info.title, size: 20pt)
             },
-            if info.subtitle != none {
+            if "subtitle" in info {
               info.subtitle
             },
-            if info.author != none {
+            if "author" in info {
               if type(info.author) == array {
                 for author in info.author {
                   if type(author) == array {
-                    author.at(0) + " (Mat.: " + author.at(1) + ")"
+                    [#author.at(0) 
+                      #text(weight: "regular", size: 0.8em)[(Mat.: #author.at(1))]]
                     linebreak()
                   } else {
                    author
@@ -88,42 +100,10 @@
       )
       v(6pt)
       line(length: 100%, stroke: stroke)
-      if info.term != none or info.date != none or info.sheetnumber != none {
-        set text(fill: text_on_accent_color)
-        grid(
-          columns: (1fr, 1fr),
-          align: (left, right),
+      if title-sub != none {
+        block(
           inset: text_inset,
-          row-gutter: 0.4em,
-          grid.cell(
-          if info.term != none {
-              info.term
-          } + "\n" +
-          if info.date != none {
-            if type(info.date) == datetime {
-              format-date(info.date, dict.locale)
-            } else {
-              info.date
-            }
-          }),
-          grid.cell(
-          if info.sheetnumber != none {
-            text(font: "Roboto", weight: "bold", dict.sheet) + ": " + str(info.sheetnumber)
-            linebreak()
-          } +
-          if info.groupnumber != none {
-            text(font: "Roboto", weight: "bold", dict.group) + ": " + str(info.groupnumber)
-            linebreak()
-          } +
-          if info.tutor != none {
-            text(font: "Roboto", weight: "bold", dict.tutor) + ": " + info.tutor
-            linebreak()
-          } + 
-          if info.lecturer != none {
-            text(font: "Roboto", weight: "bold", dict.lecturer) + ": " + info.lecturer
-            linebreak()
-          }
-          ),
+          resolve-title-sub(title-sub, info, dict)
         )
         line(length: 100%, stroke: stroke)
       }
