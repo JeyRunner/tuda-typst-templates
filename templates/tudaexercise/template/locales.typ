@@ -6,6 +6,9 @@
   group: "Übungsgruppe",
   tutor: "Tutor",
   lecturer: "Dozent",
+  point_singular: "Punkt",
+  point_plural: "Punkte",
+  difficulty: "Schwierigkeitsgrad",
   term: "Semester",
   date: "Abgabe"
 )
@@ -18,6 +21,9 @@
   group: "Exercise group",
   tutor: "Tutor",
   lecturer: "Lecturer",
+  point_singular: "Point",
+  point_plural: "Points",
+  difficulty: "Difficulty",
   term: "Term",
   date: "Due"
 )
