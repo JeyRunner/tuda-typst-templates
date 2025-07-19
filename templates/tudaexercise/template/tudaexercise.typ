@@ -6,7 +6,6 @@
 #import "common/format.typ": text-roboto
 #import "title.typ": *
 #import "locales.typ": *
-#import "@preview/cetz:0.4.0"
 #import "title-sub.typ" as title-sub
 
 #let design-defaults = (
@@ -330,38 +329,41 @@
 )
 
 
-/// Draws a star at the given position with the given number of edges, size, stroke width, fill color and rotation. Usage:
+/// Draws a star with the given number of edges, size, stroke width, fill color and rotation. Usage:
 /// ```example
-/// #cetz.canvas({
-///  #draw-star((0,0),fill: red})
-/// })
+///  #draw-star(fill: red)
 /// ```
 ///
-/// - pos (position): The position where the star should be drawn.
 /// - edges (int): The number of edges of the star. Default is 5.
 /// - size (length): The size of the star. Default is 1cm.
 /// - stroke (length): The stroke width of the star. Default is 1.5pt.
 /// - fill (color): The fill color of the star. Default is red.
 /// - rotation (angle): The rotation of the star in degrees. Default is 90deg.
 /// -> Returns: A star shape.
-#let draw-star(pos, edges: 5, size: 1cm, stroke: 1.5pt, fill: red, rotation: 90deg) = {
-  let inner_size = size / 2 - stroke * 2
+#let draw-star(edges: 5, size: 1em, stroke: .8pt, fill: red, rotation: 270deg) = {
+  let inner_size = size / 2 - stroke
   let outer_r = inner_size
   let inner_r = inner_size * 0.4
+  let center_p = (inner_size, inner_size)
   let points = ()
   for idx in range(edges * 2) {
     let angle = idx * (360deg / (edges * 2)) + rotation
     let radius = if calc.rem(idx, 2) == 0 { outer_r } else { inner_r }
     points.push((
-      pos.at(0) + radius.cm() * calc.cos(angle),
-      pos.at(1) + radius.cm() * calc.sin(angle),
+      center_p.at(0) + radius * calc.cos(angle),
+      center_p.at(1) + radius * calc.sin(angle),
     ))
   }
-  cetz.draw.line(
-    ..points,
-    close: true,
+  box(width: size, height: size, baseline: 0.5pt, inset: 0pt, outset: 0pt, 
+  align(center +horizon,
+  curve(
     stroke: stroke,
     fill: fill,
+    curve.move(points.remove(0)),
+    ..points.map(p => curve.line(p)),
+    curve.close(mode: "straight"),
+  )
+  )
   )
 }
 
@@ -374,7 +376,7 @@
 /// - spacing (length): The spacing between the stars, default is 2pt.
 /// - stroke (length): The stroke width of the stars, default is .8pt.
 /// -> Returns: A canvas with the stars drawn on it.
-#let difficulty-stars(difficulty, max_difficulty: 5, fill: rgb(tuda_colors.at("3b")), size: 1.2em, spacing: 2pt, stroke: .8pt) = context {
+#let difficulty-stars(difficulty, max_difficulty: 5, fill: rgb(tuda_colors.at("3b")), size: 1em, spacing: 2pt, stroke: .8pt) = context {
   if (type(difficulty) != float) {
     panic("difficulty must be a number")
   }
@@ -382,26 +384,35 @@
     panic("difficulty must be between 0 and " + str(max_difficulty))
   }
   let remaining_difficulty = difficulty
-  return cetz.canvas(baseline: (0,.3em), for d in range(max_difficulty) {
+  let first = true
+  for d in range(max_difficulty) {
     let fill_percentage = if remaining_difficulty > 0 {
       100% * calc.min(1, remaining_difficulty)
     } else {
       0%
     }
-    draw-star((d * (size.to-absolute().cm() + spacing.cm() - 2 *stroke.cm()), 0), size: size.to-absolute(), fill: if fill_percentage
-      > 0% {
-      gradient.linear(
-        (fill, 0%),
-        (fill, fill_percentage),
-        (rgb("#00000000"), fill_percentage),
-        (rgb("#00000000"), 100%),
-        angle: 0deg,
-      )
+    if(first) {
+      first = false
     } else {
-      rgb("#00000000")
-    }, stroke: stroke.to-absolute())
+      h(spacing)
+    }
+    draw-star(
+      size: size.to-absolute(),
+      fill: if fill_percentage > 0% {
+        gradient.linear(
+          (fill, 0%),
+          (fill, fill_percentage),
+          (rgb("#00000000"), fill_percentage),
+          (rgb("#00000000"), 100%),
+          angle: 0deg,
+        )
+      } else {
+        rgb("#00000000")
+      },
+      stroke: stroke.to-absolute(),
+    )
     remaining_difficulty -= 1
-  })
+  }
 }
 
 /// A task is a paragraph with a numbering and an indent. The numbering is either the task prefix or the default numbering.

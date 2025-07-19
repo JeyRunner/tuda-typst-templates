@@ -1,5 +1,6 @@
-#import "@preview/cetz:0.4.0"
-#import "@local/athena-tu-darmstadt-exercise:0.2.0": tudaexercise, tuda-section, tuda-subsection, tuda-gray-info, title-sub, text-roboto, task, subtask
+#import "@local/athena-tu-darmstadt-exercise:0.2.0": (
+  subtask, task, text-roboto, title-sub, tuda-gray-info, tuda-section, tuda-subsection, tudaexercise,
+)
 
 #show: tudaexercise.with(
   language: "eng",
@@ -39,7 +40,7 @@ The easiest way is by using `typst init` like on this templates universe page. B
 == Fonts
 The template requires the following fonts: Roboto and XCharter. Typst right now does not allow fonts to be installed as packages. So you will either need to install them locally or configure Typst and co. to use the fonts.
 
-#tuda-gray-info[#text(font: "Roboto", weight: "bold", "For more info:") \
+#tuda-gray-info(title: "For more info:")[
   https://github.com/JeyRunner/tuda-typst-templates?tab=readme-ov-file#logo-and-font-setup
 ]
 
@@ -70,7 +71,7 @@ info: (
 The options can also be left empty. Then their corresponding item will not appear.
 
 Additionally there is the `title-sub` field which controls how the subline of the title looks like. By default this is set to the exercise version. There also is a submission version which also displays the submission extra info fields. Or if both don't fit your needs, you can also pass raw content to the field and control the subline to your will. \
-For more info see the exported `title-sub` module of this template. 
+For more info see the exported `title-sub` module of this template.
 
 If you do not want to have a title card you can also set `show-title` to `false`.
 
@@ -94,10 +95,10 @@ If you do not like lines around subtasks you can pass `subtask: "plain"` to not 
 
 = More options
 
-The leftover options are: 
-- `language` to control the language of certain keywords (can either be `"ger"` or `"eng"`) 
-- `margins` which is a dictionary controlling the page margins 
-- `paper` which currently only supports `"a4"` 
+The leftover options are:
+- `language` to control the language of certain keywords (can either be `"ger"` or `"eng"`)
+- `margins` which is a dictionary controlling the page margins
+- `paper` which currently only supports `"a4"`
 - `headline` which currently is unsupported.
 
 #task(
@@ -113,7 +114,7 @@ The leftover options are:
   maxdifficulty: 3,
 )
 
-Such cetz, much wow
+Such stars, much wow
 
 
 = Creating tasks
