@@ -24,6 +24,7 @@ publish_ignore_files = """
 
 /templates_examples/*/logos/*
 !/templates_examples/*/logos/*.sh
+!/templates_examples/*/logos/*logo_replace.svg
 /templates_examples/*/fonts/*
 !/templates_examples/*/fonts/*.sh
 /templates_examples/*/template
