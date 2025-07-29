@@ -1,4 +1,4 @@
-
+#import "lang.typ": lang
 
 #let tudapub-make-outline-table-of-contents(
   // How the table of contents outline is displayed.
@@ -119,7 +119,7 @@
   if outline_table_of_contents_style == "rewritten" {
     heading(
       level: 1, outlined: false
-    )[Contents]
+    )[#lang("contents")]
 
 
     context {
