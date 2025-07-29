@@ -226,7 +226,6 @@
     panic("currently just a4 as paper is supported")
   }
 
-
   
 
   ///////////////////////////////////////
