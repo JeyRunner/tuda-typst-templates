@@ -1,0 +1,27 @@
+languages = ["en", "de"]
+
+[translations] 
+task.en = "Task"
+task.de = "Aufgabe"
+
+sheet.en = "Sheet"
+sheet.de = "Übungsblatt"
+
+group.en = "Exercise group"
+group.de = "Übungsgruppe"
+
+tutor.en = "Tutor"
+tutor.de = "Tutor"
+
+lecturer.en = "Lecturer"
+lecturer.de = "Dozent"
+
+term.en = "Term"
+term.de = "Semester"
+
+date.en = "Due"
+date.de = "Abgabe"
+
+
+
+

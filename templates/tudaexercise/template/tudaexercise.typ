@@ -5,6 +5,7 @@
 #import "common/addons/difficulty-points.typ": difficulty-stars
 #import "common/colorutil.typ": calc-relative-luminance, calc-contrast
 #import "common/format.typ": text-roboto
+#import "common/lang.typ": lang, check-locale
 #import "title.typ": *
 
 #let design-defaults = (
@@ -215,6 +216,9 @@
     spacing: 1.1em
   )
   
+  // Check if language is supported or even valid
+  check-locale(language)
+
   set text(
     font: "XCharter",
     size: 10.909pt,
@@ -246,7 +250,7 @@
       let final-prefix = if (task-prefix != none) {
         task-prefix
       } else {
-        dict.task + " "
+        lang("task") + " "
       }
       tuda-section[#final-prefix#c: #it.body]
     } else if it.level == 2 {
