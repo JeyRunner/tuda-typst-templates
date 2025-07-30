@@ -5,7 +5,7 @@
 ///   customization options and allows more info-fields.
 
 #import "common/format.typ": format-date, text-roboto
-
+#import "common/lang.typ": lang, get-locale
 /// To be used as `title-sub`
 /// 
 /// The default version of the title subline.
@@ -17,17 +17,17 @@
 /// 
 /// - additional (content,none): Additional content to be displayed after the previous options
 /// -> function
-#let exercise(additional: none) = (info, dict) => {
+#let exercise(additional: none) = (info) => {
   if "term" in info {
     info.term
     linebreak()
   }
   if "date" in info {
-    format-date(info.date, dict.locale)
+    format-date(info.date, get-locale())
     linebreak()
   }
   if "sheet" in info {
-    [#dict.sheet #info.sheet]
+    [#lang("sheet") #info.sheet]
     linebreak()
   }
   if additional != none {
@@ -112,7 +112,7 @@
     assert(i in dict,
       message: "Unknown item '" + i + "' in submission, please use manual syntax: (\"Display Name\", \"Value\")")
     // Format date ignores formatting if type isn't date thus this works
-    return item-style(dict.at(i), format-date(info.at(i), dict.locale))
+    return item-style(dict.at(i), format-date(info.at(i), get-locale()))
   } else {
     return none
   }
@@ -125,8 +125,8 @@
 
   let filter-none(arr) = arr.filter(x => x != none)
 
-  return (info, dict) => {
-    let full-dict = dict + dict-addon
+  return (info) => {
+    let full-dict = dict-addon
     let left-items = resolve-items(left, info, full-dict)
     let right-items = resolve-items(right, info, full-dict)
     grid(

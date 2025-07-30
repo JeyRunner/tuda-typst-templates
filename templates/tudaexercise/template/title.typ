@@ -1,9 +1,9 @@
 #import "common/format.typ": format-date
 
-#let resolve-title-sub(title-sub, info, dict) = if type(title-sub) == content {
+#let resolve-title-sub(title-sub, info) = if type(title-sub) == content {
   title-sub
 } else if type(title-sub) == function {
-  title-sub(info, dict)
+  title-sub(info)
 } else {
   panic("title-sub has unsupported type. Expected content, function or none. Got " + type(title-sub))
 }
@@ -19,7 +19,6 @@
   logo_height,
   info,
   title-sub,
-  dict
 ) = {
   let text_on_accent_color = if colorback {
     on_accent_color
@@ -103,7 +102,7 @@
       if title-sub != none {
         block(
           inset: text_inset,
-          resolve-title-sub(title-sub, info, dict)
+          resolve-title-sub(title-sub, info)
         )
         line(length: 100%, stroke: stroke)
       }
