@@ -556,7 +556,6 @@
       title_german: title_german,
       thesis_type: thesis_type,
       accentcolor: accentcolor,
-      language: language,
       author: author,
       date_of_submission: date_of_submission,
       location: location,
