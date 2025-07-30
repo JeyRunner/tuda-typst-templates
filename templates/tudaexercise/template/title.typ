@@ -1,12 +1,57 @@
 #import "common/format.typ": format-date
+#import "locales.typ": *
 
-#let resolve-title-sub(title-sub, info, dict) = if type(title-sub) == content {
-  title-sub
-} else if type(title-sub) == function {
-  title-sub(info, dict)
-} else {
-  panic("title-sub has unsupported type. Expected content, function or none. Got " + type(title-sub))
-}
+#let resolve-info-layout(exercise-type, info, info-layout, dict) = {
+  let default_keys_exercise = ("term", "date", "sheet")
+  let default_keys_submission= ("group", "tutor", "lecturer")
+  let default_keys = if exercise-type == "exercise" {
+    default_keys_exercise
+  } else {
+    default_keys_exercise + default_keys_submission
+  }
+
+  // This function is a little weird, but it prevents code duplication.
+  let sort-info-to-list(target-list, info-dict, filter-key) = {
+     for (info-key, info-value) in info-dict.pairs() {
+        if info-key in default_keys {
+          if info-key == filter-key {
+            if info-key == "date" {
+              info-value = format-date(info-value, dict.locale) 
+            }
+            target-list.push([#dict.at(info-key) #info-value])
+          }
+        }
+        else if info-key not in default_keys_submission{
+          if info-key == filter-key {
+            target-list.push([#info-key #info-value])
+          }
+        }
+      }
+      return target-list
+  }
+
+
+  let left-items = ()
+  let right-items = ()
+  if exercise-type not in ("exercise", "submission") {
+    panic("Exercise template only supports types 'exercise' and 'submission'")
+  } else  {
+
+     // Handle layouting, right first then default the rest to left
+    for layout-key in info-layout.at("right") {
+      right-items = sort-info-to-list(right-items, info, layout-key)
+    }
+    for layout-key in info-layout.at("left") {
+      left-items = sort-info-to-list(left-items, info, layout-key)  
+    }
+  }
+     grid(
+      columns: (1fr,1fr),
+      align: (alignment.left, alignment.right),
+      left-items.join(linebreak()),
+      right-items.join(linebreak())
+    )
+} 
 
 #let tuda-make-title(
   inner_page_margin_top,
@@ -18,7 +63,8 @@
   logo_element,
   logo_height,
   info,
-  title-sub,
+  info-layout,
+  exercise-type,
   dict
 ) = {
   let text_on_accent_color = if colorback {
@@ -100,10 +146,10 @@
       )
       v(6pt)
       line(length: 100%, stroke: stroke)
-      if title-sub != none {
+      if info-layout != none {
         block(
           inset: text_inset,
-          resolve-title-sub(title-sub, info, dict)
+          resolve-info-layout(exercise-type, info, info-layout, dict)
         )
         line(length: 100%, stroke: stroke)
       }

@@ -5,7 +5,6 @@
 #import "common/colorutil.typ": calc-relative-luminance, calc-contrast
 #import "common/format.typ": text-roboto
 #import "title.typ": *
-#import "locales.typ": *
 #import "title-sub.typ" as title-sub
 
 #let design-defaults = (
@@ -69,6 +68,8 @@
 /// 
 /// - body (content): 
 #let tudaexercise(
+  exercise-type: "exercise",
+
   language: "eng",
 
   margins: tud_exercise_page_margin,
@@ -91,6 +92,12 @@
     tutor: none,
     lecturer: none,
   ),
+
+  info-layout: (
+    left: ("term", "date", "sheet", "group"),
+    right: ("tutor", "lecturer")
+  ),
+
 
   title-sub: title-sub.exercise(),
 
@@ -290,7 +297,8 @@
         logo, 
         tud_title_logo_height, 
         info,
-        title-sub,
+        info-layout,
+        exercise-type,
         dict
         )
     }

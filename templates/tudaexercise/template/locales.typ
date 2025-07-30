@@ -4,10 +4,10 @@
 
   sheet: "Übungsblatt",
   group: "Übungsgruppe",
-  tutor: "Tutor",
-  lecturer: "Dozent",
-  term: "Semester",
-  date: "Abgabe"
+  tutor: "Tutor:",
+  lecturer: "Dozent:",
+  term: "Semester:",
+  date: "Abgabe:"
 )
 
 #let dict_en = (
@@ -15,9 +15,9 @@
   task: "Task",
 
   sheet: "Sheet",
-  group: "Exercise group",
-  tutor: "Tutor",
-  lecturer: "Lecturer",
-  term: "Term",
-  date: "Due"
+  group: "Exercise group:",
+  tutor: "Tutor:",
+  lecturer: "Lecturer:",
+  term: "Term:",
+  date: "Due:"
 )
