@@ -1,28 +1,14 @@
-#let _lang_order = (
-  "en": 0,
-  "de": 1
-)
-
-// Here is the actual dictionary
-#let _lang_dict = (
-  "master_thesis":      ("Master thesis", "Master Thesis"),
-  "bachelor_thesis":    ("Bachelor thesis", "Bachelor Thesis"),
-  "report":             ("Report", "Bericht"),
-  "by":                 ("by", "von"),
-  "date_of_submission": ("Date of submission:", "Abgabedatum:"),
-  "contents":           ("Contents", "Inhaltsverzeichnis"),
-  "review":             ("Review", "Korrektur"),
-)
-
-
 #let lang(key) = {
   if key == none {panic("No key specified")}
+  let dict = toml("translations.toml")
   context {
     let language = text.lang
-    if language not in ("en", "de") {
-    panic("Unknown language: '" + language + "'. Only languages 'en' and 'de' are supported")
-   }
-  return _lang_dict.at(key).at(_lang_order.at(language))
+    if language not in dict.languages {
+      let allowed_langs = dict.languages.join("', '", last: "' and '") + "'"
+      panic("Unknown language: '" + language + "'. Only languages " + allowed_langs + " are supported")
+    }
+  
+  return dict.translations.at(key).at(language)
   }
   
   
