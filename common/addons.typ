@@ -9,7 +9,7 @@
 /// - stroke (length): The stroke width of the star. Default is 1.5pt.
 /// - fill (color): The fill color of the star. Default is red.
 /// - rotation (angle): The rotation of the star in degrees. Default is 90deg.
-/// - baseline (length): The baseline of the star. Default is 0pt.
+/// - baseline (length): The baseline of the star. Default is 0.5pt.
 /// -> Returns: A star shape.
 #let draw-star(edges: 5, size: 1em, stroke: .8pt, fill: red, rotation: 270deg,baseline: 0.5pt) = {
   let inner_size = size / 2 - stroke
