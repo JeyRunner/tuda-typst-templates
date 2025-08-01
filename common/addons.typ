@@ -35,26 +35,33 @@
 
 /// Draws a number of stars to represent the difficulty of a task.
 ///
-/// - difficulty (float): The difficulty of the task, must be between 0 and `max_difficulty`.
+/// - difficulty (float): The difficulty of the task, must be between 0 and `maxdifficulty`.
 /// - max_difficulty (int): The maximum difficulty, default is 5.
 /// - fill (color): The fill color of the stars, default is `rgb(tuda_colors.at("3b"))`.
 /// - spacing (length): The spacing between the stars, default is 2pt.
+/// - difficultyname (str): The name of the difficulty, prefix for the stars, default is `none`.
 /// - otherargs: Additional arguments to pass to the `draw-star` function.
 /// -> Returns: A canvas with the stars drawn on it.
 #let difficulty-stars(
   difficulty,
-  max_difficulty: 5,
+  maxdifficulty: 5,
   fill: rgb(tuda_colors.at("3b")),
   spacing: 2pt,
+  difficultyname: none,
+  difficultysep: ": ",
   ..otherargs,
-) = context {
+) = {
   assert(type(difficulty) == float or type(difficulty) == int, message: "difficulty must be a number")
-  assert(type(max_difficulty) == int, message: "max_difficulty must be an integer")
-  assert(difficulty >= 0 and difficulty <= max_difficulty, message: "difficulty must be between 0 and " + str(max_difficulty))
+  assert(type(maxdifficulty) == int, message: "maxdifficulty must be an integer")
+  assert(difficulty >= 0 and difficulty <= maxdifficulty, message: "difficulty must be between 0 and " + str(maxdifficulty))
   assert(type(fill) == color, message: "fill must be a color, got " + str(type(fill)))
   let remaining_difficulty = difficulty
   let first = true
-  for d in range(max_difficulty) {
+  if difficultyname != none {
+    difficultyname
+    difficultysep
+  }
+  for d in range(maxdifficulty) {
     let fill_percentage = if remaining_difficulty > 0 {
       100% * calc.min(1, remaining_difficulty)
     } else {
