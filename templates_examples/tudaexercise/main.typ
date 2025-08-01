@@ -138,7 +138,7 @@ For example you can writethe following command to recreate the header of this ta
 == Task and subtask commands #task-points-header(points: 1, difficulty: 1, difficultyfunction: difficultyformat)<task-and-subtask-commands>
 Instead of the normal section and subsection commands you can also use the `task` and `subtask` functions to create tasks and subtasks with points and difficulty:
 ```typst
-#task(title: [Tasks with *points* and _difficulty_], points: "viele", difficulty: 3.69)
+#task(title: [Tasks with *points* and _difficulty_], points: 5, difficulty: 3.69)
 // you can also just pass the points if desired
 #subtask(points: 2)
 ```
