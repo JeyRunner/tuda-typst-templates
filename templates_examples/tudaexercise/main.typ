@@ -158,11 +158,12 @@ They take the same parameters as the `task-points-header` function, but addition
     difficultyname: "Effort",
     edges: 6,
     rotation: 45deg,
+    baseline: 2pt,
   ),
 ))
 As mentioned above, you can overwrite the point- and difficulty functions of the `task-points-header` function. This allows you to customize the header even further. For example, you can change the number of edges of the stars, the rotation of the stars, or the fill color of the stars:
 ```typst
-== Advanced task header styling (#task-points-header(points: 2, difficulty: 1.5, maxdifficulty: 3, detailsseperator: " | ", hspace: none, starfill: blue, pointsfunction: pointformat.with(pointsnamesingle: "Bonus point", pointsnameplural: "Bonus points"), difficultyfunction: tuda-difficulty-stars.with(difficultyname: "Effort", edges: 6, rotation: 45deg)))
+== Advanced task header styling (#task-points-header(points: 2, difficulty: 1.5, maxdifficulty: 3, detailsseperator: " | ", hspace: none, starfill: blue, pointsfunction: pointformat.with(pointsnamesingle: "Bonus point", pointsnameplural: "Bonus points", baseline: 2pt), difficultyfunction: tuda-difficulty-stars.with(difficultyname: "Effort", edges: 6, rotation: 45deg)))
 ```
 #tuda-gray-info(title: "Note:")[
   Passing all these parameters everytime is a bit cumbersome, but since typst #link("https://github.com/typst/typst/issues/147")[does not yet support user-defined elements], this is the only way to archieve this without relying on states. You can create your own function to simplify this if you want to: ```typst

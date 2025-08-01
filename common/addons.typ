@@ -9,8 +9,9 @@
 /// - stroke (length): The stroke width of the star. Default is 1.5pt.
 /// - fill (color): The fill color of the star. Default is red.
 /// - rotation (angle): The rotation of the star in degrees. Default is 90deg.
+/// - baseline (length): The baseline of the star. Default is 0pt.
 /// -> Returns: A star shape.
-#let draw-star(edges: 5, size: 1em, stroke: .8pt, fill: red, rotation: 270deg) = {
+#let draw-star(edges: 5, size: 1em, stroke: .8pt, fill: red, rotation: 270deg,baseline: 0.5pt) = {
   let inner_size = size / 2 - stroke
   let outer_r = inner_size
   let inner_r = inner_size * 0.4
@@ -24,7 +25,7 @@
       center_p.at(1) + radius * calc.sin(angle),
     ))
   }
-  box(width: size, height: size, baseline: 0.5pt, inset: 0pt, outset: 0pt, align(center + horizon, curve(
+  box(width: size, height: size, baseline, inset: 0pt, outset: 0pt, align(center + horizon, curve(
     stroke: stroke,
     fill: fill,
     curve.move(points.remove(0)),
