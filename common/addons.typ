@@ -25,7 +25,7 @@
       center_p.at(1) + radius * calc.sin(angle),
     ))
   }
-  box(width: size, height: size, baseline, inset: 0pt, outset: 0pt, align(center + horizon, curve(
+  box(width: size, height: size, baseline: baseline, inset: 0pt, outset: 0pt, align(center + horizon, curve(
     stroke: stroke,
     fill: fill,
     curve.move(points.remove(0)),
