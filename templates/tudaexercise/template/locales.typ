@@ -27,3 +27,17 @@
   term: "Term",
   date: "Due"
 )
+
+/// Returns the dictionary for the given locale.
+///
+/// - locale (str): The locale to get the dictionary for, can be "ger" or "eng".
+/// -> Returns: The dictionary for the given locale.
+#let get-locale-dict(locale) = {
+  if locale == "ger" {
+    dict_de
+  } else if locale == "eng" {
+    dict_en
+  } else {
+    panic("Unsupported locale: " + locale)
+  }
+}
