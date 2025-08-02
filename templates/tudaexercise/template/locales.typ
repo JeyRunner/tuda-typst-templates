@@ -7,6 +7,8 @@
   tutor: "Tutor",
   lecturer: "Dozent",
   term: "Semester",
+  summer_term: "Sommersemester",
+  winter_term: "Wintersemester",
   date: "Abgabe"
 )
 
@@ -19,5 +21,7 @@
   tutor: "Tutor",
   lecturer: "Lecturer",
   term: "Term",
+  summer_term: "Summer semester",
+  winter_term: "Winter semester",
   date: "Due"
 )

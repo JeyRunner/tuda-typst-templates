@@ -6,7 +6,7 @@
     title: "Usage of TUDaExercise",
     subtitle: "A small guide.",
     author: (("Andreas", "129219"), "Dennis"),
-    term: "Summer semester 2042",
+    term: auto,
     date: datetime.today(),
     sheet: 5,
     group: 1,
