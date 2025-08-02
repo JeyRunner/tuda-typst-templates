@@ -1,4 +1,4 @@
-#import "tudacolors.typ": tuda_colors
+#import "../tudacolors.typ": tuda_colors
 /// Draws a star with the given number of edges, size, stroke width, fill color and rotation. Usage:
 /// ```example
 ///  #draw-star(fill: red)
@@ -36,33 +36,33 @@
 
 /// Draws a number of stars to represent the difficulty of a task.
 ///
-/// - difficulty (float): The difficulty of the task, must be between 0 and `maxdifficulty`.
+/// - difficulty (float): The difficulty of the task, must be between 0 and `max-difficulty`.
 /// - max_difficulty (int): The maximum difficulty, default is 5.
 /// - fill (color): The fill color of the stars, default is `rgb(tuda_colors.at("3b"))`.
 /// - spacing (length): The spacing between the stars, default is 2pt.
-/// - difficultyname (str): The name of the difficulty, prefix for the stars, default is `none`.
+/// - difficulty-name (str): The name of the difficulty, prefix for the stars, default is `none`.
 /// - otherargs: Additional arguments to pass to the `draw-star` function.
 /// -> Returns: A canvas with the stars drawn on it.
 #let difficulty-stars(
   difficulty,
-  maxdifficulty: 5,
+  max-difficulty: 5,
   fill: rgb(tuda_colors.at("3b")),
   spacing: 2pt,
-  difficultyname: none,
-  difficultysep: ": ",
+  difficulty-name: none,
+  difficulty-sep: ": ",
   ..otherargs,
 ) = {
   assert(type(difficulty) == float or type(difficulty) == int, message: "difficulty must be a number")
-  assert(type(maxdifficulty) == int, message: "maxdifficulty must be an integer")
-  assert(difficulty >= 0 and difficulty <= maxdifficulty, message: "difficulty must be between 0 and " + str(maxdifficulty))
+  assert(type(max-difficulty) == int, message: "max-difficulty must be an integer")
+  assert(difficulty >= 0 and difficulty <= max-difficulty, message: "difficulty must be between 0 and " + str(max-difficulty))
   assert(type(fill) == color, message: "fill must be a color, got " + str(type(fill)))
   let remaining_difficulty = difficulty
   let first = true
-  if difficultyname != none {
-    difficultyname
-    difficultysep
+  if difficulty-name != none {
+    difficulty-name
+    difficulty-sep
   }
-  for d in range(maxdifficulty) {
+  for d in range(max-difficulty) {
     let fill_percentage = if remaining_difficulty > 0 {
       100% * calc.min(1, remaining_difficulty)
     } else {

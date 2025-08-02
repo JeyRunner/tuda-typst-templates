@@ -2,7 +2,7 @@
 #import "common/props.typ": tud_exercise_page_margin, tud_header_line_height, tud_inner_page_margin_top, tud_title_logo_height
 #import "common/headings.typ": tuda-section, tuda-subsection, tuda-subsection-unruled
 #import "common/util.typ": check-font-exists
-#import "common/addons.typ": difficulty-stars
+#import "common/addons/difficulty-points.typ": difficulty-stars
 #import "common/colorutil.typ": calc-relative-luminance, calc-contrast
 #import "common/format.typ": text-roboto
 #import "title.typ": *
@@ -327,25 +327,25 @@
 /// Formats points for display in a task header.
 ///
 /// - points (int, float): The number of points, can be an integer or a float.
-/// - pointsnamesingle (str): The singular form of the points name, default is auto and retrieved from the locale dictionary.
-/// - pointsnameplural (str): The plural form of the points name, default is auto and retrieved from the locale dictionary.
+/// - points-name-single (str): The singular form of the points name, default is auto and retrieved from the locale dictionary.
+/// - points-name-plural (str): The plural form of the points name, default is auto and retrieved from the locale dictionary.
 /// - pointssep (str): The separator between the points and the name, default is a space.
 /// -> Returns: A string formatted as "points Punkte" or "points Punkt" depending on the value of points.
-#let pointformat(
+#let point-format(
   points: none,
-  pointsnamesingle: auto,
-  pointsnameplural: auto,
+  points-name-single: auto,
+  points-name-plural: auto,
   pointssep: " ",
 ) = context {
-  let ctxpointsnamesingle = pointsnamesingle
-  let ctxpointsnameplural = pointsnameplural
-  if (pointsnamesingle == auto or pointsnameplural == auto) {
+  let ctxpoints-name-single = points-name-single
+  let ctxpoints-name-plural = points-name-plural
+  if (points-name-single == auto or points-name-plural == auto) {
     let dict = get-locale-dict(s.get().language)
-    if (pointsnamesingle == auto) {
-      ctxpointsnamesingle = dict.point_singular
+    if (points-name-single == auto) {
+      ctxpoints-name-single = dict.point_singular
     }
-    if (pointsnameplural == auto) {
-      ctxpointsnameplural = dict.point_plural
+    if (points-name-plural == auto) {
+      ctxpoints-name-plural = dict.point_plural
     }
   }
   assert(points != none, message: "points must be provided")
@@ -353,77 +353,77 @@
   str(points)
   pointssep
   if (points == 1) {
-    ctxpointsnamesingle
+    ctxpoints-name-single
   } else {
-    ctxpointsnameplural
+    ctxpoints-name-plural
   }
 }
 
 /// Formats the difficulty of a task for display in a task header.
 ///
-/// - difficulty (int, float): The difficulty of the task, must be between 0 and `maxdifficulty`.
-/// - maxdifficulty (int): The maximum difficulty, default is 5.
-/// - difficultyname (str, auto): The name of the difficulty, prefix for the stars, default is auto and retrieved from the locale dictionary.
-/// - difficultysep (str): The separator between the difficulty name and the stars, default is ": ".
-/// - outofsep (str): The separator between the difficulty and the maximum difficulty, default is "/".
+/// - difficulty (int, float): The difficulty of the task, must be between 0 and `max-difficulty`.
+/// - max-difficulty (int): The maximum difficulty, default is 5.
+/// - difficulty-name (str, auto): The name of the difficulty, prefix for the stars, default is auto and retrieved from the locale dictionary.
+/// - difficulty-sep (str): The separator between the difficulty name and the stars, default is ": ".
+/// - out-of-sep (str): The separator between the difficulty and the maximum difficulty, default is "/".
 /// - otherargs: Throwaway unneeded args used for different implementations of the difficulty format function.
-/// -> Returns: A string formatted as "difficulty: difficulty/maxdifficulty".
-#let difficultyformat(
+/// -> Returns: A string formatted as "difficulty: difficulty/max-difficulty".
+#let difficulty-format(
   difficulty,
-  maxdifficulty: 5,
-  difficultyname: auto,
-  difficultysep: ": ",
-  outofsep: "/",
+  max-difficulty: 5,
+  difficulty-name: auto,
+  difficulty-sep: ": ",
+  out-of-sep: "/",
   ..otherargs,
 ) = context {
-  let ctxdifficultyname = difficultyname
-  if(difficultyname == auto) {
-    ctxdifficultyname = get-locale-dict(s.get().language).difficulty
+  let ctxdifficulty-name = difficulty-name
+  if(difficulty-name == auto) {
+    ctxdifficulty-name = get-locale-dict(s.get().language).difficulty
   }
-  if(ctxdifficultyname != none) {
-    ctxdifficultyname + difficultysep
+  if(ctxdifficulty-name != none) {
+    ctxdifficulty-name + difficulty-sep
   }
-  str(difficulty) + outofsep + str(maxdifficulty)
+  str(difficulty) + out-of-sep + str(max-difficulty)
 }
 
 /// A header for tasks that includes points and difficulty information.
 ///
 /// - points (int, float, none): The number of points the task is worth, optional.
 /// - difficulty (int, float, none): The difficulty of the task, optional.
-/// - maxdifficulty (int): The maximum difficulty of the task, default is 5.
+/// - max-difficulty (int): The maximum difficulty of the task, default is 5.
 /// - hspace (length): The horizontal space between the title and the points/difficulty, default is 1fr.
-/// - detailsseperator (str): The separator between the points and difficulty information, default is ", ".
-/// - starfill (color): The fill color of the stars, default is the accent color from the context.
-/// - pointsfunction (function): The function to format the points, default is `pointformat`.
-/// - difficultyfunction (function): The function to format the difficulty, default is `difficulty-stars`.
-/// -> Returns: A string with the points and difficulty information formatted as "points Punkte, difficulty-stars(difficulty, max_difficulty: maxdifficulty)".
+/// - details-seperator (str): The separator between the points and difficulty information, default is ", ".
+/// - star-filll (color): The fill color of the stars, default is the accent color from the context.
+/// - points-function (function): The function to format the points, default is `point-format`.
+/// - difficulty-function (function): The function to format the difficulty, default is `difficulty-stars`.
+/// -> Returns: A string with the points and difficulty information formatted as "points Punkte, difficulty-stars(difficulty, max_difficulty: max-difficulty)".
 #let task-points-header(
   points: none,
   difficulty: none,
-  maxdifficulty: 5,
+  max-difficulty: 5,
   hspace: 1fr,
-  detailsseperator: ", ",
-  starfill: auto,
-  pointsfunction: pointformat,
-  difficultyfunction: difficulty-stars,
+  details-seperator: ", ",
+  star-filll: auto,
+  points-function: point-format,
+  difficulty-function: difficulty-stars,
 ) = context {
   assert(points != none or difficulty != none, message: "Either points or difficulty must be provided")
   if(hspace != none) {
     h(hspace)
   }
-  let ctxstarfill = starfill
-  if(starfill == auto) {
-    ctxstarfill = s.get().accent_color
+  let ctxstar-filll = star-filll
+  if(star-filll == auto) {
+    ctxstar-filll = s.get().accent_color
   }
   let details = ()
   if(points != none) {
-    details.push(pointsfunction(points: points))
+    details.push(points-function(points: points))
   }
   if(difficulty != none) {
-    details.push(difficultyfunction(difficulty, maxdifficulty: maxdifficulty,fill:ctxstarfill))
+    details.push(difficulty-function(difficulty, max-difficulty: max-difficulty,fill:ctxstar-filll))
   }
   if(details.len() > 0) {
-    details.join(detailsseperator)
+    details.join(details-seperator)
   }
 }
 
