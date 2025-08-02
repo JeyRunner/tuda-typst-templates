@@ -7,7 +7,10 @@
   tutor: "Tutor",
   lecturer: "Dozent",
   term: "Semester",
-  date: "Abgabe"
+  date: "Abgabe",
+  firstname: "Vorname",
+  lastname: "Nachname",
+  student_id: "Matrikelnummer",
 )
 
 #let dict_en = (
@@ -19,5 +22,8 @@
   tutor: "Tutor",
   lecturer: "Lecturer",
   term: "Term",
-  date: "Due"
+  date: "Due",
+  firstname: "First Name",
+  lastname: "Last Name",
+  student_id: "Student ID",
 )
