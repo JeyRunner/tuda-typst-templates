@@ -116,6 +116,18 @@ If you dislike the default task prefix, you can also set your own by changing th
 
 #tuda-subsection("Sections")
 
+asdasdasd
+
+#let number_form_box() = box(
+      curve(
+        curve.move((0em, -.5em)),
+        curve.line((0em,0em)),
+        curve.line((1em,0em)),
+        curve.line((1em,-.5em)),
+      )
+    )
+dadada #number_form_box() fwfw
+
 If you want to create an unnumbered section you can use the `tuda-section` or `tuda-subsection` functions accordingly. Simply pass the section title as a string.
 ```
 #tuda-subsection("Sections")
