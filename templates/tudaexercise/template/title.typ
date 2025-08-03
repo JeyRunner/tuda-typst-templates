@@ -1,5 +1,5 @@
 #import "common/format.typ": format-date
-#import "locales.typ": *
+#import "common/lang.typ": lang as l, get-locale
 
 /// Creates the subline content. If `info-layout` is a dict, the subline gets filled following
 /// the order specified by the keys in the `info-layout` dict. If a key is present in the
