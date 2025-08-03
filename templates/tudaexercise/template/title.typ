@@ -28,7 +28,7 @@
         }
         else if info-key not in default_keys_submission{
           if info-key == filter-key {
-            target-list.push([#info-key #info-value])
+            target-list.push([#info-value])
           }
         }
       }
