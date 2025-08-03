@@ -22,6 +22,14 @@ term.de = "Semester"
 date.en = "Due"
 date.de = "Abgabe"
 
+point_singular.de = "Punkt"
+point_singular.en = "Point"
+
+point_plural.de = "Punkte"
+point_plural.en = "Points"
+
+difficulty.de = "Schwierigkeitsgrad"
+difficulty.en = "Difficulty"
 
 
 

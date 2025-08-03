@@ -1,5 +1,5 @@
 #import "common/format.typ": format-date
-#import "locales.typ": *
+#import "common/lang.typ": lang as l, get-locale
 
 /// Creates the subline content. If `info-layout` is a dict, the subline gets filled following the order specified by the keys in the `info-layout` dict. If a key is present in the `info` but not in `info-layout`, it does not show up in the subline. 
 ///
@@ -9,8 +9,8 @@
 ///   the value of `#info.custom-subline` gets returned as content
 /// - dict (dict): A language dict to translate standard/pre-defined strings.
 /// -> Returns content filling the subline of the title
-#let resolve-info-layout(exercise-type, info, info-layout, dict) = {
-  if not info-layout {
+#let resolve-info-layout(exercise-type, info, info-layout) = {
+  if info-layout == false {
     return [#info.custom-subline]
   }
     
@@ -30,9 +30,9 @@
         if info-key in default_keys {
           if info-key == filter-key {
             if info-key == "date" {
-              info-value = format-date(info-value, dict.locale) 
+              info-value = format-date(info-value, get-locale()) 
             }
-            target-list.push([#dict.at(info-key) #info-value])
+            target-list.push([#l(info-key): #info-value])
           }
         }
         // This case makes sure the default submission keys don't get mistaken for custom keys
@@ -81,8 +81,7 @@
   logo_height,
   info,
   info-layout,
-  exercise-type,
-  dict
+  exercise-type
 ) = {
   let text_on_accent_color = if colorback {
     on_accent_color
@@ -166,7 +165,7 @@
       if info-layout != none {
         block(
           inset: text_inset,
-          resolve-info-layout(exercise-type, info, info-layout, dict)
+          resolve-info-layout(exercise-type, info, info-layout)
         )
         line(length: 100%, stroke: stroke)
       }

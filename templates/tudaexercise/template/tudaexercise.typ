@@ -5,7 +5,7 @@
 #import "common/addons/difficulty-points.typ": difficulty-stars
 #import "common/colorutil.typ": calc-relative-luminance, calc-contrast
 #import "common/format.typ": text-roboto
-#import "common/lang.typ": lang, check-locale
+#import "common/lang.typ": check-locale
 #import "title.typ": *
 
 #let design-defaults = (
@@ -228,8 +228,6 @@
     lang: language,
   )
 
-  let dict = get-locale-dict(language)
-
   set heading(numbering: (..numbers) => {
     if "sheet" in info {
       numbering("1.1a", info.sheet, ..numbers)
@@ -248,7 +246,7 @@
       let final-prefix = if (task-prefix != none) {
         task-prefix
       } else {
-        lang("task") + " "
+        l("task") + " "
       }
       tuda-section[#final-prefix#c: #it.body]
     } else if it.level == 2 {
@@ -305,8 +303,7 @@
         tud_title_logo_height, 
         info,
         info-layout,
-        exercise-type,
-        dict
+        exercise-type
         )
     }
 
@@ -353,12 +350,11 @@
   let ctxpoints-name-single = points-name-single
   let ctxpoints-name-plural = points-name-plural
   if points-name-single == auto or points-name-plural == auto {
-    let dict = get-locale-dict(text.lang)
     if points-name-single == auto {
-      ctxpoints-name-single = dict.point_singular
+      ctxpoints-name-single = l("point_singular")
     }
     if points-name-plural == auto {
-      ctxpoints-name-plural = dict.point_plural
+      ctxpoints-name-plural = l("point_plural")
     }
   }
   assert.ne(points, none, message: "points must be provided")
@@ -390,7 +386,7 @@
   ..otherargs,
 ) = context {
   let ctxdifficulty-name = if difficulty-name == auto {
-    get-locale-dict(text.lang).difficulty
+    l("difficulty")
   } else {
     difficulty-name
   }
