@@ -1,4 +1,4 @@
-#import "@local/athena-tu-darmstadt-exercise:0.2.0": tudaexercise, tuda-section, tuda-subsection, tuda-gray-info, title-sub, text-roboto
+#import "@local/athena-tu-darmstadt-exercise:0.2.0": tudaexercise, tuda-section, tuda-subsection, tuda-gray-info, text-roboto
 
 #show: tudaexercise.with(
   exercise-type: "exercise", // Choose between 'exercise' and 'submission'
