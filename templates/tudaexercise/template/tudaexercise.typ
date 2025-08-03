@@ -371,7 +371,7 @@
   ..otherargs,
 ) = context {
   let ctxdifficulty-name = if(difficulty-name == auto) {
-    ctxdifficulty-name = get-locale-dict(text.lang).difficulty
+    get-locale-dict(text.lang).difficulty
   } else {
     difficulty-name
   }
@@ -435,10 +435,10 @@
   difficulty: none,
   ..otherargs,
 ) = {
+  if (otherargs.pos().len() > 0 and title == none) {
+    title = otherargs.at(0)
+  }
   heading({
-    if (otherargs.pos().len() > 0 and title == none) {
-      title = otherargs.at(0)
-    }
     title
     if (points != none or difficulty != none) {
       task-points-header(
@@ -463,11 +463,11 @@
   difficulty: none,
   ..otherargs,
 ) = {
+  if (otherargs.pos().len() > 0 and title == none) {
+    title = otherargs.at(0)
+  }
   heading(
     {
-      if (otherargs.pos().len() > 0 and title == none) {
-        title = otherargs.at(0)
-      }
       title
       if (points != none or difficulty != none) {
         task-points-header(
