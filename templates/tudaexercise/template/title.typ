@@ -50,12 +50,12 @@
       left-items = sort-info-to-list(left-items, info, layout-key)  
     }
   }
-     grid(
-      columns: (1fr,1fr),
-      align: (alignment.left, alignment.right),
-      left-items.join(linebreak()),
-      right-items.join(linebreak())
-    )
+  grid(
+    columns: (1fr,1fr),
+    align: (alignment.left, alignment.right),
+    left-items.join(linebreak()),
+    right-items.join(linebreak())
+  )
 } 
 
 #let tuda-make-title(
