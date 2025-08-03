@@ -4,3 +4,4 @@
 #import "common/props.typ": *
 #import "common/format.typ": text-roboto
 #import "common/addons/difficulty-points.typ": difficulty-stars as tuda-difficulty-stars
+#import "common/lang.typ": lang as l
