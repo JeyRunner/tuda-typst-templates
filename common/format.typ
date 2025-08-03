@@ -1,6 +1,6 @@
 #let format-date(date, language) = if type(date) != datetime {
   date
-} else if language == "ger" {
+} else if language == "de" {
   date.display("[day].[month repr:numerical].[year]")
 } else {
   date.display("[month repr:long] [day], [year]")

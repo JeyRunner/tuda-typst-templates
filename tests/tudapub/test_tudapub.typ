@@ -23,7 +23,7 @@
   ],
   author: "Albert Author",
   accentcolor: "9c",
-  language: "eng",
+  language: "en",
 
 
   abstract: [The abstract...],
