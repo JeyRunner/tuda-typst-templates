@@ -2,6 +2,11 @@
 #import "locales.typ": *
 
 #let resolve-info-layout(exercise-type, info, info-layout, dict) = {
+  if info-layout == false {
+    return [#info.at(0)]
+  }
+    
+
   let default_keys_exercise = ("term", "date", "sheet")
   let default_keys_submission= ("group", "tutor", "lecturer")
   let default_keys = if exercise-type == "exercise" {
