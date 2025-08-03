@@ -48,7 +48,8 @@
 ///   - `term`
 ///   - `date`
 ///   - `sheet`
-///   
+/// 
+///   For customaization of the subline (see `info-layout`) use key `custom-subline`   
 ///   
 ///   Note: Items mapped to `none` are ignored aka. internally the dict is processed without
 ///   them.
@@ -61,7 +62,7 @@
 ///     right: ("tutor", "lecturer", "A Custom Key"))
 ///     ```
 ///   For complete customization set `info-layout: false` and define any content in the
-///   `info` dict under the key `custom`
+///   `info` dict under the key `custom-subline`
 /// 
 /// - design (dictionary): Options for the design of the template. Possible entries: 
 ///   `accentcolor`, `colorback` and `darkmode`
