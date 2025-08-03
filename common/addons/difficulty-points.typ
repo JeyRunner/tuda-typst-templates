@@ -68,7 +68,7 @@
     } else {
       0%
     }
-    if (first) {
+    if first {
       first = false
     } else {
       h(spacing)

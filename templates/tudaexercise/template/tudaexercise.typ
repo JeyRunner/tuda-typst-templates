@@ -333,12 +333,12 @@
 ) = context {
   let ctxpoints-name-single = points-name-single
   let ctxpoints-name-plural = points-name-plural
-  if (points-name-single == auto or points-name-plural == auto) {
+  if points-name-single == auto or points-name-plural == auto {
     let dict = get-locale-dict(text.lang)
-    if (points-name-single == auto) {
+    if points-name-single == auto {
       ctxpoints-name-single = dict.point_singular
     }
-    if (points-name-plural == auto) {
+    if points-name-plural == auto {
       ctxpoints-name-plural = dict.point_plural
     }
   }
@@ -346,7 +346,7 @@
   assert(type(points) in (float, int), message: "points must be a number, got " + str(type(points)))
   str(points)
   pointssep
-  if (points == 1) {
+  if points == 1 {
     ctxpoints-name-single
   } else {
     ctxpoints-name-plural
@@ -370,12 +370,12 @@
   out-of-sep: "/",
   ..otherargs,
 ) = context {
-  let ctxdifficulty-name = if(difficulty-name == auto) {
+  let ctxdifficulty-name = if difficulty-name == auto {
     get-locale-dict(text.lang).difficulty
   } else {
     difficulty-name
   }
-  if(ctxdifficulty-name != none) {
+  if ctxdifficulty-name != none {
     ctxdifficulty-name + difficulty-sep
   }
   str(difficulty) + out-of-sep + str(max-difficulty)
@@ -403,21 +403,21 @@
   difficulty-function: difficulty-stars,
 ) = context {
   assert(points != none or difficulty != none, message: "Either points or difficulty must be provided")
-  if(hspace != none) {
+  if hspace != none {
     h(hspace)
   }
   let ctxstar-fill = star-fill
-  if(star-fill == auto) {
+  if star-fill == auto {
     ctxstar-fill = s.get().accent_color
   }
   let details = ()
-  if(points != none) {
+  if points != none {
     details.push(points-function(points: points))
   }
-  if(difficulty != none) {
+  if difficulty != none {
     details.push(difficulty-function(difficulty, max-difficulty: max-difficulty,fill:ctxstar-fill))
   }
-  if(details.len() > 0) {
+  if details.len() > 0 {
     details.join(details-seperator)
   }
 }
@@ -435,12 +435,12 @@
   difficulty: none,
   ..otherargs,
 ) = {
-  if (otherargs.pos().len() > 0 and title == none) {
+  if otherargs.pos().len() > 0 and title == none {
     title = otherargs.at(0)
   }
   heading({
     title
-    if (points != none or difficulty != none) {
+    if points != none or difficulty != none {
       task-points-header(
         points: points,
         difficulty: difficulty,
@@ -463,13 +463,13 @@
   difficulty: none,
   ..otherargs,
 ) = {
-  if (otherargs.pos().len() > 0 and title == none) {
+  if otherargs.pos().len() > 0 and title == none {
     title = otherargs.at(0)
   }
   heading(
     {
       title
-      if (points != none or difficulty != none) {
+      if points != none or difficulty != none {
         task-points-header(
           points: points,
           difficulty: difficulty,
