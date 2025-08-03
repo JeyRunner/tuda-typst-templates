@@ -2,8 +2,8 @@
 #import "locales.typ": *
 
 #let resolve-info-layout(exercise-type, info, info-layout, dict) = {
-  if info-layout == false {
-    return [#info.at(0)]
+  if not info-layout {
+    return [#info.custom-subline]
   }
     
 
