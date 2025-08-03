@@ -20,6 +20,12 @@
 /// #show: tudaexercise.with(<options>)
 /// ```
 /// 
+/// - exercise-type ("exercise", "submission"): The type of exercise. This modifies the subline 
+///   (content below the header):
+///    - `exercise` shows info-fields `term`, `date` and `sheet`
+///    - `submission` additionally shows fields `group`, `tutor` and `lecturer` on the 
+///       right-hand side
+/// 
 /// - language ("eng", "ger"): The language for dates and certain keywords
 /// 
 /// - margins (dictionary): The page margins, possible entries: `top`, `left`,
@@ -38,22 +44,24 @@
 ///   - `subtitle`
 ///   - `author` 
 ///   
-///   Additionally the following items are used by the `exercise` `title-sub`:
+///   Additionally the following items are used by the `exercise-type` `submission`:
 ///   - `term`
 ///   - `date`
 ///   - `sheet`
 ///   
-///   Other `title-sub`s may use more options, which can be added here. See the documentation
-///   of the `title-sub` for corresponding items.
 ///   
 ///   Note: Items mapped to `none` are ignored aka. internally the dict is processed without
 ///   them.
 /// 
-/// - title-sub (content, function, none): The content of the subline in the title card.
-///   By default the `title-sub.exercise` style.
-/// 
-///   See the `title-sub` export for functions to insert here or if you do not find something
-///   fitting to your needs you can also pass raw content and completely customize it yourself.
+/// - info-layout (dict, boolean): Defines the content's layout of the subline in the title
+///   card.
+///   By default the layout is defined in the following dict:
+///     ```typst
+///     (left: ("term", "date", "sheet", "group"),
+///     right: ("tutor", "lecturer", "A Custom Key"))
+///     ```
+///   For complete customization set `info-layout: false` and define any content in the
+///   `info` dict under the key `custom`
 /// 
 /// - design (dictionary): Options for the design of the template. Possible entries: 
 ///   `accentcolor`, `colorback` and `darkmode`
