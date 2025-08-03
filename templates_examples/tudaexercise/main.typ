@@ -1,5 +1,5 @@
 #import "@local/athena-tu-darmstadt-exercise:0.2.0": (
-  subtask, task, text-roboto, title-sub, tuda-gray-info, tuda-section, tuda-subsection, tudaexercise, task-points-header, point-format, difficulty-format, tuda-difficulty-stars,
+  subtask, task, text-roboto, tuda-gray-info, tuda-section, tuda-subsection, tudaexercise, task-points-header, point-format, difficulty-format, tuda-difficulty-stars,
 )
 
 #show: tudaexercise.with(
