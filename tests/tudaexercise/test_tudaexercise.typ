@@ -17,7 +17,7 @@
     author: "Albert Author",
     sheet: 5,
   ),
-  language: "eng",
+  language: "en",
   design: (
     accentcolor: "9c",
   ),

@@ -2,6 +2,7 @@
 #import "common/props.typ": tud_exercise_page_margin, tud_header_line_height, tud_inner_page_margin_top, tud_title_logo_height
 #import "common/headings.typ": tuda-section, tuda-subsection, tuda-subsection-unruled
 #import "common/util.typ": check-font-exists
+#import "common/addons/difficulty-points.typ": difficulty-stars
 #import "common/colorutil.typ": calc-relative-luminance, calc-contrast
 #import "common/format.typ": text-roboto
 #import "title.typ": *
@@ -19,14 +20,14 @@
 /// ```
 /// #show: tudaexercise.with(<options>)
 /// ```
-/// 
+///
 /// - exercise-type ("exercise", "submission"): The type of exercise. This modifies the subline 
 ///   (content below the header):
 ///    - `exercise` shows info-fields `term`, `date` and `sheet`
 ///    - `submission` additionally shows fields `group`, `tutor` and `lecturer` on the 
 ///       right-hand side
 /// 
-/// - language ("eng", "ger"): The language for dates and certain keywords
+/// - language ("en", "de"): The language for dates and certain keywords
 /// 
 /// - margins (dictionary): The page margins, possible entries: `top`, `left`,
 ///   `bottom`, `right`
@@ -78,7 +79,7 @@
 #let tudaexercise(
   exercise-type: "exercise",
 
-  language: "eng",
+  language: "en",
 
   margins: tud_exercise_page_margin,
 
@@ -217,16 +218,11 @@
     kerning: true,
     ligatures: false,
     spacing: 91%, // to make it look like the latex template,
-    fill: text_color
+    fill: text_color,
+    lang: language,
   )
 
-  let dict = if language == "eng" {
-    dict_en
-  } else if language == "ger" {
-    dict_de
-  } else {
-    panic("Unsupported language")
-  }
+  let dict = get-locale-dict(language)
 
   set heading(numbering: (..numbers) => {
     if "sheet" in info {
@@ -321,12 +317,179 @@
   let background = if(darkmode == false) {rgb("#f0f0f0")} else {rgb("#3F4647")}
   rect(
     fill: background,
-    inset: 1em,
-    radius: 4pt,
+    // inset: 1em,
+    inset: (
+      left: 8pt,
+      y: 2mm,
+    ),
+    radius: 3pt,
     width: 100%,
-    stroke: (left: 3pt + gray),
+    stroke: (left: 5pt + gray),
   [
     #{if title != none [#text-roboto(strong(title)) \ ]}
     #body
   ])
+}
+
+/// Formats points for display in a task header.
+///
+/// - points (int, float): The number of points, can be an integer or a float.
+/// - points-name-single (str): The singular form of the points name, default is auto and retrieved from the locale dictionary.
+/// - points-name-plural (str): The plural form of the points name, default is auto and retrieved from the locale dictionary.
+/// - pointssep (str): The separator between the points and the name, default is a space.
+/// -> Returns: A string formatted as "points Punkte" or "points Punkt" depending on the value of points.
+#let point-format(
+  points: none,
+  points-name-single: auto,
+  points-name-plural: auto,
+  pointssep: " ",
+) = context {
+  let ctxpoints-name-single = points-name-single
+  let ctxpoints-name-plural = points-name-plural
+  if points-name-single == auto or points-name-plural == auto {
+    let dict = get-locale-dict(text.lang)
+    if points-name-single == auto {
+      ctxpoints-name-single = dict.point_singular
+    }
+    if points-name-plural == auto {
+      ctxpoints-name-plural = dict.point_plural
+    }
+  }
+  assert.ne(points, none, message: "points must be provided")
+  assert(type(points) in (float, int), message: "points must be a number, got " + str(type(points)))
+  str(points)
+  pointssep
+  if points == 1 {
+    ctxpoints-name-single
+  } else {
+    ctxpoints-name-plural
+  }
+}
+
+/// Formats the difficulty of a task for display in a task header.
+///
+/// - difficulty (int, float): The difficulty of the task, must be between 0 and `max-difficulty`.
+/// - max-difficulty (int): The maximum difficulty, default is 5.
+/// - difficulty-name (str, auto): The name of the difficulty, prefix for the stars, default is auto and retrieved from the locale dictionary.
+/// - difficulty-sep (str): The separator between the difficulty name and the stars, default is ": ".
+/// - out-of-sep (str): The separator between the difficulty and the maximum difficulty, default is "/".
+/// - otherargs: Throwaway unneeded args used for different implementations of the difficulty format function.
+/// -> Returns: A string formatted as "difficulty: difficulty/max-difficulty".
+#let difficulty-format(
+  difficulty,
+  max-difficulty: 5,
+  difficulty-name: auto,
+  difficulty-sep: ": ",
+  out-of-sep: "/",
+  ..otherargs,
+) = context {
+  let ctxdifficulty-name = if difficulty-name == auto {
+    get-locale-dict(text.lang).difficulty
+  } else {
+    difficulty-name
+  }
+  if ctxdifficulty-name != none {
+    ctxdifficulty-name + difficulty-sep
+  }
+  str(difficulty) + out-of-sep + str(max-difficulty)
+}
+
+/// A header for tasks that includes points and difficulty information.
+///
+/// - points (int, float, none): The number of points the task is worth, optional.
+/// - difficulty (int, float, none): The difficulty of the task, optional.
+/// - max-difficulty (int): The maximum difficulty of the task, default is 5.
+/// - hspace (length): The horizontal space between the title and the points/difficulty, default is 1fr.
+/// - details-seperator (str): The separator between the points and difficulty information, default is ", ".
+/// - star-fill (color): The fill color of the stars, default is the accent color from the context.
+/// - points-function (function): The function to format the points, default is `point-format`.
+/// - difficulty-function (function): The function to format the difficulty, default is `difficulty-stars`.
+/// -> Returns: A string with the points and difficulty information formatted as "points Punkte, difficulty-stars(difficulty, max_difficulty: max-difficulty)".
+#let task-points-header(
+  points: none,
+  difficulty: none,
+  max-difficulty: 5,
+  hspace: 1fr,
+  details-seperator: ", ",
+  star-fill: auto,
+  points-function: point-format,
+  difficulty-function: difficulty-stars,
+) = context {
+  assert(points != none or difficulty != none, message: "Either points or difficulty must be provided")
+  if hspace != none {
+    h(hspace)
+  }
+  let ctxstar-fill = star-fill
+  if star-fill == auto {
+    ctxstar-fill = s.get().accent_color
+  }
+  let details = ()
+  if points != none {
+    details.push(points-function(points: points))
+  }
+  if difficulty != none {
+    details.push(difficulty-function(difficulty, max-difficulty: max-difficulty,fill:ctxstar-fill))
+  }
+  if details.len() > 0 {
+    details.join(details-seperator)
+  }
+}
+
+/// A wrapper command to create a section (a task in the context of this template) with a title and optional points and difficulty information. See `task-points-header` for the details.
+///
+/// - title (content): The title of the task.
+/// - points (int): The number of points the task is worth, optional.
+/// - difficuty (float): The difficulty of the task, optional.
+/// - otherargs: Additional arguments to pass to the `task-points-header` function.
+/// -> Returns: A heading with the title and optional points and difficulty information.
+#let task(
+  title: none,
+  points: none,
+  difficulty: none,
+  ..otherargs,
+) = {
+  if otherargs.pos().len() > 0 and title == none {
+    title = otherargs.at(0)
+  }
+  heading({
+    title
+    if points != none or difficulty != none {
+      task-points-header(
+        points: points,
+        difficulty: difficulty,
+        ..otherargs.named(),
+      )
+    }
+  })
+}
+
+/// A wrapper command to create a subtask (a subtask in the context of this template) with a title and optional points and difficulty information. See `task-points-header` for the details.
+///
+/// - title (content): The title of the subtask.
+/// - points (int): The number of points the subtask is worth, optional.
+/// - difficulty (float): The difficulty of the subtask, optional.
+/// - otherargs: Additional arguments to pass to the `task-points-header` function.
+/// -> Returns: A heading with the title and optional points and difficulty information.
+#let subtask(
+  title: none,
+  points: none,
+  difficulty: none,
+  ..otherargs,
+) = {
+  if otherargs.pos().len() > 0 and title == none {
+    title = otherargs.at(0)
+  }
+  heading(
+    {
+      title
+      if points != none or difficulty != none {
+        task-points-header(
+          points: points,
+          difficulty: difficulty,
+          ..otherargs.named(),
+        )
+      }
+    },
+    level: 2,
+  )
 }
