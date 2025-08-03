@@ -23,7 +23,7 @@
 /// #show: tudaexercise.with(<options>)
 /// ```
 /// 
-/// - language ("eng", "ger"): The language for dates and certain keywords
+/// - language ("en", "de"): The language for dates and certain keywords
 /// 
 /// - margins (dictionary): The page margins, possible entries: `top`, `left`,
 ///   `bottom`, `right`
@@ -70,7 +70,7 @@
 /// 
 /// - body (content): 
 #let tudaexercise(
-  language: "eng",
+  language: "en",
 
   margins: tud_exercise_page_margin,
 
@@ -207,7 +207,8 @@
     kerning: true,
     ligatures: false,
     spacing: 91%, // to make it look like the latex template,
-    fill: text_color
+    fill: text_color,
+    lang: language,
   )
 
   let dict = get-locale-dict(language)
@@ -340,7 +341,7 @@
   let ctxpoints-name-single = points-name-single
   let ctxpoints-name-plural = points-name-plural
   if (points-name-single == auto or points-name-plural == auto) {
-    let dict = get-locale-dict(s.get().language)
+    let dict = get-locale-dict(text.lang)
     if (points-name-single == auto) {
       ctxpoints-name-single = dict.point_singular
     }
@@ -378,7 +379,7 @@
 ) = context {
   let ctxdifficulty-name = difficulty-name
   if(difficulty-name == auto) {
-    ctxdifficulty-name = get-locale-dict(s.get().language).difficulty
+    ctxdifficulty-name = get-locale-dict(text.lang).difficulty
   }
   if(ctxdifficulty-name != none) {
     ctxdifficulty-name + difficulty-sep

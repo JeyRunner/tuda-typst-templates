@@ -47,7 +47,7 @@
   reviewer_names: ("SuperSupervisor 1", "SuperSupervisor 2"),
 
   // language for correct hyphenation
-  language: "eng",
+  language: "en",
 
   // Set the margins of the content pages.
   // The title page is not affected by this.

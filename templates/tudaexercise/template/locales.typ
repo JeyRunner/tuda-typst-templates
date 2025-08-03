@@ -1,5 +1,5 @@
 #let dict_de = (
-  locale: "ger",
+  locale: "de",
   task: "Aufgabe",
 
   sheet: "Übungsblatt",
@@ -14,7 +14,7 @@
 )
 
 #let dict_en = (
-  locale: "eng",
+  locale: "en",
   task: "Task",
 
   sheet: "Sheet",
@@ -28,16 +28,19 @@
   date: "Due"
 )
 
+#let dicts = (
+  de: dict_de,
+  en: dict_en,
+)
+
 /// Returns the dictionary for the given locale.
 ///
-/// - locale (str): The locale to get the dictionary for, can be "ger" or "eng".
+/// - locale (str): The locale to get the dictionary for, can be "de" or "en".
 /// -> Returns: The dictionary for the given locale.
 #let get-locale-dict(locale) = {
-  if locale == "ger" {
-    dict_de
-  } else if locale == "eng" {
-    dict_en
-  } else {
-    panic("Unsupported locale: " + locale)
+  let dict = dicts.at(locale, default: none)
+  if dict == none {
+    panic("Unsupported locale: " + locale + ". Supported locales are: " + dicts.keys().join(", ", last: " and "))
   }
+  dict
 }

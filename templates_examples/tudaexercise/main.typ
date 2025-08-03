@@ -3,7 +3,7 @@
 )
 
 #show: tudaexercise.with(
-  language: "eng",
+  language: "en",
   info: (
     title: "Usage of TUDaExercise",
     subtitle: "A small guide.",
@@ -96,7 +96,7 @@ If you do not like lines around subtasks you can pass `subtask: "plain"` to not 
 = More options
 
 The leftover options are:
-- `language` to control the language of certain keywords (can either be `"ger"` or `"eng"`)
+- `language` to control the language of certain keywords (can either be `"de"` or `"en"`)
 - `margins` which is a dictionary controlling the page margins
 - `paper` which currently only supports `"a4"`
 - `headline` which currently is unsupported.

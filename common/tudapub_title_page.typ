@@ -17,7 +17,7 @@
   accentcolor: "9c",
 
   // language for correct hyphenation
-  language: "eng",
+  language: "en",
 
 
   // author name as text, e.g "Albert Author"
