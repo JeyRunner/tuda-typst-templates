@@ -4,6 +4,11 @@
   }
 }
 
+/// Checks if the locale str passed is supported by this project. I.e. if strings in the specified
+/// language are available.
+///
+/// - locale (str): 
+/// -> Panics, if the supplied locale str is not supported by the translations in `translations.toml`
 #let check-locale(locale) = {
   let dict = toml("../translations.toml")
   if locale not in dict.languages {
@@ -12,6 +17,10 @@
   }  
 }
 
+/// Retrieve translation strings from .toml file by .
+///
+/// - key (str): key identifiying the string 
+/// -> String in the locale of the document
 #let lang(key) = {
   if key == none {panic("No key specified")}
   let dict = toml("../translations.toml")
