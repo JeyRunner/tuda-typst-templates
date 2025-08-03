@@ -62,6 +62,8 @@
 ///     (left: ("term", "date", "sheet", "group"),
 ///     right: ("tutor", "lecturer", "A Custom Key"))
 ///     ```
+///   Left aligns left, and vice versa. The order of the keywords in the list, defines the 
+///   order of the info displayed in the subline.
 ///   For complete customization set `info-layout: false` and define any content in the
 ///   `info` dict under the key `custom-subline`
 /// 

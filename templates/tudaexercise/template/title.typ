@@ -1,6 +1,14 @@
 #import "common/format.typ": format-date
 #import "locales.typ": *
 
+/// Creates the subline content. If `info-layout` is a dict, the subline gets filled following the order specified by the keys in the `info-layout` dict. If a key is present in the `info` but not in `info-layout`, it does not show up in the subline. 
+///
+/// - exercise-type (string): The type of exercise specified 
+/// - info (dict): The info dict containing all relevant data for the subline
+/// - info-layout (dict, boolean): A dict specifying the layout of the subline. If `false`
+///   the value of `#info.custom-subline` gets returned as content
+/// - dict (dict): A language dict to translate standard/pre-defined strings.
+/// -> Returns content filling the subline of the title
 #let resolve-info-layout(exercise-type, info, info-layout, dict) = {
   if not info-layout {
     return [#info.custom-subline]
@@ -15,7 +23,8 @@
     default_keys_exercise + default_keys_submission
   }
 
-  // This function is a little weird, but it prevents code duplication.
+  /// Checks if `filter-key` is present in `info-dict` and appends it to `target-list` 
+  /// if that is the case. Also format the value of key `date` to match the locale.
   let sort-info-to-list(target-list, info-dict, filter-key) = {
      for (info-key, info-value) in info-dict.pairs() {
         if info-key in default_keys {
@@ -26,7 +35,10 @@
             target-list.push([#dict.at(info-key) #info-value])
           }
         }
-        else if info-key not in default_keys_submission{
+        // This case makes sure the default submission keys don't get mistaken for custom keys
+        // I.e. we don't want submission keys ("group", "tutor", "lecturer") showing up, if
+        // exercise-type isn't "submission"!
+        else if info-key not in default_keys_submission {
           if info-key == filter-key {
             target-list.push([#info-value])
           }
