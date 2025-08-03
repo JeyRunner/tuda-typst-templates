@@ -125,7 +125,7 @@ You can pass the following parameters:
 - `hspace` (length): The horizontal space between the task title and the points, default is 1em
 - `details-seperator` (string): The string that separates the task title from the points
   header, default is `", "`
-- `star-filll` (color): The fill color of the stars, default is the currentaccent color
+- `star-fill` (color): The fill color of the stars, default is the currentaccent color
 - `points-function` (function): The function to format the points, default is `point-format`
 - `difficulty-function` (function): The function to format the difficulty, default is `tuda-difficulty-stars`, but you can also pass `difficulty-format` to use a more simple text representation of the difficulty (or even a custom function). See @task-and-subtask-commands to see `difficulty-format` in action.
 
@@ -138,8 +138,8 @@ For example you can writethe following command to recreate the header of this ta
 == Task and subtask commands #task-points-header(points: 1, difficulty: 1, difficulty-function: difficulty-format)<task-and-subtask-commands>
 Instead of the normal section and subsection commands you can also use the `task` and `subtask` functions to create tasks and subtasks with points and difficulty:
 ```typst
-#task(title: [Tasks with *points* and _difficulty_], points: 5, difficulty: 3.69)
-// you can also just pass the points if desired
+#task(points: 5, difficulty: 3.69)[Tasks with *points* and _difficulty_]
+// you can also just pass the points and omit the title if desired
 #subtask(points: 2)
 ```
 They take the same parameters as the `task-points-header` function, but additionally you can pass a `title` parameter to set the title of the task or subtask.
@@ -149,7 +149,7 @@ They take the same parameters as the `task-points-header` function, but addition
   max-difficulty: 3,
   details-seperator: " | ",
   hspace: none,
-  star-filll: blue,
+  star-fill: blue,
   points-function: point-format.with(
     points-name-single: "Bonus point",
     points-name-plural: "Bonus points",
@@ -163,7 +163,7 @@ They take the same parameters as the `task-points-header` function, but addition
 ))
 As mentioned above, you can overwrite the point- and difficulty functions of the `task-points-header` function. This allows you to customize the header even further. For example, you can change the number of edges of the stars, the rotation of the stars, or the fill color of the stars:
 ```typst
-== Advanced task header styling (#task-points-header(points: 2, difficulty: 1.5, max-difficulty: 3, details-seperator: " | ", hspace: none, star-filll: blue, points-function: point-format.with(points-name-single: "Bonus point", points-name-plural: "Bonus points", baseline: 2pt), difficulty-function: tuda-difficulty-stars.with(difficulty-name: "Effort", edges: 6, rotation: 45deg)))
+== Advanced task header styling (#task-points-header(points: 2, difficulty: 1.5, max-difficulty: 3, details-seperator: " | ", hspace: none, star-fill: blue, points-function: point-format.with(points-name-single: "Bonus point", points-name-plural: "Bonus points", baseline: 2pt), difficulty-function: tuda-difficulty-stars.with(difficulty-name: "Effort", edges: 6, rotation: 45deg)))
 ```
 #tuda-gray-info(title: "Note:")[
   Passing all these parameters everytime is a bit cumbersome, but since typst #link("https://github.com/typst/typst/issues/147")[does not yet support user-defined elements], this is the only way to archieve this without relying on states. You can create your own function to simplify this if you want to: ```typst

@@ -145,7 +145,6 @@
   }
   
   s.update((
-    language: language,
     text_color: text_color,
     background_color: background_color,
     accent_color: accent_color,
@@ -319,12 +318,6 @@
   ])
 }
 
-#let textsf(body) = text(
-  font: "Roboto",
-  fallback: false,
-  body,
-)
-
 /// Formats points for display in a task header.
 ///
 /// - points (int, float): The number of points, can be an integer or a float.
@@ -349,8 +342,8 @@
       ctxpoints-name-plural = dict.point_plural
     }
   }
-  assert(points != none, message: "points must be provided")
-  assert(type(points) == int or type(points) == float, message: "points must be a number, got " + str(type(points)))
+  assert.ne(points, none, message: "points must be provided")
+  assert(type(points) in (float, int), message: "points must be a number, got " + str(type(points)))
   str(points)
   pointssep
   if (points == 1) {
@@ -377,9 +370,10 @@
   out-of-sep: "/",
   ..otherargs,
 ) = context {
-  let ctxdifficulty-name = difficulty-name
-  if(difficulty-name == auto) {
+  let ctxdifficulty-name = if(difficulty-name == auto) {
     ctxdifficulty-name = get-locale-dict(text.lang).difficulty
+  } else {
+    difficulty-name
   }
   if(ctxdifficulty-name != none) {
     ctxdifficulty-name + difficulty-sep
@@ -394,7 +388,7 @@
 /// - max-difficulty (int): The maximum difficulty of the task, default is 5.
 /// - hspace (length): The horizontal space between the title and the points/difficulty, default is 1fr.
 /// - details-seperator (str): The separator between the points and difficulty information, default is ", ".
-/// - star-filll (color): The fill color of the stars, default is the accent color from the context.
+/// - star-fill (color): The fill color of the stars, default is the accent color from the context.
 /// - points-function (function): The function to format the points, default is `point-format`.
 /// - difficulty-function (function): The function to format the difficulty, default is `difficulty-stars`.
 /// -> Returns: A string with the points and difficulty information formatted as "points Punkte, difficulty-stars(difficulty, max_difficulty: max-difficulty)".
@@ -404,7 +398,7 @@
   max-difficulty: 5,
   hspace: 1fr,
   details-seperator: ", ",
-  star-filll: auto,
+  star-fill: auto,
   points-function: point-format,
   difficulty-function: difficulty-stars,
 ) = context {
@@ -412,16 +406,16 @@
   if(hspace != none) {
     h(hspace)
   }
-  let ctxstar-filll = star-filll
-  if(star-filll == auto) {
-    ctxstar-filll = s.get().accent_color
+  let ctxstar-fill = star-fill
+  if(star-fill == auto) {
+    ctxstar-fill = s.get().accent_color
   }
   let details = ()
   if(points != none) {
     details.push(points-function(points: points))
   }
   if(difficulty != none) {
-    details.push(difficulty-function(difficulty, max-difficulty: max-difficulty,fill:ctxstar-filll))
+    details.push(difficulty-function(difficulty, max-difficulty: max-difficulty,fill:ctxstar-fill))
   }
   if(details.len() > 0) {
     details.join(details-seperator)
@@ -442,12 +436,15 @@
   ..otherargs,
 ) = {
   heading({
+    if (otherargs.pos().len() > 0 and title == none) {
+      title = otherargs.at(0)
+    }
     title
     if (points != none or difficulty != none) {
       task-points-header(
         points: points,
         difficulty: difficulty,
-        ..otherargs
+        ..otherargs.named(),
       )
     }
   })
@@ -468,12 +465,15 @@
 ) = {
   heading(
     {
+      if (otherargs.pos().len() > 0 and title == none) {
+        title = otherargs.at(0)
+      }
       title
       if (points != none or difficulty != none) {
         task-points-header(
           points: points,
           difficulty: difficulty,
-          ..otherargs
+          ..otherargs.named(),
         )
       }
     },

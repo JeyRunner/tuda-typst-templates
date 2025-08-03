@@ -52,10 +52,10 @@
   difficulty-sep: ": ",
   ..otherargs,
 ) = {
-  assert(type(difficulty) == float or type(difficulty) == int, message: "difficulty must be a number")
-  assert(type(max-difficulty) == int, message: "max-difficulty must be an integer")
+  assert(type(difficulty) in (float,int), message: "difficulty must be a number")
+  assert.eq(type(max-difficulty), int, message: "max-difficulty must be an integer")
   assert(difficulty >= 0 and difficulty <= max-difficulty, message: "difficulty must be between 0 and " + str(max-difficulty))
-  assert(type(fill) == color, message: "fill must be a color, got " + str(type(fill)))
+  assert.eq(type(fill), color, message: "fill must be a color, got " + str(type(fill)))
   let remaining_difficulty = difficulty
   let first = true
   if difficulty-name != none {
