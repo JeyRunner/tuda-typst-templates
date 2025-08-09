@@ -12,10 +12,15 @@
 /// `translations.toml`
 #let check-locale(locale) = {
   let dict = toml("../translations.toml")
-  if locale not in dict.languages {
-    let allowed_langs = dict.languages.join("', '", last: "' and '") + "'"
-    panic("Unknown language: '" + locale + "'. Only languages " + allowed_langs + " are supported")
-  }
+  assert(
+    locale in dict.languages,
+    message: "Unknown language: '"
+      + locale
+      + "'. Only languages '"
+      + dict.languages.join("', '", last: "' and '")
+      + "'"
+      + " are supported",
+  )
 }
 
 /// Retrieve translation strings froWm .toml file by .
