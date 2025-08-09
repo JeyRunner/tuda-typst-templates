@@ -11,7 +11,7 @@
 ///   the value of `#info.custom-subline` gets returned as content
 /// - dict (dict): A language dict to translate standard/pre-defined strings.
 /// -> Returns content filling the subline of the title
-#let resolve-info-layout(exercise-type, info, info-layout, dict) = {
+#let resolve-info-layout(exercise-type, info, info-layout) = {
   if info-layout == none {
     if "custom-subline" in info {
       return [#info.custom-subline]
@@ -44,9 +44,9 @@
       if info-key in default_keys {
         if info-key == filter-key {
           if info-key == "date" {
-            target-list.push([#format-date(info-value, dict.locale)])
+            target-list.push([#format-date(info-value, get-locale())])
           } else {
-            target-list.push([#dict.at(info-key) #info-value])
+            target-list.push([#l(info-key) #info-value])
           }
         }
       } // This case makes sure the default submission keys don't get mistaken for custom keys
@@ -98,8 +98,7 @@
   logo_height,
   info,
   info-layout,
-  exercise-type,
-  dict,
+  exercise-type
 ) = {
   let text_on_accent_color = if colorback {
     on_accent_color
@@ -180,7 +179,7 @@
       )
       v(6pt)
       line(length: 100%, stroke: stroke)
-      let subline-content = resolve-info-layout(exercise-type, info, info-layout, dict)
+      let subline-content = resolve-info-layout(exercise-type, info, info-layout)
       if subline-content != none {
         block(
           inset: text_inset,
