@@ -51,17 +51,15 @@
 
   let left-items = ()
   let right-items = ()
-  if exercise-type not in ("exercise", "submission") {
-    panic("Exercise template only supports types 'exercise' and 'submission'")
-  } else {
-    // Handle layouting, right first then default the rest to left
-    for layout-key in info-layout.at("right") {
-      right-items = sort-info-to-list(right-items, info, layout-key)
-    }
-    for layout-key in info-layout.at("left") {
-      left-items = sort-info-to-list(left-items, info, layout-key)
-    }
+  assert(exercise-type in ("exercise", "submission"), "Exercise template only supports types 
+  'exercise' and 'submission'")
+  // Handle layouting, right first then default the rest to left
+  for layout-key in info-layout.at("right") {
+    right-items = sort-info-to-list(right-items, info, layout-key)
   }
+  for layout-key in info-layout.at("left") {
+    left-items = sort-info-to-list(left-items, info, layout-key)
+  }  
   grid(
     columns: (1fr, 1fr),
     align: (alignment.left, alignment.right),
