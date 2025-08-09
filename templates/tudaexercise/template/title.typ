@@ -12,7 +12,7 @@
 /// - dict (dict): A language dict to translate standard/pre-defined strings.
 /// -> Returns content filling the subline of the title
 #let resolve-info-layout(exercise-type, info, info-layout, dict) = {
-  if info-layout == false{
+  if info-layout == false {
     return [#info.custom-subline]
   }
 
@@ -67,7 +67,7 @@
       left-items = sort-info-to-list(left-items, info, layout-key)
     }
   }
-  
+
   grid(
     columns: (1fr, 1fr),
     align: (alignment.left, alignment.right),
