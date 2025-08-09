@@ -86,17 +86,19 @@ If you add a custom key, want to modify what is displayed or where it is display
   // [...]
   info: (
     // [...]
-    "A Custom Key": "A Custom Value" // Adding a custom key values pair
+    "My Custom Key": "My Custom Value" // Adding a custom key values pair
   )
   // If you want to include custom keys in the info, uncomment the info-layout as shown below and expand it with the key of your key-value pair.
   info-layout: (
     left: ("term", "date", "sheet", "group"),
-    right: ("tutor", "lecturer", "A Custom Key")
+    right: ("tutor", "lecturer", "My Custom Key")
   ),
   // [...]
 )
 ```
-Note that the value of the key-value-pair can also be any conent (e.g. an image: `"My Custom Key": [#image("path/to/image.png")]`). Only the keys specified in `info-layout` will show up in the info box.
+Note that the value of the key-value-pair can also be any content (e.g. an image: `"My Custom Key": [#image("path/to/image.png")]`). Only the keys specified in `info-layout` will show up in the info box.
+
+For absolute freedom for subline cusomization set `info-layout: false` and pass any #link("https://typst.app/docs/reference/foundations/content/", [#underline("content")]) you like in the info dictionary using the key `custom-subline`.
 
 If you do not want to have a title card you can also set `show-title` to `false`.
 
