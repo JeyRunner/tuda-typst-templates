@@ -4,7 +4,7 @@
 #import "common/tudapub_title_page.typ": *
 #import "common/thesis_statement_pursuant.typ": *
 #import "common/util.typ": *
-#import "common/lang.typ": get-locale
+#import "common/lang.typ": check-locale
 
 #import "@preview/i-figured:0.2.3"
 
