@@ -1,6 +1,6 @@
 languages = ["en", "de"]
 
-[translations] 
+[translations]
 # tudapub
 master_thesis.en = "Master thesis"
 master_thesis.de = "Master Thesis"
@@ -22,6 +22,3 @@ contents.de = "Inhaltsverzeichnis"
 
 review.en = "Review"
 review.de = "Korrektur"
-
-
-

@@ -1,6 +1,6 @@
 languages = ["en", "de"]
 
-[translations] 
+[translations]
 task.en = "Task"
 task.de = "Aufgabe"
 
@@ -30,6 +30,3 @@ point_plural.en = "Points"
 
 difficulty.de = "Schwierigkeitsgrad"
 difficulty.en = "Difficulty"
-
-
-
