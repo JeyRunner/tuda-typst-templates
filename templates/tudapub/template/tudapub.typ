@@ -4,6 +4,7 @@
 #import "common/tudapub_title_page.typ": *
 #import "common/thesis_statement_pursuant.typ": *
 #import "common/util.typ": *
+#import "common/lang.typ": get-locale
 
 #import "@preview/i-figured:0.2.3"
 
@@ -180,6 +181,8 @@
   //assert(tuda_colors.keys().contains(accentcolor), "accentcolor unknown")
   //assert.eq(paper, "a4", "currently just a4 is supported as paper size")
   //[#paper]
+  // Check if provided language code is supported by the translations
+  check-locale(language)
 
   // vars
   let accentcolor_rgb = tuda_colors.at(accentcolor)
