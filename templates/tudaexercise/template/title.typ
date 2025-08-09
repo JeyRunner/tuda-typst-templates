@@ -32,9 +32,10 @@
       if info-key in default_keys {
         if info-key == filter-key {
           if info-key == "date" {
-            info-value = format-date(info-value, dict.locale)
+            target-list.push([#format-date(info-value, dict.locale)])
+          } else {
+            target-list.push([#dict.at(info-key) #info-value])
           }
-          target-list.push([#dict.at(info-key) #info-value])
         }
       } // This case makes sure the default submission keys don't get mistaken for custom keys
       // I.e. we don't want submission keys ("group", "tutor", "lecturer") showing up, if
