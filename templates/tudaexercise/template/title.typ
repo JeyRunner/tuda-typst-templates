@@ -12,17 +12,28 @@
 /// - dict (dict): A language dict to translate standard/pre-defined strings.
 /// -> Returns content filling the subline of the title
 #let resolve-info-layout(exercise-type, info, info-layout, dict) = {
-  if info-layout == false {
-    return [#info.custom-subline]
+  if info-layout == none {
+    if "custom-subline" in info {
+      return [#info.custom-subline]
+    }
   }
-
-
+  let title_keys = ("title", "subtitle", "author")
   let default_keys_exercise = ("term", "date", "sheet")
   let default_keys_submission = ("group", "tutor", "lecturer")
   let default_keys = if exercise-type == "exercise" {
     default_keys_exercise
   } else {
     default_keys_exercise + default_keys_submission
+  }
+
+  // filter out standard title keys
+  for key in title_keys {
+    _ = info.remove(key)
+  }
+
+  // Check if info actually contains any items
+  if info.len() == 0 {
+    return none
   }
 
   /// Checks if `filter-key` is present in `info-dict` and appends it to `target-list`
@@ -168,10 +179,11 @@
       )
       v(6pt)
       line(length: 100%, stroke: stroke)
-      if info-layout != none {
+      let subline-content = resolve-info-layout(exercise-type, info, info-layout, dict)
+      if subline-content != none {
         block(
           inset: text_inset,
-          resolve-info-layout(exercise-type, info, info-layout, dict),
+          subline-content,
         )
         line(length: 100%, stroke: stroke)
       }
