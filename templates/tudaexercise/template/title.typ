@@ -12,7 +12,7 @@
 /// - dict (dict): A language dict to translate standard/pre-defined strings.
 /// -> Returns content filling the subline of the title
 #let resolve-info-layout(exercise-type, info, info-layout, dict) = {
-  if not info-layout {
+  if info-layout == false{
     return [#info.custom-subline]
   }
 
@@ -53,15 +53,20 @@
   let right-items = ()
   assert(
     exercise-type in ("exercise", "submission"),
-    "Exercise template only supports types 'exercise' and 'submission'",
+    message: "Exercise template only supports types 'exercise' and 'submission'",
   )
   // Handle layouting, right first then default the rest to left
-  for layout-key in info-layout.at("right") {
-    right-items = sort-info-to-list(right-items, info, layout-key)
+  if "right" in info-layout {
+    for layout-key in info-layout.at("right") {
+      right-items = sort-info-to-list(right-items, info, layout-key)
+    }
   }
-  for layout-key in info-layout.at("left") {
-    left-items = sort-info-to-list(left-items, info, layout-key)
+  if "left" in info-layout {
+    for layout-key in info-layout.at("left") {
+      left-items = sort-info-to-list(left-items, info, layout-key)
+    }
   }
+  
   grid(
     columns: (1fr, 1fr),
     align: (alignment.left, alignment.right),
