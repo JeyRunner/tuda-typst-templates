@@ -5,9 +5,8 @@
 #import "common/addons/difficulty-points.typ": difficulty-stars
 #import "common/colorutil.typ": calc-relative-luminance, calc-contrast
 #import "common/format.typ": text-roboto
+#import "common/lang.typ": check-locale
 #import "title.typ": *
-#import "locales.typ": *
-#import "title-sub.typ" as title-sub
 
 #let design-defaults = (
   accentcolor: "0b",
@@ -22,6 +21,12 @@
 /// ```
 /// #show: tudaexercise.with(<options>)
 /// ```
+///
+/// - exercise-type ("exercise", "submission"): The type of exercise. This modifies the subline 
+///   (content below the header):
+///    - `exercise` shows info-fields `term`, `date` and `sheet`
+///    - `submission` additionally shows fields `group`, `tutor` and `lecturer` on the 
+///       right-hand side
 /// 
 /// - language ("en", "de"): The language for dates and certain keywords
 /// 
@@ -35,28 +40,35 @@
 /// - logo (content): The tuda logo as an image to be used in the title.
 /// 
 /// - info (dictionary): Info about the document mostly used in the title.
-///   
-///   By default accepts the following items:
+/// 
+///   The following items are used by the `exercise-type` `exercise`:
 ///   - `title`
 ///   - `subtitle`
-///   - `author` 
-///   
-///   Additionally the following items are used by the `exercise` `title-sub`:
+///   - `author`
+///
+///   Additionally the following items are used by the `exercise-type` `submission`:
 ///   - `term`
 ///   - `date`
 ///   - `sheet`
-///   
-///   Other `title-sub`s may use more options, which can be added here. See the documentation
-///   of the `title-sub` for corresponding items.
+///
+///   For free customization of the subline (see `info-layout`) use key `custom-subline` and
+///   pass any content (`[...]`) as value.
 ///   
 ///   Note: Items mapped to `none` are ignored aka. internally the dict is processed without
-///   them.
+///   them. Furthermore items `term`, `date` and `sheet` will only show when using 
+///   `exercise-type: "submission"`
 /// 
-/// - title-sub (content, function, none): The content of the subline in the title card.
-///   By default the `title-sub.exercise` style.
-/// 
-///   See the `title-sub` export for functions to insert here or if you do not find something
-///   fitting to your needs you can also pass raw content and completely customize it yourself.
+/// - info-layout (dict, boolean): Defines the content's layout of the subline in the title
+///   card.
+///   By default the layout is defined in the following dict:
+///     ```typst
+///     (left: ("term", "date", "sheet", "group"),
+///     right: ("tutor", "lecturer", "A Custom Key"))
+///     ```
+///   Left aligns left, and vice versa. The order of the keywords in the list, defines the 
+///   order of the info displayed in the subline.
+///   For complete customization set `info-layout: false` and define any content in the
+///   `info` dict under the key `custom-subline`
 /// 
 /// - design (dictionary): Options for the design of the template. Possible entries: 
 ///   `accentcolor`, `colorback` and `darkmode`
@@ -70,6 +82,8 @@
 /// 
 /// - body (content): 
 #let tudaexercise(
+  exercise-type: "exercise",
+
   language: "en",
 
   margins: tud_exercise_page_margin,
@@ -93,7 +107,10 @@
     lecturer: none,
   ),
 
-  title-sub: title-sub.exercise(),
+  info-layout: (
+    left: ("term", "date", "sheet", "group"),
+    right: ("tutor", "lecturer")
+  ),
 
   design: design-defaults,
 
@@ -199,6 +216,9 @@
     spacing: 1.1em
   )
   
+  // Check if language is supported or even valid
+  check-locale(language)
+
   set text(
     font: "XCharter",
     size: 10.909pt,
@@ -209,8 +229,6 @@
     fill: text_color,
     lang: language,
   )
-
-  let dict = get-locale-dict(language)
 
   set heading(numbering: (..numbers) => {
     if "sheet" in info {
@@ -230,7 +248,7 @@
       let final-prefix = if (task-prefix != none) {
         task-prefix
       } else {
-        dict.task + " "
+        l("task") + " "
       }
       tuda-section[#final-prefix#c: #it.body]
     } else if it.level == 2 {
@@ -286,8 +304,8 @@
         logo, 
         tud_title_logo_height, 
         info,
-        title-sub,
-        dict
+        info-layout,
+        exercise-type
         )
     }
 
@@ -334,12 +352,11 @@
   let ctxpoints-name-single = points-name-single
   let ctxpoints-name-plural = points-name-plural
   if points-name-single == auto or points-name-plural == auto {
-    let dict = get-locale-dict(text.lang)
     if points-name-single == auto {
-      ctxpoints-name-single = dict.point_singular
+      ctxpoints-name-single = l("point_singular")
     }
     if points-name-plural == auto {
-      ctxpoints-name-plural = dict.point_plural
+      ctxpoints-name-plural = l("point_plural")
     }
   }
   assert.ne(points, none, message: "points must be provided")
@@ -371,7 +388,7 @@
   ..otherargs,
 ) = context {
   let ctxdifficulty-name = if difficulty-name == auto {
-    get-locale-dict(text.lang).difficulty
+    l("difficulty")
   } else {
     difficulty-name
   }

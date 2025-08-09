@@ -3,6 +3,7 @@
 
 // setup the template
 #show: tudapub.with(
+  language: "en",
   title: [
     TUDa Thesis
     With Typst
