@@ -50,11 +50,12 @@
 ///   - `date`
 ///   - `sheet`
 ///
-///   For customaization of the subline (see `info-layout`) use key `custom-subline` and pass 
-///   any content (`[...]`) as value.
+///   For free customization of the subline (see `info-layout`) use key `custom-subline` and
+///   pass any content (`[...]`) as value.
 ///   
 ///   Note: Items mapped to `none` are ignored aka. internally the dict is processed without
-///   them.
+///   them. Furthermore items `term`, `date` and `sheet` will only show when using 
+///   `exercise-type: "submission"`
 /// 
 /// - info-layout (dict, boolean): Defines the content's layout of the subline in the title
 ///   card.

@@ -78,7 +78,7 @@ info: (
   // "A Custom Key": "A Custom Value" // Adding a custom key values pair
 )
 ```
-The options can also be left empty. Then their corresponding item will not appear.
+The options can also be left empty. Then their corresponding item will not appear. Please also note, that the options `group, tutor` and `lecturer` will only show up if choosing the `exercise-type: "submission"`. 
 
 If you add a custom key, want to modify what is displayed or where it is displayed in the space below the title, include the parameter `info-layout` like shown in the example below:
 ```typst
@@ -96,9 +96,9 @@ If you add a custom key, want to modify what is displayed or where it is display
   // [...]
 )
 ```
-Note that the value of the key-value-pair can also be any content (e.g. an image: `"My Custom Key": [#image("path/to/image.png")]`). Only the keys specified in `info-layout` will show up in the info box.
+The value of the key-value-pair can also be any #link("https://typst.app/docs/reference/foundations/content/", [#underline("content")])  (e.g. an image: `"My Custom Key": [#image("path/to/image.png")]`). Only the keys specified in `info-layout` will show up in the info box.
 
-For absolute freedom for subline cusomization set `info-layout: false` and pass any #link("https://typst.app/docs/reference/foundations/content/", [#underline("content")]) you like in the info dictionary using the key `custom-subline`.
+For absolute freedom within the subline cusomization set `info-layout: none` and pass any content you like in the info dictionary using the key `custom-subline`.
 
 If you do not want to have a title card you can also set `show-title` to `false`.
 
