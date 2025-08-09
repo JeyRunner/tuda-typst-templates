@@ -39,18 +39,19 @@
 /// - logo (content): The tuda logo as an image to be used in the title.
 /// 
 /// - info (dictionary): Info about the document mostly used in the title.
-///   
-///   By default accepts the following items:
+/// 
+///   The following items are used by the `exercise-type` `exercise`:
 ///   - `title`
 ///   - `subtitle`
-///   - `author` 
-///   
+///   - `author`
+///
 ///   Additionally the following items are used by the `exercise-type` `submission`:
 ///   - `term`
 ///   - `date`
 ///   - `sheet`
-/// 
-///   For customaization of the subline (see `info-layout`) use key `custom-subline`   
+///
+///   For customaization of the subline (see `info-layout`) use key `custom-subline` and pass 
+///   any content (`[...]`) as value.
 ///   
 ///   Note: Items mapped to `none` are ignored aka. internally the dict is processed without
 ///   them.
