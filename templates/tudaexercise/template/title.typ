@@ -16,6 +16,7 @@
     if "custom-subline" in info {
       return [#info.custom-subline]
     }
+    return none
   }
   let title_keys = ("title", "subtitle", "author")
   let default_keys_exercise = ("term", "date", "sheet")
