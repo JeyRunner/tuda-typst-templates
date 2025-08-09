@@ -1,11 +1,90 @@
 #import "common/format.typ": format-date
+#import "locales.typ": *
 
-#let resolve-title-sub(title-sub, info, dict) = if type(title-sub) == content {
-  title-sub
-} else if type(title-sub) == function {
-  title-sub(info, dict)
-} else {
-  panic("title-sub has unsupported type. Expected content, function or none. Got " + type(title-sub))
+/// Creates the subline content. If `info-layout` is a dict, the subline gets filled following
+/// the order specified by the keys in the `info-layout` dict. If a key is present in the
+/// `info` but not in `info-layout`, it does not show up in the subline.
+///
+/// - exercise-type (string): The type of exercise specified
+/// - info (dict): The info dict containing all relevant data for the subline
+/// - info-layout (dict, boolean): A dict specifying the layout of the subline. If `false`
+///   the value of `#info.custom-subline` gets returned as content
+/// - dict (dict): A language dict to translate standard/pre-defined strings.
+/// -> Returns content filling the subline of the title
+#let resolve-info-layout(exercise-type, info, info-layout, dict) = {
+  if info-layout == none {
+    if "custom-subline" in info {
+      return [#info.custom-subline]
+    }
+    return none
+  }
+  let title_keys = ("title", "subtitle", "author")
+  let default_keys_exercise = ("term", "date", "sheet")
+  let default_keys_submission = ("group", "tutor", "lecturer")
+  let default_keys = if exercise-type == "exercise" {
+    default_keys_exercise
+  } else {
+    default_keys_exercise + default_keys_submission
+  }
+
+  // filter out standard title keys
+  for key in title_keys {
+    _ = info.remove(key)
+  }
+
+  // Check if info actually contains any items
+  if info.len() == 0 {
+    return none
+  }
+
+  /// Checks if `filter-key` is present in `info-dict` and appends it to `target-list`
+  /// if that is the case. Also format the value of key `date` to match the locale.
+  let sort-info-to-list(target-list, info-dict, filter-key) = {
+    for (info-key, info-value) in info-dict.pairs() {
+      if info-key in default_keys {
+        if info-key == filter-key {
+          if info-key == "date" {
+            target-list.push([#format-date(info-value, dict.locale)])
+          } else {
+            target-list.push([#dict.at(info-key) #info-value])
+          }
+        }
+      } // This case makes sure the default submission keys don't get mistaken for custom keys
+      // I.e. we don't want submission keys ("group", "tutor", "lecturer") showing up, if
+      // exercise-type isn't "submission"!
+      else if info-key not in default_keys_submission {
+        if info-key == filter-key {
+          target-list.push([#info-value])
+        }
+      }
+    }
+    return target-list
+  }
+
+
+  let left-items = ()
+  let right-items = ()
+  assert(
+    exercise-type in ("exercise", "submission"),
+    message: "Exercise template only supports types 'exercise' and 'submission'",
+  )
+  // Handle layouting, right first then default the rest to left
+  if "right" in info-layout {
+    for layout-key in info-layout.at("right") {
+      right-items = sort-info-to-list(right-items, info, layout-key)
+    }
+  }
+  if "left" in info-layout {
+    for layout-key in info-layout.at("left") {
+      left-items = sort-info-to-list(left-items, info, layout-key)
+    }
+  }
+
+  grid(
+    columns: (1fr, 1fr),
+    align: (alignment.left, alignment.right),
+    left-items.join(linebreak()), right-items.join(linebreak()),
+  )
 }
 
 #let tuda-make-title(
@@ -18,8 +97,9 @@
   logo_element,
   logo_height,
   info,
-  title-sub,
-  dict
+  info-layout,
+  exercise-type,
+  dict,
 ) = {
   let text_on_accent_color = if colorback {
     on_accent_color
@@ -28,7 +108,7 @@
   }
 
   let text_inset = if colorback {
-    (x:3mm)
+    (x: 3mm)
   } else {
     (:)
   }
@@ -46,7 +126,7 @@
   set text(fill: text_on_accent_color)
 
   box(
-    fill: if colorback {accent_color}, 
+    fill: if colorback { accent_color },
     width: 100%,
     outset: 0pt,
     {
@@ -55,9 +135,10 @@
       v(logo_height / 2)
       grid(
         columns: (1fr, auto),
-        box(inset: (y:3mm),{
+        box(inset: (y: 3mm), {
           set text(font: "Roboto", weight: "bold", size: 12pt)
-          grid(row-gutter: 1em,
+          grid(
+            row-gutter: 1em,
             inset: text_inset,
             if "title" in info {
               text(info.title, size: 20pt)
@@ -69,44 +150,44 @@
               if type(info.author) == array {
                 for author in info.author {
                   if type(author) == array {
-                    [#author.at(0) 
+                    [#author.at(0)
                       #text(weight: "regular", size: 0.8em)[(Mat.: #author.at(1))]]
                     linebreak()
                   } else {
-                   author
-                   linebreak()
+                    author
+                    linebreak()
                   }
                 }
               } else {
                 info.author
               }
-            }
+            },
           )
 
           v(.5em)
-        }
-        ),
-        { 
+        }),
+        {
           if logo_element != none {
             move(
               dx: 6mm,
               {
                 set image(height: logo_height)
                 logo_element
-              }
+              },
             )
           }
-        }
+        },
       )
       v(6pt)
       line(length: 100%, stroke: stroke)
-      if title-sub != none {
+      let subline-content = resolve-info-layout(exercise-type, info, info-layout, dict)
+      if subline-content != none {
         block(
           inset: text_inset,
-          resolve-title-sub(title-sub, info, dict)
+          subline-content,
         )
         line(length: 100%, stroke: stroke)
       }
-    }
+    },
   )
 }

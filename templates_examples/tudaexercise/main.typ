@@ -1,8 +1,9 @@
 #import "@local/athena-tu-darmstadt-exercise:0.2.0": (
-  subtask, task, text-roboto, title-sub, tuda-gray-info, tuda-section, tuda-subsection, tudaexercise, task-points-header, point-format, difficulty-format, tuda-difficulty-stars,
+  subtask, task, text-roboto, tuda-gray-info, tuda-section, tuda-subsection, tudaexercise, task-points-header, point-format, difficulty-format, tuda-difficulty-stars,
 )
 
 #show: tudaexercise.with(
+  exercise-type: "exercise", // Choose between 'exercise' and 'submission'
   language: "en",
   info: (
     title: "Usage of TUDaExercise",
@@ -14,8 +15,15 @@
     group: 1,
     tutor: "Dr. John Smith",
     lecturer: "Prof. Dr. Jane Doe",
+    // Add custom key values pairs like this:
+    // "A Custom Key": "A Custom Value"
   ),
-  title-sub: title-sub.exercise(),
+  // If you want to include custom keys in the info, uncomment the info-layout as shown below and expand it with the key of your key-value pair.
+  // info-layout: (
+  //   left: ("term", "date", "sheet", "group"),
+  //   right: ("tutor", "lecturer", "A Custom Key")
+  // ),
+
   logo: image("logos/tuda_logo_replace.svg"),
   design: (
     accentcolor: "0b",
@@ -50,8 +58,9 @@ Similarly as the logo is protected and Typst does not have a folder for global r
 = Configuring the title
 All options of the title can be controlled using the `info` dictionary:
 
-```
+```typst
 info: (
+  exercise-type: "exercise", // You can choose between 'exercise' and 'submission'
   title: "The big title",
   subtitle: "The smaller title below",
   author: "The author",
@@ -66,12 +75,30 @@ info: (
   group: "05", // the lecture group you are in
   tutor: "John", // the tutor of your group
   lecturer: "Karpfen", // the lecturer of the module that this assignment is for
+  // "A Custom Key": "A Custom Value" // Adding a custom key values pair
 )
 ```
-The options can also be left empty. Then their corresponding item will not appear.
+The options can also be left empty. Then their corresponding item will not appear. Please also note, that the options `group, tutor` and `lecturer` will only show up if choosing the `exercise-type: "submission"`. 
 
-Additionally there is the `title-sub` field which controls how the subline of the title looks like. By default this is set to the exercise version. There also is a submission version which also displays the submission extra info fields. Or if both don't fit your needs, you can also pass raw content to the field and control the subline to your will. \
-For more info see the exported `title-sub` module of this template.
+If you add a custom key, want to modify what is displayed or where it is displayed in the space below the title, include the parameter `info-layout` like shown in the example below:
+```typst
+#show: tudaexercise.with(
+  // [...]
+  info: (
+    // [...]
+    "My Custom Key": "My Custom Value" // Adding a custom key values pair
+  )
+  // If you want to include custom keys in the info, uncomment the info-layout as shown below and expand it with the key of your key-value pair.
+  info-layout: (
+    left: ("term", "date", "sheet", "group"),
+    right: ("tutor", "lecturer", "My Custom Key")
+  ),
+  // [...]
+)
+```
+The value of the key-value-pair can also be any #link("https://typst.app/docs/reference/foundations/content/", [#underline("content")])  (e.g. an image: `"My Custom Key": [#image("path/to/image.png")]`). Only the keys specified in `info-layout` will show up in the info box.
+
+For absolute freedom within the subline cusomization set `info-layout: none` and pass any content you like in the info dictionary using the key `custom-subline`.
 
 If you do not want to have a title card you can also set `show-title` to `false`.
 
