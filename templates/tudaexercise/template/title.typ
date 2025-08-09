@@ -1,7 +1,9 @@
 #import "common/format.typ": format-date
 #import "locales.typ": *
 
-/// Creates the subline content. If `info-layout` is a dict, the subline gets filled following the order specified by the keys in the `info-layout` dict. If a key is present in the `info` but not in `info-layout`, it does not show up in the subline. 
+/// Creates the subline content. If `info-layout` is a dict, the subline gets filled following
+/// the order specified by the keys in the `info-layout` dict. If a key is present in the
+/// `info` but not in `info-layout`, it does not show up in the subline. 
 ///
 /// - exercise-type (string): The type of exercise specified 
 /// - info (dict): The info dict containing all relevant data for the subline
