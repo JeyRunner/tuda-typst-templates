@@ -23,7 +23,7 @@
       // if month between 4 and 9 then it's summer term, else it's winter term
       let month = datetime.today().month()
       let year = datetime.today().year()
-      info.term = if month >= 4 and month <= 9 {
+      if month >= 4 and month <= 9 {
         dict.summer_term + " " + str(year)
       } else {
         dict.winter_term
@@ -32,8 +32,9 @@
         }
         " " + str(year) + "/" + str(year + 1)
       }
+    } else {
+      info.term
     }
-    info.term
     linebreak()
   }
   if "date" in info {
