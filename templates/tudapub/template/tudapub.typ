@@ -97,6 +97,9 @@
   // Add an English translation to the "Erklärung zur Abschlussarbeit".
   thesis_statement_pursuant_include_english_translation: false,
   
+  // Insert an image as a signature on the "Erklärung zur Abschlussarbeit"
+  thesis_statement_pursuant_signature: none,
+
   // Which pages to insert
   // Pages can be disabled individually.
   show_pages: (
@@ -609,7 +612,9 @@
     tudapub-get-thesis-statement-pursuant(
       date: date_of_submission, 
       author: author, 
-      location: location, include-english-translation: thesis_statement_pursuant_include_english_translation
+      location: location,
+      include-english-translation: thesis_statement_pursuant_include_english_translation,
+      signature: thesis_statement_pursuant_signature
     )
   }
 
