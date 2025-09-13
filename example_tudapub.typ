@@ -76,7 +76,7 @@
   ),
 
   thesis_statement_pursuant_include_english_translation: true,
-  thesis_statement_pursuant_signature: image("assets/misc/signature.svg"),
+  thesis_statement_pursuant_signature: image("assets/misc/dummy_signature.svg"),
 
   // pages after outline that will not be included in the outline
   additional_pages_after_outline_table_of_contents: [
