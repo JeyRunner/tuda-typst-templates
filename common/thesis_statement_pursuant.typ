@@ -18,7 +18,6 @@
         text(
           font: "Roboto",
           size: 8pt,
-          lang: "de",
         )[Erklärung zur Abschlussarbeit #h(1fr) Dezernat II -- Studium und Lehre, Hochschulrecht #h(1fr) Stand 28.04.2023],
         // Originally 'Vorlage "Erklärung zur Abschlussarbeit"'
       )
