@@ -8,7 +8,7 @@
   signature: none,
 ) = [
   #set page(
-    // Original margins are (left: 3cm, right 2cm, top: 2.5cm, bottom: 2.3cm)
+    // Original margins are (left: 30mm, right 20mm, top: 25mm, bottom: 23mm)
     margin: (x: 25mm, top: 25mm, bottom: 23mm),
     footer: [
       #grid(
@@ -17,7 +17,7 @@
         v(2.5mm),
         text(
           font: "Roboto",
-          size: 10pt, // Originally 8pt
+          size: 8pt,
           lang: "de",
         )[Erklärung zur Abschlussarbeit #h(1fr) Dezernat II -- Studium und Lehre, Hochschulrecht #h(1fr) Stand 28.04.2023],
         // Originally 'Vorlage "Erklärung zur Abschlussarbeit"'
