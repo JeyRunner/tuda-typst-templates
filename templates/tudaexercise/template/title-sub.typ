@@ -19,7 +19,7 @@
 /// -> function
 #let exercise(additional: none) = (info, dict) => {
   if "term" in info {
-    if(info.term == auto) {
+    if info.term == auto {
       // if month between 4 and 9 then it's summer term, else it's winter term
       let month = datetime.today().month()
       let year = datetime.today().year()
@@ -27,7 +27,7 @@
         dict.summer_term + " " + str(year)
       } else {
         dict.winter_term
-        if (month < 4) {
+        if month < 4 {
           year = year - 1
         }
         " " + str(year) + "/" + str(year + 1)
