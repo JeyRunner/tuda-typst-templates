@@ -10,6 +10,8 @@
   point_plural: "Punkte",
   difficulty: "Schwierigkeitsgrad",
   term: "Semester",
+  summer_term: "Sommersemester",
+  winter_term: "Wintersemester",
   date: "Abgabe"
 )
 
@@ -25,6 +27,8 @@
   point_plural: "Points",
   difficulty: "Difficulty",
   term: "Term",
+  summer_term: "Summer semester",
+  winter_term: "Winter semester",
   date: "Due"
 )
 
