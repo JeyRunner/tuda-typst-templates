@@ -7,27 +7,10 @@
   include-english-translation: false,
   signature: none,
 ) = [
-  #set page(
-    // Original margins are (left: 30mm, right 20mm, top: 25mm, bottom: 23mm)
-    margin: (x: 25mm, top: 25mm, bottom: 23mm),
-    footer: [
-      #grid(
-        rows: auto,
-        line(length: 100%, stroke: 0.6pt),
-        v(2.5mm),
-        text(
-          font: "Roboto",
-          size: 8pt,
-        )[Erklärung zur Abschlussarbeit #h(1fr) Dezernat II -- Studium und Lehre, Hochschulrecht #h(1fr) Stand 28.04.2023],
-        // Originally 'Vorlage "Erklärung zur Abschlussarbeit"'
-      )
-    ],
-  )
   #set heading(outlined: false)
-  #set par(justify: false)
 
   #block(breakable: false)[
-    *Erklärung zur Abschlussarbeit gemäß § 22 Abs. 7 APB TU Darmstadt*
+    === Erklärung zur Abschlussarbeit gemäß § 22 Abs. 7 APB TU Darmstadt
 
     Hiermit erkläre ich, #author, dass ich die vorliegende Arbeit gemäß § 22 Abs. 7 APB TU Darmstadt selbstständig, ohne Hilfe Dritter und nur mit den angegebenen Quellen und Hilfsmitteln angefertigt habe. Ich habe mit Ausnahme der zitierten Literatur und anderer in der Arbeit genannter Quellen keine fremden Hilfsmittel benutzt. Die von mir bei der Anfertigung dieser wissenschaftlichen Arbeit wörtlich oder inhaltlich benutzte Literatur und alle anderen Quellen habe ich im Text deutlich gekennzeichnet und gesondert aufgeführt. Dies gilt auch für Quellen oder Hilfsmittel aus dem Internet.
 
@@ -40,14 +23,7 @@
 
   #block(breakable: false)[
     #if include-english-translation [
-      // Not sure what the exact spacing is, but this looks quite similar
-      #v(1em)
-      #line(length: 100%, stroke: 0.6pt)
-      #v(1em)
-
-      *English translation for information purposes  only:*
-
-      *Thesis Statement pursuant to § 22 paragraph 7 of APB TU Darmstadt*
+      === English translation for information purposes only: \ Thesis Statement pursuant to § 22 paragraph 7 of APB TU Darmstadt
 
       I herewith formally declare that I, #author, have written the submitted thesis independently pursuant to § 22 paragraph 7 of APB TU Darmstadt without any outside support and using only the quoted literature and other sources. I did not use any outside support except for the quoted literature and other sources mentioned in the paper. I have clearly marked and separately listed in the text the literature used literally or in terms of content and all other sources I used for the preparation of this academic work. This also applies to sources or aids from the Internet.
 
@@ -57,10 +33,6 @@
 
       For a thesis of the Department of Architecture, the submitted electronic version corresponds to the presented model and the submitted architectural plans.
     ]
-
-    #v(1em)
-    #line(length: 100%, stroke: 0.6pt)
-    #v(1em)
 
     #v(1.4cm)
 
