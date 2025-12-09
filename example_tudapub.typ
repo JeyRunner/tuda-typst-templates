@@ -76,6 +76,7 @@
   ),
 
   thesis_statement_pursuant_include_english_translation: false,
+  thesis_statement_pursuant_signature: image("assets/misc/dummy_signature.svg"),
 
   // pages after outline that will not be included in the outline
   additional_pages_after_outline_table_of_contents: [
@@ -342,7 +343,7 @@ In the following, we show the show-command of this template with all doc and def
   reviewer_names: ("SuperSupervisor 1", "SuperSupervisor 2"),
 
   // language for correct hyphenation
-  language: "eng",
+  language: "en",
 
   // Set the margins of the content pages.
   // The title page is not affected by this.

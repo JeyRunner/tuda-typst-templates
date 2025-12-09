@@ -17,7 +17,7 @@
   accentcolor: "9c",
 
   // language for correct hyphenation
-  language: "eng",
+  language: "en",
 
 
   // author name as text, e.g "Albert Author"
@@ -65,7 +65,7 @@
   let title_page_inner_margin_left = 8pt
   let logo_tud_height = 22mm
 
-  let submission_date = format-date(date_of_submission, location)
+  let submission_date = format-date(date_of_submission, language)
 
   let thesis_type_text = {
     if lower(thesis_type) == "master" {"Master"}

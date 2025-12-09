@@ -1,12 +1,14 @@
-#import "@local/athena-tu-darmstadt-exercise:0.2.0": tudaexercise, tuda-section, tuda-subsection, tuda-gray-info, title-sub, text-roboto
+#import "@local/athena-tu-darmstadt-exercise:0.2.0": (
+  subtask, task, text-roboto, title-sub, tuda-gray-info, tuda-section, tuda-subsection, tudaexercise, task-points-header, point-format, difficulty-format, tuda-difficulty-stars,
+)
 
 #show: tudaexercise.with(
-  language: "eng",
+  language: "en",
   info: (
     title: "Usage of TUDaExercise",
     subtitle: "A small guide.",
     author: (("Andreas", "129219"), "Dennis"),
-    term: "Summer semester 2042",
+    term: auto,
     date: datetime.today(),
     sheet: 5,
     group: 1,
@@ -39,7 +41,7 @@ The easiest way is by using `typst init` like on this templates universe page. B
 The template requires the following fonts: Roboto and XCharter. Typst right now does not allow fonts to be installed as packages. So you will either need to install them locally or configure Typst and co. to use the fonts.
 
 #tuda-gray-info(title: "For more info:")[
-https://github.com/JeyRunner/tuda-typst-templates?tab=readme-ov-file#logo-and-font-setup
+  https://github.com/JeyRunner/tuda-typst-templates?tab=readme-ov-file#logo-and-font-setup
 ]
 
 == Logo
@@ -69,7 +71,7 @@ info: (
 The options can also be left empty. Then their corresponding item will not appear.
 
 Additionally there is the `title-sub` field which controls how the subline of the title looks like. By default this is set to the exercise version. There also is a submission version which also displays the submission extra info fields. Or if both don't fit your needs, you can also pass raw content to the field and control the subline to your will. \
-For more info see the exported `title-sub` module of this template. 
+For more info see the exported `title-sub` module of this template.
 
 If you do not want to have a title card you can also set `show-title` to `false`.
 
@@ -93,11 +95,12 @@ If you do not like lines around subtasks you can pass `subtask: "plain"` to not 
 
 = More options
 
-The leftover options are: 
-- `language` to control the language of certain keywords (can either be `"ger"` or `"eng"`) 
-- `margins` which is a dictionary controlling the page margins 
-- `paper` which currently only supports `"a4"` 
+The leftover options are:
+- `language` to control the language of certain keywords (can either be `"de"` or `"en"`)
+- `margins` which is a dictionary controlling the page margins
+- `paper` which currently only supports `"a4"`
 - `headline` which currently is unsupported.
+
 
 = Creating tasks
 
@@ -111,6 +114,62 @@ Similarly subtasks are created using
 ```
 
 If you dislike the default task prefix, you can also set your own by changing the `taks-prefix` field of the template.
+
+= Tasks with points and difficulty #task-points-header(points:5,difficulty: 2.65)
+== Task point header #task-points-header(points: 2)
+If you want to add points and difficulty to your tasks, you can use the `task-points-header` function. This will add a header to the task with the points and difficulty.
+You can pass the following parameters:
+- `points` (int or float): The amount of points of the task
+- `difficulty` (int or float): The difficulty rating the task, must be a number between 0 and `max-difficulty`
+- `max-difficulty` (int): The maximum difficulty, default is 5
+- `hspace` (length): The horizontal space between the task title and the points, default is 1em
+- `details-seperator` (string): The string that separates the task title from the points
+  header, default is `", "`
+- `star-fill` (color): The fill color of the stars, default is the currentaccent color
+- `points-function` (function): The function to format the points, default is `point-format`
+- `difficulty-function` (function): The function to format the difficulty, default is `tuda-difficulty-stars`, but you can also pass `difficulty-format` to use a more simple text representation of the difficulty (or even a custom function). See @task-and-subtask-commands to see `difficulty-format` in action.
+
+For example you can writethe following command to recreate the header of this task:
+```typst
+= Tasks with points and difficulty #task-points-header(points: 5, difficulty: 2.65)
+== Task point header #task-points-header(points: 2)
+```
+
+== Task and subtask commands #task-points-header(points: 1, difficulty: 1, difficulty-function: difficulty-format)<task-and-subtask-commands>
+Instead of the normal section and subsection commands you can also use the `task` and `subtask` functions to create tasks and subtasks with points and difficulty:
+```typst
+#task(points: 5, difficulty: 3.69)[Tasks with *points* and _difficulty_]
+// you can also just pass the points and omit the title if desired
+#subtask(points: 2)
+```
+They take the same parameters as the `task-points-header` function, but additionally you can pass a `title` parameter to set the title of the task or subtask.
+== Advanced task header styling (#task-points-header(
+  points: 2,
+  difficulty: 1.5,
+  max-difficulty: 3,
+  details-seperator: " | ",
+  hspace: none,
+  star-fill: blue,
+  points-function: point-format.with(
+    points-name-single: "Bonus point",
+    points-name-plural: "Bonus points",
+  ),
+  difficulty-function: tuda-difficulty-stars.with(
+    difficulty-name: "Effort",
+    edges: 6,
+    rotation: 45deg,
+    baseline: 2pt,
+  ),
+))
+As mentioned above, you can overwrite the point- and difficulty functions of the `task-points-header` function. This allows you to customize the header even further. For example, you can change the number of edges of the stars, the rotation of the stars, or the fill color of the stars:
+```typst
+== Advanced task header styling (#task-points-header(points: 2, difficulty: 1.5, max-difficulty: 3, details-seperator: " | ", hspace: none, star-fill: blue, points-function: point-format.with(points-name-single: "Bonus point", points-name-plural: "Bonus points", baseline: 2pt), difficulty-function: tuda-difficulty-stars.with(difficulty-name: "Effort", edges: 6, rotation: 45deg)))
+```
+#tuda-gray-info(title: "Note:")[
+  Passing all these parameters everytime is a bit cumbersome, but since typst #link("https://github.com/typst/typst/issues/147")[does not yet support user-defined elements], this is the only way to archieve this without relying on states. You can create your own function to simplify this if you want to: ```typst
+  #let custom-tph = task-points-header.with(points-function: point-format.with(points-name-single: "Bonus point", points-name-plural: "Bonus points"), difficulty-function: difficulty-format)
+  ```
+]
 
 #pagebreak()
 
