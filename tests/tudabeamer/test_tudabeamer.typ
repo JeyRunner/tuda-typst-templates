@@ -1,4 +1,12 @@
-#import "@preview/not-tudabeamer-2023:0.2.1": *
+// imports
+
+#import "../../templates/not-tudabeamer-2023/template/lib.typ": *
+#import "../../common/tudacolors.typ": tuda_colors
+#import "../../common/props.typ": *
+
+// #import "template/lib.typ": *
+// #import "template/common/tudacolors.typ": tuda_colors
+// #import "template/common/props.typ": *
 
 #show: not-tudabeamer-2023-theme.with(
   config-info(
@@ -10,7 +18,7 @@
     date: datetime.today(),
     department: [Department],
     institute: [Institute],
-    logo: text(fallback: true, size: 0.75in, emoji.cat.face)
+    logo: text(fallback: true, size: 0.75in, emoji.cat.face),
     //logo: image("logos/tuda_logo.svg", height: 100%)
   ),
   config-store(
@@ -18,7 +26,7 @@
     show-bar: true,
     enable-header: true
   ),
-  accentcolor: "9c",
+  accentcolor: "9c", 
 )
 
 #title-slide()
