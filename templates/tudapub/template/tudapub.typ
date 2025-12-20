@@ -14,6 +14,9 @@
   title: [Title],
   title_german: [Title German],
 
+  // Adjust height of title on title page if title gets to long
+  title_height: 3.5em,
+
   // Adds an abstract page after the title page with the corresponding content.
   // E.g. abstract: [My abstract text...]
   abstract: none,
@@ -99,7 +102,7 @@
   
   // Insert an image as a signature on the "Erklärung zur Abschlussarbeit"
   thesis_statement_pursuant_signature: none,
-
+  
   // Which pages to insert
   // Pages can be disabled individually.
   show_pages: (
@@ -569,7 +572,8 @@
       logo_institute: logo_institute,
       logo_institute_sizeing_type: logo_institute_sizeing_type,
       logo_institute_offset_right: logo_institute_offset_right,
-      logo_sub_content_text: logo_sub_content_text
+      logo_sub_content_text: logo_sub_content_text,
+      title_height: title_height
     )
   }
 
@@ -645,6 +649,9 @@
   // main body starts at the next page after table of contents
   pagebreak(weak: true)
   additional_pages_after_outline_table_of_contents
+  if additional_pages_after_outline_table_of_contents != none [
+    #pagebreak(weak: true)
+  ]
 
   // mark start of body
   //box[#figure(none) <__after_table_of_contents>]
