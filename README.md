@@ -5,7 +5,7 @@ These **unofficial** templates enable you to write documents in [Typst](https://
 Please ask your supervisor if you are allowed to use Typst and one of these templates for your thesis or other documents.
 Note that this template is not checked by TU Darmstadt for correctness.
 Thus, this template does not guarantee completeness or correctness.
-For notes for publishing on TUbama see the [Publishing](#publishing-on-tubama).
+For notes for publishing on TUbama see [Publishing](#publishing-on-tubama).
 
 
 ## Implemented Templates
@@ -57,16 +57,16 @@ cd assets/logos
 ./convert_logo.sh
 ```
 
-Note: The here used `pdf2svg` command might not be available. In this case we recommend a online converter like [PDF24 Tools](https://tools.pdf24.org/en/pdf-to-svg). There also is a [tool](https://github.com/FussballAndy/typst-img-to-local) to install images as local typst packages.
+Note: The here used `pdf2svg` command might not be available. In this case we recommend a online converter like [PDF24 Tools](https://tools.pdf24.org/en/pdf-to-svg). There is also a [tool](https://github.com/FussballAndy/typst-img-to-local) to install images as local typst packages.
 
 Also download the required fonts `Roboto` and `XCharter`:
 ```bash
 cd assets/fonts
 ./download_fonts.sh
 ```
-Optionally you can install all fonts in the folders in `fonts` on your system. But you can also use Typst's `--font-path` option. Or install them in a folder and add the folder to `TYPST_FONT_PATHS` for a single font folder.
+Optionally, you can install all fonts in the folders in `fonts` on your system. But you can also use Typst's `--font-path` option. Or install them in a folder and add the folder to `TYPST_FONT_PATHS` for a single font folder.
 
-Note: wget might not be available. In this case either download it or replace the command with something like `curl <url> -o <filename> -L`
+Note: wget might not be available. In this case, either download it or replace the command with something like `curl <url> -o <filename> -L`
 
 <details>
 <summary>Create a main.typ file for the manual template installation.</summary>
