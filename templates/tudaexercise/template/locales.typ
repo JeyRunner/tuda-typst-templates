@@ -10,9 +10,12 @@
   point_plural: "Punkte",
   difficulty: "Schwierigkeitsgrad",
   term: "Semester",
+  date: "Abgabe",
+  firstname: "Vorname",
+  lastname: "Nachname",
+  student_id: "Matrikelnummer",
   summer_term: "Sommersemester",
   winter_term: "Wintersemester",
-  date: "Abgabe"
 )
 
 #let dict_en = (
@@ -27,9 +30,12 @@
   point_plural: "Points",
   difficulty: "Difficulty",
   term: "Term",
+  date: "Due",
+  firstname: "First Name",
+  lastname: "Last Name",
+  student_id: "Student ID",
   summer_term: "Summer semester",
   winter_term: "Winter semester",
-  date: "Due"
 )
 
 #let dicts = (
