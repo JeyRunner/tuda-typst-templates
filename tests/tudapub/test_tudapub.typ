@@ -272,8 +272,6 @@ In @fig.myfig we can see stuff.
   ]
 )<fig.myfig>
 
-
-Next is @fig:test_f. When using `figure_numbering_per_chapter: true` figures need to referenced with `@fig:<labelname>`
 #figure(
   [
     #rect(inset: 20.9pt)[Dummy Test]
