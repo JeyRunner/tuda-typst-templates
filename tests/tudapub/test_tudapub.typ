@@ -10,6 +10,10 @@
 #import "template/common/tudacolors.typ": tuda_colors
 #import "template/common/props.typ": *
 
+#import "template/common/vendored/hallon/0.2.0/lib.typ": style-figures, style-equations
+
+#show: style-figures(heading-levels: 1).rule
+#show: style-equations(heading-levels: 1).rule
 
 // setup
 // #set page(width: 20cm, height:auto)
