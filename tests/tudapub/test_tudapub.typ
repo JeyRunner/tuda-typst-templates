@@ -10,6 +10,10 @@
 #import "template/common/tudacolors.typ": tuda_colors
 #import "template/common/props.typ": *
 
+#import "template/common/vendored/hallon/0.2.0/lib.typ": style-figures, style-equations
+
+#show: style-figures(heading-levels: 1).rule
+#show: style-equations(heading-levels: 1).rule
 
 // setup
 // #set page(width: 20cm, height:auto)
@@ -272,8 +276,6 @@ In @fig.myfig we can see stuff.
   ]
 )<fig.myfig>
 
-
-Next is @fig:test_f. When using `figure_numbering_per_chapter: true` figures need to referenced with `@fig:<labelname>`
 #figure(
   [
     #rect(inset: 20.9pt)[Dummy Test]
