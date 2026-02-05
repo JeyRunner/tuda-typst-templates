@@ -265,14 +265,7 @@
       #set align(right)
       // context needed for page counter for typst >= 0.11.0
       #context [
-        #let counter_disp = counter(page).display()
-        //#hide(counter_disp)
-        //#counter_disp
-        #context {
-          let show_counter = query(selector(<__start_page_counter>).before(here())).len() >= 1
-          if show_counter {counter_disp}
-          else {hide(counter_disp)}
-        }
+        #counter(page).display()
       ]
     ]
   )
@@ -627,7 +620,6 @@
     #abstract
   ]
 
-  [#metadata("begin shwoing page counter") <__start_page_counter>]
 
 
 
