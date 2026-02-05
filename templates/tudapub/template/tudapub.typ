@@ -269,8 +269,8 @@
         //#hide(counter_disp)
         //#counter_disp
         #context {
-          let after_table_of_contents = query(selector(<__after_table_of_contents>).before(here())).len() >= 1
-          if after_table_of_contents {counter_disp}
+          let show_counter = query(selector(<__start_page_counter>).before(here())).len() >= 1
+          if show_counter {counter_disp}
           else {hide(counter_disp)}
         }
       ]
@@ -627,6 +627,7 @@
     #abstract
   ]
 
+  [#metadata("begin shwoing page counter") <__start_page_counter>]
 
 
 
@@ -654,12 +655,8 @@
   ]
 
   // mark start of body
-  //box[#figure(none) <__after_table_of_contents>]
   [#metadata("After Table of Contents") <__after_table_of_contents>]
-  //[abc]
 
-  // restart page counter
-  counter(page).update(1)
   // restart heading counter
   counter(heading).update(0)
 
