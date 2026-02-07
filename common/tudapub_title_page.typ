@@ -148,7 +148,7 @@
           let tud_logo = [
                 #set image(height: logo_tud_height)
                 #if logo_tuda == none {
-                  box(fill: white)[logo_tuda \ not set!]
+                  box(height: logo_tud_height, fill: white)[logo_tuda \ not set!]
                 } else {
                   logo_tuda
                 } 
@@ -199,7 +199,7 @@
                       top: 6pt,
                       bottom: 6pt,
                       left: 4.5mm,
-                      right: 6pt + logo_sub_box_extend_dx,
+                      right: logo_sub_box_extend_dx,
                     ),
                     align(left)[
                     #set text(weight: "regular", size: 9.96pt)
