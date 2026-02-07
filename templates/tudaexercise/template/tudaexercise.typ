@@ -1,5 +1,5 @@
 #import "common/tudacolors.typ": tuda_colors, text_colors
-#import "common/props.typ": tud_exercise_page_margin, tud_header_line_height, tud_inner_page_margin_top, tud_title_logo_height
+#import "common/props.typ": tud_exercise_page_margin, tud_header_line_height, tud_inner_page_margin_top, tud_title_logo_height, tud_heading_line_thin_stroke
 #import "common/headings.typ": tuda-section, tuda-subsection, tuda-subsection-unruled
 #import "common/util.typ": check-font-exists
 #import "common/addons/difficulty-points.typ": difficulty-stars
@@ -257,25 +257,63 @@
     line(length: 100%, stroke: tud_header_line_height),
   )
 
+  let number_form_box = box(
+    curve(
+      stroke: .5pt,
+      curve.move((0em, -.5em)),
+      curve.line((0em,0em)),
+      curve.line((1em,0em)),
+      curve.line((1em,-.5em)),
+    )
+  ) + " "
+
+  let student_id_boxes = for i in range(7) {
+    number_form_box
+  }
+
+  let additional_header = grid(
+    rows: auto,
+    row-gutter: 1.4mm + 0.25mm,
+    info.title,
+    {
+      dict.firstname + ", " + dict.lastname + ": "
+      box(width:1fr, line(length: 100%, stroke: 0.5pt))
+      h(2em)
+      dict.student_id + ": "
+      student_id_boxes
+    },
+    [],
+    line(length: 100%, stroke: tud_heading_line_thin_stroke),
+  )
+
   context {
     let height_header = measure(header_frontpage).height
+    let height_additional_header = measure(additional_header).height
 
     set page(
       paper: paper,
       numbering: "1",
       number-align: right,
       margin: (
-        top: margins.top + tud_inner_page_margin_top + height_header, 
+        top: margins.top + tud_inner_page_margin_top + height_header + height_additional_header, 
         bottom: margins.bottom, 
         left: margins.left, 
         right: margins.right
       ),
-      header: header_frontpage,
+      header: context {
+        if(show-title) {
+          place(dy: margins.top, header_frontpage)
+          if(here().page() > 1){
+            place(dy:margins.top + height_header + 2*1.4mm, additional_header)
+          }
+        }
+      },
       header-ascent: tud_inner_page_margin_top,
       fill: background_color
     )
 
     if show-title {
+      v(-height_additional_header)
       tuda-make-title(
         tud_inner_page_margin_top, 
         tud_header_line_height,
