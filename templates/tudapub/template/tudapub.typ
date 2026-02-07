@@ -265,14 +265,7 @@
       #set align(right)
       // context needed for page counter for typst >= 0.11.0
       #context [
-        #let counter_disp = counter(page).display()
-        //#hide(counter_disp)
-        //#counter_disp
-        #context {
-          let after_table_of_contents = query(selector(<__after_table_of_contents>).before(here())).len() >= 1
-          if after_table_of_contents {counter_disp}
-          else {hide(counter_disp)}
-        }
+        #counter(page).display()
       ]
     ]
   )
@@ -654,12 +647,8 @@
   ]
 
   // mark start of body
-  //box[#figure(none) <__after_table_of_contents>]
   [#metadata("After Table of Contents") <__after_table_of_contents>]
-  //[abc]
 
-  // restart page counter
-  counter(page).update(1)
   // restart heading counter
   counter(heading).update(0)
 
