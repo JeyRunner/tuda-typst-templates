@@ -167,7 +167,7 @@
                 #tud_logo
               ],
               // sub logo
-              v(5mm),
+              if logo_institute != none {v(5mm)},
               // height from design guidelines
               if logo_institute != none {
                 box(inset: (right: logo_institute_offset_right), fill: black)[
@@ -189,6 +189,7 @@
                   }
                 ]
               },
+              if logo_sub_content_text != none {v(5mm)}, 
               // sub box with custom text
               let logo_sub_box_extend_dx = -tud_logo_offset_right,
               if logo_sub_content_text != none {
