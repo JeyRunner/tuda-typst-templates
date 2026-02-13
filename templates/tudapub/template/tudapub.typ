@@ -5,10 +5,6 @@
 #import "common/thesis_statement_pursuant.typ": *
 #import "common/util.typ": *
 
-#import "@preview/i-figured:0.2.3"
-
-
-
 // This function gets your whole document as its `body` and formats it.
 #let tudapub(
   title: [Title],
@@ -174,13 +170,6 @@
 
   // Use 'Roboto Slab' instead of 'Robot' font for figure captions.
   figure_caption_font_roboto_slab: true,
-
-  // Figures have the numbering <chapter-nr>.<figure-nr>
-  figure_numbering_per_chapter: true,
-
-  // Equations have the numbering <chapter-nr>.<equation-nr>
-  // @todo This seems to increase the equation number in steps of 2 instead of one
-  equation_numbering_per_chapter: false,
 
   // content.
   body
@@ -385,25 +374,7 @@
         v(32pt)
       )
     ]
-    // rest figure/equation numbers for each chapter
-    // -> manual reimplementation of the i-figured.reset-counters(...) function
-    //   -> fixes: heading page is wrong due to pagebreak 
-    if figure_numbering_per_chapter {
-      for kind in (image, table, raw)  {
-        counter(figure.where(kind: i-figured._prefix + repr(kind))).update(0)
-      }
-    }
-    if equation_numbering_per_chapter {
-        counter(math.equation).update(0)
-    }
   }
-  // rest figure numbers for each chapter
-  // -> not working together with pagebreak of heading level 1
-  //   -> heading page is wrong
-  //show heading: it => if figure_numbering_per_chapter {
-  //    i-figured.reset-counters.with()(it)
-  //  } else {it}
-
 
   // heading level 2 
   show heading.where(
@@ -454,18 +425,8 @@
 
   ///////////////////////////////////////
 
-  // Configure equation numbering and spacing.
-  set math.equation(numbering: "(1.1.1)")
   // typst0.12:  show math.equation: set block(spacing: 0.65em)
   show math.equation: set block(spacing: 0.9em)
-  // equation numbering per chapter
-  show math.equation.where(block: true): it => {
-    if equation_numbering_per_chapter {
-      // @todo this seems to increase the equation number in steps of 2 instead of one
-      i-figured.show-equation(only-labeled: false, it)
-    }
-    else {it}
-  }
 
   // Configure figures.
   let figure_caption_font = "Roboto"
@@ -479,14 +440,6 @@
         fallback: false,
         weight: "regular"
   )
-  // figure numbering per Chapter
-  show figure: it => {
-    if figure_numbering_per_chapter {
-      i-figured.show-figure(it)
-    }
-    else {it}
-  }
-
 
   // configure footnotes
   set footnote.entry(
@@ -518,7 +471,6 @@
       it
     }
   }
-
 
   ///////////////////////////////////////
   // Display font checks

@@ -6,6 +6,7 @@
 // add
 // - subpar for sub-figures
 #import "@preview/equate:0.1.0": equate
+#import "@preview/hallon:0.1.3" as hallon: subfigure
 
 #show: make-glossary
 
@@ -64,7 +65,7 @@
 
   //outline_table_of_contents_style: "adapted",
   //reduce_heading_space_when_first_on_page: false
-  //figure_numbering_per_chapter: false
+  figure_numbering_per_chapter: true, // needed for subfigure use
 
   // Which pages to insert
   // Pages can be disabled individually.
@@ -497,11 +498,35 @@ The list of colors that can be used in the template argument `accentcolor`:
   }
 )
 
+== Subfigures
 
+#figure(
+	grid(
+    columns: (1fr, 1fr),
+    subfigure(rect(inset: 20.9pt)[Dummy Test], caption: [
+      An image of the andromeda galaxy.
+    ]),
 
+    subfigure(rect(inset: 20.9pt)[Dummy Test], caption: [
+      A sunset illuminating the sky above a mountain range.
+    ]),
+  ),
+  caption: [A figure composed of two sub figures.],
+)
 
- 
+#figure(
+	grid(
+    columns: (1fr, 1fr),
+    subfigure(rect(inset: 20.9pt)[Dummy Test], caption: [
+      An image of the andromeda galaxy.
+    ]),
 
+    subfigure(rect(inset: 20.9pt)[Dummy Test], caption: [
+      A sunset illuminating the sky above a mountain range.
+    ]),
+  ),
+  caption: [A figure composed of two sub figures.],
+)
 
 = Glossary
 #let glossary = (
