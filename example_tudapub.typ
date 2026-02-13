@@ -83,7 +83,9 @@
     == List of Symbols
     - $t$ - time
     == List of Figures
-  ]
+  ],
+  // begin displaying page numbers after the outline and not on every page except for the title page
+  page_numbering_starts_after_outline: true,
 )
 
 

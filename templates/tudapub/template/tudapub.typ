@@ -138,6 +138,9 @@
   // ]
   additional_pages_after_outline_table_of_contents: none,
 
+  // When disabled, numbering is in line with the latex template where every page is counted.
+  // Additionally, every page that is not the title page displays its page number in the footer.
+  page_numbering_starts_after_outline: true,
 
 
   // For headings with a height level than this number no number will be shown.
@@ -264,16 +267,12 @@
     )[
       #set align(right)
       // context needed for page counter for typst >= 0.11.0
-      #context [
-        #let counter_disp = counter(page).display()
-        //#hide(counter_disp)
-        //#counter_disp
-        #context {
-          let after_table_of_contents = query(selector(<__after_table_of_contents>).before(here())).len() >= 1
-          if after_table_of_contents {counter_disp}
-          else {hide(counter_disp)}
-        }
-      ]
+      #context {
+        let counter_disp = counter(page).display()
+        let after_table_of_contents = query(selector(<__after_table_of_contents>).before(here())).len() >= 1
+        if not page_numbering_starts_after_outline or after_table_of_contents { counter_disp }
+        else { hide(counter_disp) }
+      }
     ]
   )
 
@@ -654,12 +653,10 @@
   ]
 
   // mark start of body
-  //box[#figure(none) <__after_table_of_contents>]
   [#metadata("After Table of Contents") <__after_table_of_contents>]
-  //[abc]
 
-  // restart page counter
-  counter(page).update(1)
+  // restart page counter if desired
+  if page_numbering_starts_after_outline { counter(page).update(1) }
   // restart heading counter
   counter(heading).update(0)
 
